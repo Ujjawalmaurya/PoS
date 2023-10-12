@@ -1,11 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/invoice/model/invoice.dart';
+import 'package:pos/shop_manager/dashboard/create_sale/payment_mode.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
+import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/cart_items_tile.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
-import 'package:pos/src/widgets/inventory_item_tile.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/slidable_widget.dart';
 
@@ -14,12 +17,20 @@ class AddSales extends GetWidget<AddSalesController> {
 
   @override
   Widget build(BuildContext context) {
+    log(controller.selectedCustomer.value!.name.toString());
     final Color greyShade = Colors.grey.shade300;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Add Sales"),
-        // actions: [],
+        actions: [
+          Obx(
+            () => IconButton(
+              onPressed: () => controller.isLandscape.value = !controller.isLandscape.value,
+              icon: controller.isLandscape.value ? const Icon(Icons.landscape) : const Icon(Icons.portrait),
+            ),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -30,24 +41,27 @@ class AddSales extends GetWidget<AddSalesController> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Obx(
-                      () => controller.selectedCustomer.isEmpty
+                      () => controller.selectedCustomer.value!.name == null
                           ? MyDottedBorderWidget(
                               child: ListTile(
-                                // tileColor: greyShade,
                                 title: const Text("Select customer"),
                                 onTap: () => Get.toNamed('/showCustomersForSale'),
                               ),
                             )
                           : ListTile(
-                              // trailing: OutlinedButton.icon(
-                              //   onPressed: () {},
-                              //   icon: const Icon(Icons.person),
-                              //   label: const Text("Change customer"),
-                              // ),
-                              tileColor: greyShade,
-                              subtitle: const Text("Tap to change Customer"),
+                              selected: true,
+                              // dense: true,
+                              selectedTileColor: greyShade,
+                              // isThreeLine: true,
+                              subtitle: Text("Tap to change Customer",
+                                  style: Theme.of(context).textTheme.bodySmall),
                               onTap: () => Get.toNamed('/showCustomersForSale'),
-                              title: Text("Customer: ${controller.selectedCustomer["name"]}"),
+                              title: Text(
+                                  "Customer: ${controller.selectedCustomer.value!.name}\n(+91-${controller.selectedCustomer.value!.contact})"),
+                              trailing: IconButton(
+                                onPressed: () => controller.selectedCustomer.value = Customer(),
+                                icon: const Icon(Icons.cancel),
+                              ),
                             ),
                     ),
                   ),
@@ -90,7 +104,10 @@ class AddSales extends GetWidget<AddSalesController> {
                                         controller.removeFromSelectedItems(_item);
                                       },
                                       child: CartItemTile(
+                                        onIncrease: () => controller.increaseQuantity(index),
+                                        onDecrease: () => controller.decreaseQuantity(index),
                                         mrp: 5.0,
+                                        quantity: _item.quantity,
                                         name: _item.itemName,
                                         price: _item.unitPrice,
 
@@ -120,12 +137,34 @@ class AddSales extends GetWidget<AddSalesController> {
                                     textAlign: TextAlign.end,
                                     style: Theme.of(context).textTheme.titleMedium,
                                   ),
-                                  GestureDetector(
-                                    onTap: () => controller.increaseDiscount(),
-                                    child: Text(
-                                      "Discount: - ${Utils.parseInINR(controller.discount.value)} Rs",
-                                      textAlign: TextAlign.end,
-                                      style: Theme.of(context).textTheme.titleMedium,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 15),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text('Discount:  In %'),
+                                            Obx(
+                                              () => Switch(
+                                                value: controller.finalDiscountType_isValue.value,
+                                                onChanged: (value) {
+                                                  controller.finalDiscountType_isValue.value = value;
+                                                },
+                                              ),
+                                            ),
+                                            Text('in Amount (Rs)'),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => controller.updateDiscount(),
+                                          child: Obx(() => Text(
+                                                "- ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
+                                                textAlign: TextAlign.end,
+                                                style: Theme.of(context).textTheme.titleMedium,
+                                              )),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                   Padding(
@@ -140,7 +179,59 @@ class AddSales extends GetWidget<AddSalesController> {
                             ),
                           )
                         : const SizedBox.shrink(),
-                  )
+                  ),
+                  Obx(
+                    () => ListTile(
+                      // onTap: () => Get.to(const PaymentMode()),
+                      onTap: () => Get.defaultDialog(
+                        title: "Select a payment Method:",
+                        contentPadding: const EdgeInsets.all(10),
+                        titlePadding: const EdgeInsets.all(10),
+                        content: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: OutlinedButton.icon(
+                                onPressed: () {
+                                  controller.payType.value = PaymentType.card;
+                                  Get.back();
+                                },
+                                icon: const Icon(Icons.credit_card),
+                                label: const Text("Credit/Debit Card"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: OutlinedButton.icon(
+                                onPressed: () {
+                                  controller.payType.value = PaymentType.cash;
+                                  Get.back();
+                                },
+                                icon: const Icon(Icons.currency_rupee_rounded),
+                                label: const Text("Cash"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: OutlinedButton.icon(
+                                onPressed: () {
+                                  controller.payType.value = PaymentType.upi;
+                                  Get.back();
+                                },
+                                icon: const Icon(Icons.system_update_outlined),
+                                label: const Text("UPI"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      title: Text("Payment Mode -  Selected ${controller.payType.value}"),
+                      // subtitle: Text("Selected Payment Type ${controller.payType.value}"),
+                    ),
+                  ),
+                  // DropdownButton(items: DropdownMenuItem['',''], onChanged: (_val){})
                 ],
               ),
             ),
@@ -149,7 +240,8 @@ class AddSales extends GetWidget<AddSalesController> {
             () => ElevatedButton.icon(
               icon: const Icon(Icons.done),
               onPressed: () {
-                controller.selectedItems.isEmpty || controller.selectedCustomer.isEmpty
+                controller.selectedItems.isEmpty ||
+                        controller.selectedCustomer.value!.name.toString().trim() == ''
                     ? {
                         showSnackbar(
                           "Incomplete Task",
@@ -166,7 +258,8 @@ class AddSales extends GetWidget<AddSalesController> {
                       };
               },
               label: Text(
-                controller.selectedItems.isEmpty || controller.selectedCustomer.isEmpty
+                controller.selectedItems.isEmpty ||
+                        controller.selectedCustomer.value!.name.toString().trim() == ''
                     ? "Please select Items and customer"
                     : "Generate invoice from selected items",
               ),

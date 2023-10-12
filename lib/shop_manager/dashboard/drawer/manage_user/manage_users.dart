@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:pos/shop_manager/dashboard/drawer/manage_user/manage_user_c.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
+import 'package:pos/src/widgets/search_field.dart';
 
 class ManageUser extends GetWidget<ManageUserController> {
   const ManageUser({super.key});
@@ -15,53 +16,59 @@ class ManageUser extends GetWidget<ManageUserController> {
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
-          appBar: const TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.manage_accounts),
-                child: Text('Manage'),
-              ),
-              Tab(
-                icon: Icon(Icons.add_business_rounded),
-                child: Text('Add users'),
-              ),
-              // Tab(
-              //   icon: Icon(Icons.add_business_rounded),
-              //   child: Text(
-              //     'Manage users by id',
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
-            ],
+          appBar: AppBar(
+            title: const Text("Manage Users"),
+            bottom: const TabBar(
+              labelColor: Colors.white,
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.manage_accounts),
+                  child: Text('Manage'),
+                ),
+                Tab(
+                  icon: Icon(Icons.add_business_rounded),
+                  child: Text('Add users'),
+                ),
+                // Tab(
+                //   icon: Icon(Icons.add_business_rounded),
+                //   child: Text(
+                //     'Manage users by id',
+                //     textAlign: TextAlign.center,
+                //   ),
+                // ),
+              ],
+            ),
           ),
-          // AppBar(title: const Text("Users")),
           body: TabBarView(
             // physics: FixedExtentScrollPhysics(),
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text("Get user info by id"),
-                          content: TextField(
-                            keyboardType: const TextInputType.numberWithOptions(signed: true),
-                            controller: controller.idcontroller,
-                            onChanged: (val) {},
-                          ),
-                          actions: [
-                            ElevatedButton(onPressed: () {}, child: const Text("Get user info")),
-                            ElevatedButton(onPressed: () => Get.back(), child: const Text("Cancel")),
-                          ],
-                        ),
-                      ),
-                      child: const Text("Get user by id"),
-                    ),
-                  ],
-                ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                // child: ListView(
+                //   children: [
+                // ElevatedButton(
+                //   onPressed: () => showDialog(
+                //     context: context,
+                //     builder: (context) => AlertDialog(
+                //       title: const Text("Get user info by id"),
+                //       content: TextField(
+                //         keyboardType: const TextInputType.numberWithOptions(signed: true),
+                //         controller: controller.idcontroller,
+                //         onChanged: (val) {},
+                //       ),
+                //       actions: [
+                //         ElevatedButton(onPressed: () {}, child: const Text("Get user info")),
+                //         ElevatedButton(onPressed: () => Get.back(), child: const Text("Cancel")),
+                //       ],
+                //     ),
+                //   ),
+                //   child: const Text("Get user by id"),
+                // ),
+                // SearchField(),
+
+                // ],
+                // ),
+                child: Placeholder(),
               ),
               Form(
                 key: controller.signupKey,

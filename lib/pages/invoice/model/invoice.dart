@@ -1,4 +1,5 @@
-import 'customer.dart';
+import 'package:pos/shop_manager/parties/customer_model.dart';
+
 import 'supplier.dart';
 
 class Invoice {
@@ -31,16 +32,16 @@ class InvoiceInfo {
 
 class InvoiceItem {
   final String itemName;
-  // final DateTime date;
   final int quantity;
   final double gst;
+  final DateTime expiryDate;
   final double unitPrice;
 
   const InvoiceItem({
     required this.itemName,
-    // required this.date,
     required this.quantity,
     required this.gst,
+    required this.expiryDate,
     required this.unitPrice,
   });
 }

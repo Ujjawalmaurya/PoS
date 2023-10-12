@@ -56,9 +56,10 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
                 var _data = controller.inventoryData[index];
                 var item = InvoiceItem(
                   itemName: _data['name'],
-                  quantity: 1,
+                  quantity: _data['qty'],
                   gst: _data['gst'],
                   unitPrice: _data['price'],
+                  expiryDate: DateTime(2030),
                 );
                 return ListTile(
                   // tileColor: ,

@@ -6,6 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pos/pages/login.dart';
+import 'package:pos/shop_manager/dashboard/more_pages/credit_note.dart';
+import 'package:pos/shop_manager/dashboard/more_pages/debt_note.dart';
+import 'package:pos/shop_manager/dashboard/more_pages/purchase_order.dart';
+import 'package:pos/shop_manager/dashboard/more_pages/purchase_return.dart';
+import 'package:pos/shop_manager/dashboard/more_pages/sales_return.dart';
 import 'package:pos/src/constants/constants.dart';
 
 enum callAnAction { sale, purchase }
@@ -22,12 +27,12 @@ class HomeController extends GetxController {
       'color': Colors.pinkAccent,
       'icon': Icons.blur_circular_sharp,
       'title': 'Credit note',
-      'onpress': () {},
+      'onpress': () => Get.to(const CreditNote()),
     },
     {
       'icon': Icons.payments,
       'color': Colors.lightBlue,
-      'onpress': () {},
+      'onpress': () => Get.to(const SalesReturn()),
       'title': 'Sales Return',
     },
     {
@@ -56,7 +61,7 @@ class HomeController extends GetxController {
       'onpress': () {
         print('sales');
       },
-      'title': 'Purchase Order',
+      'title': 'Sales Order',
     },
   ];
 
@@ -65,12 +70,12 @@ class HomeController extends GetxController {
       'color': Colors.tealAccent,
       'icon': Icons.blur_circular_sharp,
       'title': 'Purchase Return',
-      'onpress': () {},
+      'onpress': () => Get.to(const PurchaseReturn()),
     },
     {
       'icon': Icons.payments,
       'color': Colors.yellow,
-      'onpress': () {},
+      'onpress': () => Get.to(const DebtNote()),
       'title': 'Debt note',
     },
     {
@@ -82,7 +87,7 @@ class HomeController extends GetxController {
     {
       'color': Colors.deepPurple,
       'icon': Icons.escalator_outlined,
-      'onpress': () {},
+      'onpress': () => Get.to(const PurchaseOrder()),
       'title': 'Purchase Order',
     },
   ];
@@ -130,31 +135,6 @@ class HomeController extends GetxController {
     }
   }
 
-  void logout(context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Logout"),
-        content: const Text("Do you really want to logout??"),
-        actions: [
-          OutlinedButton(
-            onPressed: () => Get.back(),
-            child: const Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () => ((readData('closeAppOnLogout') ?? false) && Platform.isAndroid)
-                ? storage.erase().then(
-                      (value) => Get.back(),
-                    )
-                : storage.erase().then((value) => Get.offAllNamed('/login')),
-            child: const Text("Logout"),
-          ),
-        ],
-      ),
-    );
-  }
-  // Popping out of screen
-
   void moreOptionsBbottomSheet(context, List gridData, String type) {
     showModalBottomSheet(
       context: context,
@@ -180,11 +160,14 @@ class HomeController extends GetxController {
               shrinkWrap: true,
               itemCount: gridData.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, crossAxisSpacing: 0.0, mainAxisSpacing: 24.0),
+                crossAxisCount: 4,
+                crossAxisSpacing: 0.0,
+                mainAxisSpacing: 22.0,
+              ),
               itemBuilder: (BuildContext context, int index) {
                 var data = gridData[index];
                 return GestureDetector(
-                  onTap: (() => log('Found ${data['title']}')),
+                  onTap: data['onpress'],
                   child: Column(
                     children: [
                       Container(
@@ -195,14 +178,17 @@ class HomeController extends GetxController {
                           child: Icon(
                             data['icon'],
                             color: data['color'].shade700,
-                            size: 30,
+                            size: 32,
                           ),
                         ),
                       ),
-                      FittedBox(
-                        child: Text(
-                          data['title'],
-                          textAlign: TextAlign.center,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: FittedBox(
+                          child: Text(
+                            data['title'],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ],

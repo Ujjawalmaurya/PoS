@@ -7,16 +7,21 @@ class CartItemTile extends StatelessWidget {
   const CartItemTile({
     super.key,
     required this.name,
-    this.imageURL = "https://www.webyurt.com/images-o/images/photography-dusk.jpg",
+    this.imageURL =
+        "https://lh3.googleusercontent.com/-btsBfVtr70I/X2OrpgIPdoI/AAAAAAAAWbw/gUa8GWoMCV0TnYFtYAPZJaaa8dQKJwzpgCLcBGAsYHQ/1.3.jpg",
     this.description = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
     required this.mrp,
     this.gst = 18,
     this.quantity = 1,
     this.ontap,
+    this.onIncrease,
+    this.onDecrease,
     required this.price,
   });
 
   final void Function()? ontap;
+  final void Function()? onIncrease;
+  final void Function()? onDecrease;
   final String name;
   final int quantity;
   final String imageURL;
@@ -99,11 +104,7 @@ class CartItemTile extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              InkWell(
-                                  onTap: () {
-                                    log("Decrement");
-                                  },
-                                  child: const Icon(Icons.remove)),
+                              InkWell(onTap: onDecrease, child: const Icon(Icons.remove)),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
                                 child: Column(
@@ -118,11 +119,7 @@ class CartItemTile extends StatelessWidget {
                                 ),
                               ),
                               // Text('+'),
-                              InkWell(
-                                  onTap: () {
-                                    log("Increment");
-                                  },
-                                  child: const Icon(Icons.add)),
+                              InkWell(onTap: onIncrease, child: const Icon(Icons.add)),
                             ],
                           ),
                         ),

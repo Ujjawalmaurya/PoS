@@ -1,14 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:pos/pages/invoice/model/customer.dart';
 import 'package:pos/shop_manager/inventory/item_model.dart';
+import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/shop_manager/parties/partyModel.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
+import 'package:pos/src/widgets/notify_snackbar.dart';
 
 import './api.dart';
 import 'package:http/http.dart' as http;
 
-final String businessID = readData("userData")['businessId'].toString();
+final String businessID = readData(StorageKey.userData)['businessId'].toString();
 
 class APIServices {
   // Login
@@ -31,7 +36,7 @@ class APIServices {
   static Future getMyProfile() async {
     try {
       var res = await http.get(
-        Uri.parse(ApiLink.getVendors + "${readData('userData')['id']}"),
+        Uri.parse(ApiLink.getVendors + "${readData(StorageKey.userData)['id']}"),
         headers: BaseURL.authHeader,
       );
       return res;
@@ -41,7 +46,7 @@ class APIServices {
   }
 
   static refreshToken() async {
-    Map _body = {"refreshToken": readData('refreshToken')};
+    Map _body = {"refreshToken": readData(StorageKey.refreshToken)};
     log("Refresh Token Body=>> $_body ");
     try {
       var res = await http.post(
@@ -57,9 +62,9 @@ class APIServices {
         // print('Date ==>> ${_headerData["date"]}');
         // writeData('date', _headerData['date']);
         print('Access Token ==>> ${_headerData["accesstoken"]}');
-        writeData('accessToken', _headerData['accesstoken']);
+        writeData(StorageKey.accessToken, _headerData['accesstoken']);
         print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
-        writeData('refreshToken', _headerData['refreshtoken']);
+        writeData(StorageKey.refreshToken, _headerData['refreshtoken']);
         log("================== Success ==================");
         print(_bodyData.toString());
       }
@@ -112,10 +117,8 @@ class APIServices {
     }
   }
 
-  //? Get veendors list
-  static
-      // Future<List<Party>>
-      getVendors() async {
+  //? Get vendors list
+  static Future<List<Vendor>> getVendors() async {
     Uri uri = Uri.parse(ApiLink.getVendors + businessID);
     // log(uri.toString());
     try {
@@ -125,10 +128,10 @@ class APIServices {
         final List result = json.decode(res.body);
         // print("Party list : " + result.toString());
         log("Vendors => " + result.toString());
-        // return result.map((e) => Party.fromJson(e)).toList();
-        return result;
-      } else if (res.statusCode == 403) {
-        APIServices.refreshToken();
+        return result.map((e) => Vendor.fromJson(e)).toList();
+        // return result;
+        // } else if (res.statusCode == 403) {
+        //   APIServices.refreshToken();
       } else {
         throw Exception('response not oke: res:${res.statusCode}');
       }
@@ -139,9 +142,8 @@ class APIServices {
   }
 
 //? get Customers
-  static
-      // Future<List<Party>>
-      getCustomers() async {
+
+  static Future<List<Customer>> getCustomers() async {
     Uri uri = Uri.parse(ApiLink.getCustomers + businessID);
     // log(uri.toString());
     try {
@@ -151,10 +153,12 @@ class APIServices {
         final List result = json.decode(res.body);
         // print("Party list : " + result.toString());
         log("Customers => " + result.toString());
-        // return result.map((e) => Party.fromJson(e)).toList();
-        return result;
+        return result.map((e) => Customer.fromJson(e)).toList();
+        // return result;
+      } else if (res.statusCode == 403) {
+        return refreshToken();
       } else {
-        throw Exception('response not oke: res:${res.statusCode}');
+        throw Exception('Getting customers=> response not oke: res:${res.statusCode}');
       }
     } catch (e) {
       log(e.toString());
@@ -229,6 +233,36 @@ class APIServices {
       return res;
     } catch (e) {
       log("Exception@AddingVendor => $e");
+    }
+  }
+
+  static deleteCustomer(String customerID) async {
+    Uri uri = Uri.parse(ApiLink.deleteCustomer + customerID + "/$businessID");
+    try {
+      var res = await http.delete(uri, headers: BaseURL.authHeader);
+      if (res.statusCode == 200) {
+        showSnackbar("Succeed", "Deleted successfully");
+      } else {
+        throw Exception('response not oke while deleting: res:${res.statusCode}');
+      }
+    } catch (e) {
+      log(e.toString());
+      throw e;
+    }
+  }
+
+  static deleteSupplier(String supplierID) async {
+    Uri uri = Uri.parse(ApiLink.deleteVendor + supplierID + "/$businessID");
+    try {
+      var res = await http.delete(uri, headers: BaseURL.authHeader);
+      if (res.statusCode == 200) {
+        showSnackbar("Succeed", "Deleted successfully");
+      } else {
+        throw Exception('response not oke while deleting: res:${res.statusCode}');
+      }
+    } catch (e) {
+      log(e.toString());
+      throw e;
     }
   }
 

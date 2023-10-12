@@ -28,12 +28,9 @@ class AddPartyController extends GetxController {
   final TextEditingController vBOwnerName = TextEditingController();
   final TextEditingController vBAddress = TextEditingController();
   final TextEditingController vBEmail = TextEditingController();
-  // final TextEditingController vBNumber = TextEditingController();
   final TextEditingController vDrugLicense = TextEditingController();
   final TextEditingController vGST = TextEditingController();
   // final TextEditingController vPAN = TextEditingController();
-  // final TextEditingController vName = TextEditingController();
-  // final TextEditingController vName = TextEditingController();
 
 // PartyController
   PartyController partyController = Get.find<PartyController>();

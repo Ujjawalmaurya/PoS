@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 
 class InvoiceSettings extends StatefulWidget {
   const InvoiceSettings({super.key});
@@ -9,10 +10,10 @@ class InvoiceSettings extends StatefulWidget {
 }
 
 class _InvoiceSettingsState extends State<InvoiceSettings> {
-  bool showShopUPI = readData('showShopUPI') ?? false;
-  bool showShopAdd = readData('showShopAdd') ?? false;
-  bool hideGSTperItem = readData('hideGSTperItem') ?? false;
-  bool showInvoiceQR = readData('showInvoiceQR') ?? false;
+  bool showShopUPI = readData(StorageKey.showShopUPI) ?? false;
+  bool showShopAdd = readData(StorageKey.showShopAdd) ?? false;
+  bool hideGSTperItem = readData(StorageKey.hideGSTperItem) ?? false;
+  bool showInvoiceQR = readData(StorageKey.showInvoiceQR) ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showShopUPI,
             onChanged: (_val) => setState(() {
               showShopUPI = _val;
-              writeData('showShopUPI', _val);
+              writeData(StorageKey.showShopUPI, _val);
             }),
           ),
           SwitchListTile(
@@ -42,7 +43,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showShopAdd,
             onChanged: (_val) => setState(() {
               showShopAdd = _val;
-              writeData('showShopAdd', _val);
+              writeData(StorageKey.showShopAdd, _val);
             }),
           ),
           SwitchListTile(
@@ -53,7 +54,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: hideGSTperItem,
             onChanged: (_val) => setState(() {
               hideGSTperItem = _val;
-              writeData('hideGSTperItem', _val);
+              writeData(StorageKey.hideGSTperItem, _val);
             }),
           ),
           SwitchListTile(
@@ -64,7 +65,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showInvoiceQR,
             onChanged: (_val) => setState(() {
               showInvoiceQR = _val;
-              writeData('showInvoiceQR', showInvoiceQR);
+              writeData(StorageKey.showInvoiceQR, showInvoiceQR);
             }),
           ),
         ],

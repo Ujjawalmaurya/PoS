@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/utils/theme/textTheme.dart';
 
 Color _primaryColor = Colors.teal;
 MaterialColor _primarySwatch = Colors.teal;
 Brightness _brightness = Brightness.light;
 // Color _accentColor = Colors.yellow;
+bool isMaterial3 = readData(StorageKey.isMaterial3) ?? false;
 
 class PoSAppTheme {
   // PoSAppTheme._();
@@ -19,7 +21,7 @@ class PoSAppTheme {
     //   seedColor: Colors.deepPurpleAccent,
     //   brightness: Brightness.light,
     // ),
-    useMaterial3: readData('isMaterial3') ?? false,
+    useMaterial3: isMaterial3,
     brightness: _brightness,
     primaryColor: _primaryColor,
     primarySwatch: _primarySwatch,
@@ -91,7 +93,7 @@ class PoSAppTheme {
     inputDecorationTheme: InputDecorationTheme(
       fillColor: Colors.grey.withOpacity(0.1),
       filled: true,
-      border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+      border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 22,
         horizontal: 26,

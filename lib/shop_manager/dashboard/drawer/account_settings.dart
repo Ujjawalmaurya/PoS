@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});
@@ -9,8 +10,8 @@ class AccountSettings extends StatefulWidget {
 }
 
 class _AccountSettingsState extends State<AccountSettings> {
-  bool closeApponLogout = readData("closeAppOnLogout") ?? false;
-  bool isMaterial3 = readData('isMaterial3') ?? false;
+  bool closeApponLogout = readData(StorageKey.closeAppOnLogout) ?? false;
+  bool isMaterial3 = readData(StorageKey.isMaterial3) ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class _AccountSettingsState extends State<AccountSettings> {
             value: closeApponLogout,
             onChanged: (_val) => setState(() {
               closeApponLogout = _val;
-              writeData('closeAppOnLogout', closeApponLogout);
+              writeData(StorageKey.closeAppOnLogout, closeApponLogout);
             }),
           ),
           SwitchListTile(
@@ -38,7 +39,7 @@ class _AccountSettingsState extends State<AccountSettings> {
             value: isMaterial3,
             onChanged: (_val) => setState(() {
               isMaterial3 = _val;
-              writeData('isMaterial3', isMaterial3);
+              writeData(StorageKey.isMaterial3, isMaterial3);
             }),
           ),
         ],

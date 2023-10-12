@@ -15,6 +15,15 @@ class _AddPurchaseState extends State<AddPurchase> {
         title: const Text("Add Purchase"),
         // centerTitle: true,
       ),
+      body: Column(
+        children: [
+          ListTile(title: Text("Select Supplier")),
+          ListTile(
+            // selected: true,
+            title: Text("Select/Add items"),
+          )
+        ],
+      ),
     );
   }
 }

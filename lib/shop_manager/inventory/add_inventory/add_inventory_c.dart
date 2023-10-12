@@ -6,7 +6,27 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 class AddInventoryController extends GetxController {
   final addItemFormKey = GlobalKey<FormState>();
 
-  bool isTaxable = false;
+  // ! TXT-Ctrl
+  TextEditingController itemNameCtr = TextEditingController();
+  TextEditingController itemExpCtr = TextEditingController();
+  TextEditingController manufacturerCtr = TextEditingController();
+  TextEditingController hsnCtr = TextEditingController();
+  TextEditingController batchCtr = TextEditingController();
+  TextEditingController packSizeCtr = TextEditingController();
+  TextEditingController mrpCtr = TextEditingController();
+  TextEditingController rateCtr = TextEditingController();
+  TextEditingController purchasePriceCtr = TextEditingController();
+  TextEditingController openingStocksCtr = TextEditingController();
+  TextEditingController qtyCtr = TextEditingController();
+  TextEditingController discountCtr = TextEditingController();
+  TextEditingController discountQtyCtr = TextEditingController();
+  TextEditingController tdCtr = TextEditingController();
+  TextEditingController cdCtr = TextEditingController();
+  TextEditingController cgstCtr = TextEditingController();
+  TextEditingController sgstCtr = TextEditingController();
+  // TextEditingController Ctr = TextEditingController();
+
+  RxBool isTaxable = false.obs;
 
   // ! Image Picker
   final ImagePicker picker = ImagePicker();
@@ -34,9 +54,6 @@ class AddInventoryController extends GetxController {
   ];
 
   XFile? itemImage;
-
-// ! TXT-Ctrl
-  // TextEditingController itemNameCtr = TextEditingController();
 
   void addItem() {
     showSnackbar("Adding Item", "API");

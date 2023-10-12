@@ -52,7 +52,13 @@ class AddInventory extends GetWidget<AddInventoryController> {
                 ),
               ),
               PoSInputField(
-                  hint: "e.g., pen, bulb, Paracetamol", label: "Item Name", maxLines: 3, minLines: 1),
+                controller: controller.itemNameCtr,
+                hint: "e.g., pen, bulb, Paracetamol",
+                label: "Item Name",
+                validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                maxLines: 3,
+                minLines: 1,
+              ),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -89,6 +95,8 @@ class AddInventory extends GetWidget<AddInventoryController> {
                   ),
                 ),
               ),
+
+              // PoSInputField(label: "Manufactured on", hint: 'DD-MM-YYYY'),
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -127,30 +135,78 @@ class AddInventory extends GetWidget<AddInventoryController> {
                 ),
               ),
 
-              PoSInputField(flex: 2, label: "Manufacturer", hint: 'Name of manufaturer'),
               PoSInputField(
-                  label: "HSN", hint: 'HSN Code', textCapitalization: TextCapitalization.characters),
-              PoSInputField(
-                  label: "Batch no", hint: 'BT00054', textCapitalization: TextCapitalization.characters),
-              PoSInputField(
-                  label: "Pack Size", hint: 'Size', textCapitalization: TextCapitalization.characters),
+                flex: 2,
+                label: "Manufacturer",
+                hint: 'Name of manufaturer',
+                validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                controller: controller.manufacturerCtr,
+              ),
+              Row(
+                children: [
+                  PoSInputField(
+                    label: "Expiry",
+                    hint: 'DD-MM-YYYY',
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.itemExpCtr,
+                  ),
+                  PoSInputField(
+                    label: "HSN",
+                    hint: 'HSN Code',
+                    controller: controller.hsnCtr,
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    textCapitalization: TextCapitalization.characters,
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  PoSInputField(
+                    label: "Batch no",
+                    hint: 'BT00054',
+                    controller: controller.batchCtr,
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    textCapitalization: TextCapitalization.characters,
+                  ),
+                  PoSInputField(
+                    label: "Pack Size",
+                    hint: 'Size',
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.packSizeCtr,
+                    textCapitalization: TextCapitalization.characters,
+                  ),
+                ],
+              ),
 
               //! ==========================================================================
               //! ==========================================================================
               const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Pricing"))),
               Row(
                 children: [
-                  PoSInputField(flex: 3, label: "MRP", hint: "MRP in Rs", maxLength: 5, numbersOnly: true),
+                  PoSInputField(
+                    // flex: 2,
+                    label: "MRP",
+                    hint: "MRP in Rs",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    maxLength: 5,
+                    numbersOnly: true,
+                    controller: controller.mrpCtr,
+                  ),
                   Flexible(
-                    flex: 1,
+                    // flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Text("Tax Included"),
-                          Switch(
-                            value: controller.isTaxable,
-                            onChanged: (_val) => controller.isTaxable = _val,
+                          Obx(
+                            () => Switch(
+                              value: controller.isTaxable.value,
+                              onChanged: (_val) => controller.isTaxable.value = _val,
+                            ),
                           ),
                         ],
                       ),
@@ -158,44 +214,79 @@ class AddInventory extends GetWidget<AddInventoryController> {
                   ),
                 ],
               ),
-              PoSInputField(
-                  numbersOnly: true, label: "Sale Price", hint: "Price", suffixText: "INR", maxLength: 5),
-              PoSInputField(
-                  flex: 2,
-                  label: "Purchase Price",
-                  hint: "Price",
-                  numbersOnly: true,
-                  maxLength: 5,
-                  suffixText: "INR"),
+              Row(
+                children: [
+                  PoSInputField(
+                    numbersOnly: true,
+                    label: "Rate",
+                    hint: "Rate",
+                    controller: controller.rateCtr,
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    suffixText: "INR",
+                    maxLength: 5,
+                  ),
+                  PoSInputField(
+                    // flex: 2,
+                    label: "Purchase Price",
+                    hint: "Price",
+                    numbersOnly: true,
+                    maxLength: 5,
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    suffixText: "INR",
+                    controller: controller.purchasePriceCtr,
+                  ),
+                ],
+              ),
 
               //! ==========================================================================
               //! ==========================================================================
-              const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Product Count"))),
-              PoSInputField(
-                numbersOnly: true,
-                label: "Opening Stocks",
-                hint: "Quantity",
-                suffixText: "Qty",
-                maxLength: 4,
-              ),
-              PoSInputField(
-                numbersOnly: true,
-                label: "Quantity",
-                hint: "Quantity",
-                suffixText: "Qty",
-                maxLength: 4,
+              const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Stock Count"))),
+              Row(
+                children: [
+                  PoSInputField(
+                    numbersOnly: true,
+                    label: "Opening Stocks",
+                    hint: "Quantity",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    suffixText: "Qty",
+                    maxLength: 4,
+                    controller: controller.openingStocksCtr,
+                  ),
+                  PoSInputField(
+                    numbersOnly: true,
+                    label: "Quantity",
+                    hint: "Quantity",
+                    suffixText: "Qty",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    maxLength: 4,
+                    controller: controller.qtyCtr,
+                  ),
+                ],
               ),
               //! ==========================================================================
               //! ==========================================================================
               const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Discount"))),
-              PoSInputField(
-                  label: "Discount", numbersOnly: true, hint: "GST in %", suffixText: "%", maxLength: 2),
-              //
-              PoSInputField(
-                label: "Discount(Qty)",
-                numbersOnly: true,
-                hint: "Discount ",
-                maxLength: 2,
+              Row(
+                children: [
+                  PoSInputField(
+                    label: "Discount",
+                    numbersOnly: true,
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    hint: "Discount in %",
+                    suffixText: "%",
+                    maxLength: 2,
+                    controller: controller.discountCtr,
+                  ),
+                  //
+                  PoSInputField(
+                    label: "Discount(Qty)",
+                    numbersOnly: true,
+                    hint: "Discount ",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.discountQtyCtr,
+                    maxLength: 2,
+                  ),
+                ],
               ),
               Row(
                 children: [
@@ -203,12 +294,16 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     label: "TD%",
                     numbersOnly: true,
                     hint: "TD% ",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.tdCtr,
                     maxLength: 2,
                   ),
                   PoSInputField(
                     label: "CD%",
                     numbersOnly: true,
                     hint: "CD%",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.cdCtr,
                     maxLength: 2,
                   ),
                 ],
@@ -219,31 +314,31 @@ class AddInventory extends GetWidget<AddInventoryController> {
               Row(
                 children: [
                   PoSInputField(
-                    label: "C-GST%",
+                    label: "CGST%",
                     numbersOnly: true,
-                    hint: "C-GST in%",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    hint: "CGST in%",
                     suffixText: "%",
                     maxLength: 2,
+                    controller: controller.cgstCtr,
                   ),
                   PoSInputField(
-                    label: "S-GST%",
+                    label: "SGST%",
                     numbersOnly: true,
-                    hint: "S-GST in%",
+                    hint: "SGST in%",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    controller: controller.sgstCtr,
                     suffixText: "%",
                     maxLength: 2,
                   ),
                 ],
               ),
 
-              // ElevatedButton(onPressed: () {}, child: Text("Add Item"))
+              // ElevatedButton(onPressed: () {}, child: Text("Add Item")),
 
               // PoSInputField(
               //     label: "Shelf life", hint: 'xyz', suffixText: "Months", numbersOnly: true, maxLength: 3),
               // PoSInputField(flex: 1, label: "Unit", hint: 'Unit of measurement'),
-              PoSInputField(flex: 1, label: "Pack", hint: 'Unit'),
-
-              // PoSInputField(label: "Manufactured on", hint: 'DD-MM-YYYY'),
-              PoSInputField(label: "Expiry", hint: 'DD-MM-YYYY'),
 
               const SizedBox(height: 80)
             ],

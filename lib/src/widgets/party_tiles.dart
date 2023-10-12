@@ -30,12 +30,9 @@ class CustomerTile extends StatelessWidget {
       // ],
 
       onTap: onTap,
-      // isThreeLine: true,
+      isThreeLine: true,
       leading: Image.network(image),
-      title: Text(
-        name,
-        style: const TextStyle(fontSize: 18),
-      ),
+      title: Text(name, style: const TextStyle(fontSize: 18)),
       subtitle: Text(subtitle ?? "${Utils.formatDate(DateTime.now())}"),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,

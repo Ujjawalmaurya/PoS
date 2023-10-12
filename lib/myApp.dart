@@ -6,13 +6,14 @@ import 'package:pos/pages/login.dart';
 import 'package:pos/shop_boy/shopboy.dart';
 import 'package:pos/shop_owner/shop_owner.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/utils/theme/theme.dart';
 import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final String? role = readData('userData')?['role'];
+  final String? role = readData(StorageKey.userData)?['role'];
 
   // Root Widget
   @override

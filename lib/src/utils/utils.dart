@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 
 class Utils {
   // To format Dates
-  static formatDate(DateTime date) => DateFormat.yMd().format(date);
+  static formatDate(DateTime date) => DateFormat.yMMMMd().format(date);
 
   // to format price in INR
   static parseInINR(dynamic amount) => NumberFormat.currency(

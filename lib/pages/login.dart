@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/services/apiServices.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 class Login extends StatefulWidget {
@@ -25,16 +26,16 @@ void login(context) async {
   Map<String, String> _headerData = res.headers;
   if (res.statusCode == 201) {
     log("================== Success ================");
-    print('Date ==>> ${_headerData["date"]}');
-    writeData('date', _headerData['date']);
+    // print('Date ==>> ${_headerData["date"]}');
+    // writeData('date', _headerData['date']);
     print('Access Token ==>> ${_headerData["accesstoken"]}');
-    writeData('accessToken', _headerData['accesstoken']);
+    writeData(StorageKey.accessToken, _headerData['accesstoken']);
     print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
-    writeData('refreshToken', _headerData['refreshtoken']);
+    writeData(StorageKey.refreshToken, _headerData['refreshtoken']);
     log("================== Success ==================");
     print(_bodyData.toString());
     writeData(
-      'userData',
+      StorageKey.userData,
       {
         'id': _bodyData['id'],
         'name': _bodyData['name'],

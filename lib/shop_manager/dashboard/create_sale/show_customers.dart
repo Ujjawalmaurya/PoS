@@ -12,18 +12,35 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
       appBar: AppBar(
         title: const Text("Select Customer"),
       ),
-      body: SizedBox(
-        child: ListView.builder(
-            itemCount: controller.customers.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(controller.customers[index]['name']),
-                onTap: () {
-                  controller.selectedCustomer.value = controller.customers[index];
-                  Get.back();
-                },
-              );
-            }),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: controller.partyController.customers.length,
+                itemBuilder: (context, index) {
+                  var customer = controller.partyController.customers[index];
+                  return ListTile(
+                    title: Text(customer.name.toString()),
+                    trailing: Text(customer.contact.toString()),
+                    subtitle: Text(customer.address.toString()),
+                    onTap: () {
+                      controller.selectedCustomer.value = controller.partyController.customers[index];
+                      Get.back();
+                    },
+                  );
+                }),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => Get.toNamed('/addParties'),
+              icon: const Icon(Icons.add),
+              label: const Text("Add new Customer"),
+            ),
+          )
+        ],
       ),
     );
   }

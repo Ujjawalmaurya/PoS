@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 
 // import 'package:http/http.dart' as http;
 
@@ -14,7 +15,7 @@ class BaseURL {
   static var authHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer ${readData("accessToken")}'
+    'Authorization': 'Bearer ${readData(StorageKey.accessToken)}',
   };
 }
 
@@ -35,7 +36,9 @@ class ApiLink {
   static const String getVendors = BaseURL.CompleteURL + "vendor/"; // GET
   static const String getCustomers = BaseURL.CompleteURL + "customer/"; // GET
   static const String addCustomer = BaseURL.CompleteURL + "customer/"; // POST
+  static const String deleteCustomer = BaseURL.CompleteURL + "customer/"; // DELETE
   static const String addVendor = BaseURL.CompleteURL + "vendor/"; // POST
+  static const String deleteVendor = BaseURL.CompleteURL + "vendor/"; // DELETE
 
   //! Inventory items
   static const String getInventoryItems = BaseURL.CompleteURL + "product/";

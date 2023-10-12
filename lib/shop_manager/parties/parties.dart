@@ -14,32 +14,6 @@ class Parties extends GetWidget<PartyController> {
   //   );
   // }
 
-  // List<Map> supplier = [
-  //   {
-  //     'name': 'Supplier',
-  //     'amount': 67,
-  //     'amountType': 'To Recieve',
-  //   },
-  //   {
-  //     'name': 'Supplier',
-  //     'amount': 75,
-  //     'amountType': 'To Pay',
-  //   },
-  // ];
-
-  // List<Map> customer = [
-  //   {
-  //     'name': 'Customer',
-  //     'amount': 67,
-  //     'amountType': 'To Pay',
-  //   },
-  //   {
-  //     'name': 'Customer',
-  //     'amount': 234,
-  //     'amountType': 'To Recieve',
-  //   },
-  // ];
-
   @override
   Widget build(BuildContext context) {
     // final _p = ref.watch(partyListProvider);
@@ -104,28 +78,30 @@ class Parties extends GetWidget<PartyController> {
                 builder: (_) {
                   return _.partyType == Type.supplier
                       ? ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           itemCount: _.vendors.length,
                           itemBuilder: (context, index) {
                             var _data = _.vendors[index];
                             return SupplierTile(
-                              name: _data['supplierName'],
-                              businessName: "${_data['businessName']}",
-                              onTap: () => Get.defaultDialog(),
+                              name: _data.supplierName.toString(),
+                              businessName: "${_data.businessName}",
+                              onTap: () => controller.showVendorInfo(_data),
                               amount: 585.4,
-                              amountType: "to Pay",
+                              amountType: "Total Amount",
                             );
                           },
                         )
                       : ListView.builder(
+                          physics: BouncingScrollPhysics(),
                           itemCount: _.customers.length,
                           itemBuilder: (context, index) {
                             var _data = _.customers[index];
                             return CustomerTile(
-                              onTap: () => Get.defaultDialog(),
-                              name: _data['name'],
+                              onTap: () => controller.showCustomerInfo(_data),
+                              name: _data.name.toString(),
                               amount: 585.4,
-                              amountType: "to Pay",
-                              subtitle: "${_data['email']}",
+                              amountType: "Total Purchases",
+                              subtitle: "${_data.email} ${_data.contact}",
                             );
                           },
                         );

@@ -46,7 +46,7 @@ class Routes {
 
     GetPage(
       name: '/STORE_MANAGER',
-      page: () => const BottomNavigationBarPage(),
+      page: () => BottomNavigationBarPage(),
       binding: BottomNavigationBarBinding(),
     ),
     // GetPage(
