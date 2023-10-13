@@ -183,6 +183,11 @@ class AddSales extends GetWidget<AddSalesController> {
                   Obx(
                     () => ListTile(
                       // onTap: () => Get.to(const PaymentMode()),
+                      leading: Icon(
+                        controller.payType.value == PaymentType.card
+                            ? Icons.credit_card
+                            : Icons.currency_exchange_sharp,
+                      ),
                       onTap: () => Get.defaultDialog(
                         title: "Select a payment Method:",
                         contentPadding: const EdgeInsets.all(10),
@@ -236,32 +241,35 @@ class AddSales extends GetWidget<AddSalesController> {
               ),
             ),
           ),
-          Obx(
-            () => ElevatedButton.icon(
-              icon: const Icon(Icons.done),
-              onPressed: () {
-                controller.selectedItems.isEmpty ||
-                        controller.selectedCustomer.value!.name.toString().trim() == ''
-                    ? {
-                        showSnackbar(
-                          "Incomplete Task",
-                          "Items or Customers are not selected properly",
-                        )
-                      }
-                    : {
-                        // ! PROCEEED
-                        controller.writeInvoice(
-                            // controller.selectedItems,
-                            // controller.constCustomer,
-                            // controller.constSupplier,
-                            )
-                      };
-              },
-              label: Text(
-                controller.selectedItems.isEmpty ||
-                        controller.selectedCustomer.value!.name.toString().trim() == ''
-                    ? "Please select Items and customer"
-                    : "Generate invoice from selected items",
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Obx(
+              () => ElevatedButton.icon(
+                icon: const Icon(Icons.done),
+                onPressed: () {
+                  controller.selectedItems.isEmpty ||
+                          controller.selectedCustomer.value!.name.toString().trim() == ''
+                      ? {
+                          showSnackbar(
+                            "Incomplete Task",
+                            "Items or Customers are not selected properly",
+                          )
+                        }
+                      : {
+                          // ! PROCEEED
+                          controller.writeInvoice(
+                              // controller.selectedItems,
+                              // controller.constCustomer,
+                              // controller.constSupplier,
+                              )
+                        };
+                },
+                label: Text(
+                  controller.selectedItems.isEmpty ||
+                          controller.selectedCustomer.value!.name.toString().trim() == ''
+                      ? "Please select Items and customer"
+                      : "Generate invoice from selected items",
+                ),
               ),
             ),
           ),

@@ -38,6 +38,13 @@ class PDFInvoiceHelper {
                 ),
               ),
               Text(
+                "Sales Invoice",
+                style: TextStyle(
+                  color: PdfColors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
                 "Customer copy",
                 style: const TextStyle(
                   color: PdfColors.grey500,
@@ -52,9 +59,9 @@ class PDFInvoiceHelper {
         build: (context) => [
           SizedBox(height: 0.5 * PdfPageFormat.cm),
           // buildHeader(invoice),
+          buildTitle(invoice),
           buildTable(invoice),
           SizedBox(height: 1 * PdfPageFormat.cm),
-          buildTitle(invoice),
           buildInvoice(invoice),
           Divider(),
           buildTotal(invoice),
@@ -150,12 +157,17 @@ class PDFInvoiceHelper {
   //     );
 
   static Widget buildTitle(Invoice invoice) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            // 'Paperlessly Outlet One(1)',
-            readData(StorageKey.userData)['businessname'] ?? "Some business name",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              // 'Paperlessly Outlet One(1)',
+              readData(StorageKey.userData)['businessname'] ?? "Some business name",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
           SizedBox(height: 0.6 * PdfPageFormat.cm),
           // Text(invoice.info.description),
@@ -238,25 +250,25 @@ class PDFInvoiceHelper {
       'Item',
       'Qty',
       'Expiry',
-      'MRP',
       'Batch',
       'HSN',
       // if (!readData(StorageKey.hideGSTperItem)) 'GST(CGST+SGST)%',
+      'MRP',
       'disc',
       'Total (Rs)',
     ];
     final data = invoice.items.map((item) {
-      final total = item.unitPrice * item.quantity * (1 + (item.gst / 100));
+      final total = item.unitPrice * item.quantity;
 
       return [
         '${invoice.items.indexOf(item) + 1}',
         item.itemName,
         '${item.quantity}',
         Utils.formatDate(item.expiryDate).toString(),
-        'Rs ${item.unitPrice}',
         'XYZ97ABC',
         'HSN00',
         // if (!readData(StorageKey.hideGSTperItem)) '${item.gst}(${item.gst / 2} + ${item.gst / 2})%',
+        'Rs ${item.unitPrice}',
         '00',
         'Rs ${total.toStringAsFixed(2)}',
       ];
@@ -295,7 +307,7 @@ class PDFInvoiceHelper {
         invoice.items.map((item) => item.unitPrice * item.quantity).reduce((item1, item2) => item1 + item2);
     final gstPercent = invoice.items.first.gst;
     final gst = netTotal * (gstPercent / 100);
-    final total = netTotal + (gst / 100);
+    final total = netTotal - salesController.discount.value;
 
     return Container(
       alignment: Alignment.centerRight,
@@ -304,7 +316,7 @@ class PDFInvoiceHelper {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            flex: 5,
+            flex: 6,
             child: Column(
               children: [
                 Bullet(
@@ -342,6 +354,11 @@ class PDFInvoiceHelper {
                   value: "- ${salesController.discount} Rs",
                   unite: true,
                 ),
+                // buildText(
+                //   title: 'Payment Method',
+                //   value: "${salesController.payType}",
+                //   unite: true,
+                // ),
                 Divider(),
                 buildText(
                   title: 'Total amount due',
@@ -356,6 +373,7 @@ class PDFInvoiceHelper {
                 Container(height: 1, color: PdfColors.grey400),
                 SizedBox(height: 0.5 * PdfPageFormat.mm),
                 Container(height: 1, color: PdfColors.grey400),
+                buildText(title: 'Payment Method', value: "${salesController.payType}")
               ],
             ),
           ),
@@ -400,7 +418,7 @@ class PDFInvoiceHelper {
     TextStyle? titleStyle,
     bool unite = false,
   }) {
-    final style = titleStyle ?? TextStyle(fontSize: 11, fontWeight: FontWeight.bold);
+    final style = titleStyle ?? TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold);
 
     return Container(
       width: width,
