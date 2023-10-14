@@ -10,8 +10,8 @@ class AccountSettings extends StatefulWidget {
 }
 
 class _AccountSettingsState extends State<AccountSettings> {
-  bool closeApponLogout = readData(StorageKey.closeAppOnLogout) ?? false;
-  bool isMaterial3 = readData(StorageKey.isMaterial3) ?? false;
+  bool closeApponLogout = readData(StorageKey.settings.closeAppOnLogout) ?? false;
+  bool isMaterial3 = readData(StorageKey.settings.isMaterial3) ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _AccountSettingsState extends State<AccountSettings> {
             value: closeApponLogout,
             onChanged: (_val) => setState(() {
               closeApponLogout = _val;
-              writeData(StorageKey.closeAppOnLogout, closeApponLogout);
+              writeData(StorageKey.settings.closeAppOnLogout, closeApponLogout);
             }),
           ),
           SwitchListTile(
@@ -39,7 +39,7 @@ class _AccountSettingsState extends State<AccountSettings> {
             value: isMaterial3,
             onChanged: (_val) => setState(() {
               isMaterial3 = _val;
-              writeData(StorageKey.isMaterial3, isMaterial3);
+              writeData(StorageKey.settings.isMaterial3, isMaterial3);
             }),
           ),
         ],

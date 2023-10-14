@@ -9,6 +9,8 @@ import 'package:pos/pages/invoice/model/supplier.dart';
 import 'package:pos/shop_manager/inventory/inventory_c.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
+import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 enum PaymentType { cash, upi, card }
@@ -27,7 +29,6 @@ class AddSalesController extends GetxController {
   RxDouble subTotal = 00.0.obs;
   RxDouble discount = 00.0.obs;
   RxDouble totalAmount = 00.0.obs;
-  RxBool isLandscape = false.obs;
 
   RxList<Map> inventoryData = [
     {"name": "Apple cider", "price": 240.5, "gst": 10.0, "qty": 2},

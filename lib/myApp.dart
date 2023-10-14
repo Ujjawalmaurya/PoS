@@ -8,7 +8,7 @@ import 'package:pos/src/utils/theme/theme.dart';
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final String? role = readData(StorageKey.userData)?['role'];
+  final String? role = readData(StorageKey.user.userData)?['role'];
 
   // Root Widget
   @override

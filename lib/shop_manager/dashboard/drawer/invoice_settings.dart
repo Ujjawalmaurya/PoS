@@ -10,10 +10,11 @@ class InvoiceSettings extends StatefulWidget {
 }
 
 class _InvoiceSettingsState extends State<InvoiceSettings> {
-  bool showShopUPI = readData(StorageKey.showShopUPI) ?? false;
-  bool showShopAdd = readData(StorageKey.showShopAdd) ?? false;
-  bool hideGSTperItem = readData(StorageKey.hideGSTperItem) ?? false;
-  bool showInvoiceQR = readData(StorageKey.showInvoiceQR) ?? false;
+  bool showShopUPI = readData(StorageKey.settings.showShopUPI) ?? false;
+  bool showShopAdd = readData(StorageKey.settings.showShopAdd) ?? false;
+  bool hideGSTperItem = readData(StorageKey.settings.hideGSTperItem) ?? false;
+  bool showInvoiceQR = readData(StorageKey.settings.showInvoiceQR) ?? false;
+  bool isInvoiceLandscape = readData(StorageKey.settings.isInvoiceLandscape) ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showShopUPI,
             onChanged: (_val) => setState(() {
               showShopUPI = _val;
-              writeData(StorageKey.showShopUPI, _val);
+              writeData(StorageKey.settings.showShopUPI, _val);
             }),
           ),
           SwitchListTile(
@@ -43,7 +44,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showShopAdd,
             onChanged: (_val) => setState(() {
               showShopAdd = _val;
-              writeData(StorageKey.showShopAdd, _val);
+              writeData(StorageKey.settings.showShopAdd, _val);
             }),
           ),
           SwitchListTile(
@@ -54,7 +55,7 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: hideGSTperItem,
             onChanged: (_val) => setState(() {
               hideGSTperItem = _val;
-              writeData(StorageKey.hideGSTperItem, _val);
+              writeData(StorageKey.settings.hideGSTperItem, _val);
             }),
           ),
           SwitchListTile(
@@ -65,9 +66,20 @@ class _InvoiceSettingsState extends State<InvoiceSettings> {
             value: showInvoiceQR,
             onChanged: (_val) => setState(() {
               showInvoiceQR = _val;
-              writeData(StorageKey.showInvoiceQR, showInvoiceQR);
+              writeData(StorageKey.settings.showInvoiceQR, showInvoiceQR);
             }),
           ),
+          SwitchListTile(
+              isThreeLine: true,
+              subtitle: const Text("Create invoices in Landscape format"),
+              title: const Text("Invoice layout"),
+              value: isInvoiceLandscape,
+              onChanged: (bool _val) {
+                setState(() {
+                  isInvoiceLandscape = _val;
+                  writeData(StorageKey.settings.isInvoiceLandscape, _val);
+                });
+              })
         ],
       ),
     );

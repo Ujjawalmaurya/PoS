@@ -15,7 +15,7 @@ class BaseURL {
   static var authHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer ${readData(StorageKey.accessToken)}',
+    'Authorization': 'Bearer ${readData(StorageKey.user.accessToken)}',
   };
 }
 

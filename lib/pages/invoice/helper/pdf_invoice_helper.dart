@@ -19,13 +19,33 @@ AddSalesController salesController = Get.find<AddSalesController>();
 
 class PDFInvoiceHelper {
   static Future<File> generate(Invoice invoice) async {
-    final pdf = pw.Document();
+    final pdf = pw.Document(
+      title: "GoPaperLess",
+      author: "seller",
+    );
     pdf.addPage(
       pw.MultiPage(
+        pageFormat: readData(StorageKey.settings.isInvoiceLandscape)
+            ? PdfPageFormat.a4.landscape
+            : PdfPageFormat.a4.portrait,
+        orientation: readData(StorageKey.settings.isInvoiceLandscape)
+            ? PageOrientation.landscape
+            : PageOrientation.portrait,
+        // ? Theme
         theme: pw.ThemeData(
-          bulletStyle: const pw.TextStyle(color: PdfColors.grey900),
-        ),
-        margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            bulletStyle: const pw.TextStyle(
+              color: PdfColors.grey800,
+            ),
+            paragraphStyle: const TextStyle(
+              wordSpacing: 0.2,
+              letterSpacing: 0.1,
+              background: BoxDecoration(
+                color: PdfColors.grey200,
+              ),
+            )
+            // maxLines: 1,
+            ),
+        margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
         header: (context) => Container(
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -53,9 +73,6 @@ class PDFInvoiceHelper {
             ],
           ),
         ),
-        pageFormat:
-            salesController.isLandscape.value ? PdfPageFormat.a4.landscape : PdfPageFormat.a4.portrait,
-        orientation: salesController.isLandscape.value ? PageOrientation.landscape : PageOrientation.portrait,
         build: (context) => [
           SizedBox(height: 0.5 * PdfPageFormat.cm),
           // buildHeader(invoice),
@@ -165,7 +182,7 @@ class PDFInvoiceHelper {
             alignment: Alignment.center,
             child: Text(
               // 'Paperlessly Outlet One(1)',
-              readData(StorageKey.userData)['businessname'] ?? "Some business name",
+              readData(StorageKey.user.userData)['businessname'] ?? "Some business name",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),
@@ -197,10 +214,10 @@ class PDFInvoiceHelper {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 1 * PdfPageFormat.mm),
-                if (readData(StorageKey.showShopAdd) ?? false) Text(invoice.supplier.address),
+                if (readData(StorageKey.settings.showShopAdd) ?? false) Text(invoice.supplier.address),
               ],
             ),
-            if (readData(StorageKey.showInvoiceQR) ?? false)
+            if (readData(StorageKey.settings.showInvoiceQR) ?? false)
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -312,19 +329,20 @@ class PDFInvoiceHelper {
     return Container(
       alignment: Alignment.centerRight,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
             flex: 6,
             child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Bullet(
-                  text: LoremText().paragraph(8),
+                  text: LoremText().paragraph(20),
                   // padding: EdgeInsets.all(5),
                   style: const TextStyle(fontSize: 10),
                 ),
-                Bullet(),
                 // Paragraph(
                 //   textAlign: TextAlign.left,
                 //   text: LoremText().paragraph(8),
@@ -389,7 +407,7 @@ class PDFInvoiceHelper {
           SizedBox(height: 2 * PdfPageFormat.mm),
           buildSimpleText(title: 'Address', value: invoice.supplier.address),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          if (readData(StorageKey.showShopUPI) ?? false)
+          if (readData(StorageKey.settings.showShopUPI) ?? false)
             buildSimpleText(title: 'UPI', value: invoice.supplier.upi),
         ],
       );

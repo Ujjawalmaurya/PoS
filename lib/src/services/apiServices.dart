@@ -13,7 +13,7 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 import './api.dart';
 import 'package:http/http.dart' as http;
 
-final String businessID = readData(StorageKey.userData)['businessId'].toString();
+final String businessID = readData(StorageKey.user.userData)['businessId'].toString();
 
 class APIServices {
   // Login
@@ -36,7 +36,7 @@ class APIServices {
   static Future getMyProfile() async {
     try {
       var res = await http.get(
-        Uri.parse(ApiLink.getVendors + "${readData(StorageKey.userData)['id']}"),
+        Uri.parse(ApiLink.getVendors + "${readData(StorageKey.user.userData)['id']}"),
         headers: BaseURL.authHeader,
       );
       return res;
@@ -46,7 +46,7 @@ class APIServices {
   }
 
   static refreshToken() async {
-    Map _body = {"refreshToken": readData(StorageKey.refreshToken)};
+    Map _body = {"refreshToken": readData(StorageKey.user.refreshToken)};
     log("Refresh Token Body=>> $_body ");
     try {
       var res = await http.post(
@@ -62,9 +62,9 @@ class APIServices {
         // print('Date ==>> ${_headerData["date"]}');
         // writeData('date', _headerData['date']);
         print('Access Token ==>> ${_headerData["accesstoken"]}');
-        writeData(StorageKey.accessToken, _headerData['accesstoken']);
+        writeData(StorageKey.user.accessToken, _headerData['accesstoken']);
         print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
-        writeData(StorageKey.refreshToken, _headerData['refreshtoken']);
+        writeData(StorageKey.user.refreshToken, _headerData['refreshtoken']);
         log("================== Success ==================");
         print(_bodyData.toString());
       }

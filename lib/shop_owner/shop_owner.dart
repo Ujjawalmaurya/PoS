@@ -11,9 +11,9 @@ class ShopOwner extends StatefulWidget {
 
 class _ShopOwnerState extends State<ShopOwner> {
   // String date = readData('date') ?? "Null date";
-  String accToken = readData(StorageKey.accessToken) ?? "Null acc token";
-  String refrToken = readData(StorageKey.refreshToken) ?? "Null refresh token";
-  Map data = readData(StorageKey.userData) ?? {};
+  String accToken = readData(StorageKey.user.accessToken) ?? "Null acc token";
+  String refrToken = readData(StorageKey.user.refreshToken) ?? "Null refresh token";
+  Map data = readData(StorageKey.user.userData) ?? {};
 
   @override
   Widget build(BuildContext context) {

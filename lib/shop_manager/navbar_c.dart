@@ -54,7 +54,7 @@ class BottomNavigationBarController extends GetxController {
             child: const Text("Cancel"),
           ),
           ElevatedButton(
-            onPressed: () => ((readData(StorageKey.closeAppOnLogout) ?? false) && Platform.isAndroid)
+            onPressed: () => ((readData(StorageKey.settings.closeAppOnLogout) ?? false) && Platform.isAndroid)
                 ? storage.erase().then(
                       (value) => Get.back(),
                     )

@@ -8,7 +8,7 @@ Color _primaryColor = Colors.teal;
 MaterialColor _primarySwatch = Colors.teal;
 Brightness _brightness = Brightness.light;
 // Color _accentColor = Colors.yellow;
-bool isMaterial3 = readData(StorageKey.isMaterial3) ?? false;
+bool isMaterial3 = readData(StorageKey.settings.isMaterial3) ?? false;
 
 class PoSAppTheme {
   // PoSAppTheme._();

@@ -25,10 +25,10 @@ class BottomNavigationBarPage extends GetWidget<BottomNavigationBarController> {
               child: Column(
                 children: [
                   Text(
-                    readData(StorageKey.userData)['name'],
+                    readData(StorageKey.user.userData)['name'],
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  Text("Role: ${readData(StorageKey.userData)['role']}"),
+                  Text("Role: ${readData(StorageKey.user.userData)['role']}"),
                 ],
               ),
             ),

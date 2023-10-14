@@ -24,12 +24,10 @@ class AddSales extends GetWidget<AddSalesController> {
       appBar: AppBar(
         title: const Text("Add Sales"),
         actions: [
-          Obx(
-            () => IconButton(
-              onPressed: () => controller.isLandscape.value = !controller.isLandscape.value,
-              icon: controller.isLandscape.value ? const Icon(Icons.landscape) : const Icon(Icons.portrait),
-            ),
-          )
+          IconButton(
+            onPressed: () => Get.toNamed('/invoiceSettings'),
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
       body: Column(

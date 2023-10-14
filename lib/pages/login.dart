@@ -29,13 +29,13 @@ void login(context) async {
     // print('Date ==>> ${_headerData["date"]}');
     // writeData('date', _headerData['date']);
     print('Access Token ==>> ${_headerData["accesstoken"]}');
-    writeData(StorageKey.accessToken, _headerData['accesstoken']);
+    writeData(StorageKey.user.accessToken, _headerData['accesstoken']);
     print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
-    writeData(StorageKey.refreshToken, _headerData['refreshtoken']);
+    writeData(StorageKey.user.refreshToken, _headerData['refreshtoken']);
     log("================== Success ==================");
     print(_bodyData.toString());
     writeData(
-      StorageKey.userData,
+      StorageKey.user.userData,
       {
         'id': _bodyData['id'],
         'name': _bodyData['name'],
