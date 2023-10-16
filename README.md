@@ -28,3 +28,4 @@
 | 02-09-2023 | 1.1.4   | Complete migration to Get from Riverpod & minute changes               | Ujjawal |
 | 11-09-2023 | 1.1.4   | Added new font and some misc changes                                   | Ujjawal |
 | 12-09-2023 | 1.1.4   | Add parties and get parties api implemented                            | Ujjawal |
+| 15-10-2023 | 1.1.4   | refactored keyAddressing & some misc changes                           | Ujjawal |
