@@ -2,15 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/pages/invoice/helper/pdf_helper.dart';
-import 'package:pos/pages/invoice/helper/pdf_invoice_helper.dart';
 import 'package:pos/pages/invoice/model/invoice.dart';
 import 'package:pos/pages/invoice/model/supplier.dart';
+import 'package:pos/pages/invoice/preview.dart';
 import 'package:pos/shop_manager/inventory/inventory_c.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
-import 'package:pos/src/constants/constants.dart';
-import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 enum PaymentType { cash, upi, card }
@@ -52,18 +49,18 @@ class AddSalesController extends GetxController {
   // ];
 
   increaseQuantity(int index) {
-    log(selectedItems[index].quantity.toString());
+    log("Increase in Qty${selectedItems[index].quantity}");
   }
 
   decreaseQuantity(int index) {
-    log(selectedItems[index].quantity.toString());
+    log("Decrease in Qty${selectedItems[index].quantity}");
   }
 
-  final Customer constCustomer = Customer(
-    name: 'Customer - Arpit Raj',
-    address: 'a/0b, XYZ Street, Noida, WDC, Singapore',
-    contact: '873581987320',
-  );
+  // final Customer constCustomer = Customer(
+  //   name: 'Customer - Arpit Raj',
+  //   address: 'a/0b, XYZ Street, Noida, WDC, Singapore',
+  //   contact: '873581987320',
+  // );
 
   final Supplier constSupplier = const Supplier(
     name: 'Seller - Ujjawal Maurya',
@@ -122,7 +119,7 @@ class AddSalesController extends GetxController {
     for (var i = 0; i < selectedItems.length; i++) {
       // TO DO
       subTotal.value += selectedItems[i].unitPrice;
-      log(subTotal.value.toString());
+      log("Subtotal: ${subTotal.value}");
     }
     totalAmount.value = subTotal.value - discount.value;
   }
@@ -176,7 +173,13 @@ class AddSalesController extends GetxController {
       items: selectedItems,
     );
 
-    final pdfFile = await PDFInvoiceHelper.generate(invoice);
-    PdfApi.openFile(pdfFile);
+    // log(
+    //   'Invoice Model: ${invoice.supplier.name}',
+    //   time: DateTime.now(),
+    // );
+
+    // final pdfFile = await PDFInvoiceHelper.generate(invoice);
+    // PdfApi.openFile(pdfFile);
+    Get.to(() => PDFPreview(invoice: invoice));
   }
 }// END

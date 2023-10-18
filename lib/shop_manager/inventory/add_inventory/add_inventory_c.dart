@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/shop_manager/parties/party_c.dart';
+import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 class AddInventoryController extends GetxController {
   final addItemFormKey = GlobalKey<FormState>();
+
+  PartyController partyController = Get.find<PartyController>();
+  Vendor selectedVendor = Vendor();
 
   // ! TXT-Ctrl
   TextEditingController itemNameCtr = TextEditingController();
@@ -37,6 +43,26 @@ class AddInventoryController extends GetxController {
   RxString defaultSubCategory = ''.obs;
   RxString selectedSubCategory = ''.obs;
 
+  List<Vendor> vendorList = [];
+
+  @override
+  void onInit() {
+    vendorList = partyController.vendors;
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    // TODO: implement onReady
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+  }
+
   final List<String> categories = [
     'Food and Beverages ',
     "Personal Care and Hygiene",
@@ -56,7 +82,8 @@ class AddInventoryController extends GetxController {
   XFile? itemImage;
 
   void addItem() {
-    showSnackbar("Adding Item", "API");
+    // showSnackbar("Adding Item", "API");
+    final res = APIServices.addItem();
   }
 
   pickImage(context) async {
@@ -86,6 +113,7 @@ class AddInventoryController extends GetxController {
                         onPressed: () async {
                           photo = await picker.pickImage(source: ImageSource.camera);
                           itemImage = photo;
+                          update();
                         },
                         icon: const Icon(Icons.camera_alt),
                       ),
@@ -102,6 +130,7 @@ class AddInventoryController extends GetxController {
                         onPressed: () async {
                           photo = await picker.pickImage(source: ImageSource.gallery);
                           itemImage = photo;
+                          update();
                         },
                         icon: const Icon(Icons.file_copy),
                       ),

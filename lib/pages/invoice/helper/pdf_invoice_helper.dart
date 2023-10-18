@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -18,17 +19,18 @@ import 'pdf_helper.dart';
 AddSalesController salesController = Get.find<AddSalesController>();
 
 class PDFInvoiceHelper {
-  static Future<File> generate(Invoice invoice) async {
+  static Future<Uint8List> generate(Invoice invoice) async {
+    // log("Invoice Data ${invoice}");
     final pdf = pw.Document(
       title: "GoPaperLess",
       author: "seller",
     );
     pdf.addPage(
       pw.MultiPage(
-        pageFormat: readData(StorageKey.settings.isInvoiceLandscape)
+        pageFormat: readData(StorageKey.settings.isInvoiceLandscape) ?? false
             ? PdfPageFormat.a4.landscape
             : PdfPageFormat.a4.portrait,
-        orientation: readData(StorageKey.settings.isInvoiceLandscape)
+        orientation: readData(StorageKey.settings.isInvoiceLandscape) ?? false
             ? PageOrientation.landscape
             : PageOrientation.portrait,
         // ? Theme
@@ -88,7 +90,8 @@ class PDFInvoiceHelper {
       ),
     );
 
-    return PdfApi.saveDocument(name: 'paperlessly-invoice.pdf', pdf: pdf);
+    // return PdfApi.saveDocument(name: 'paperlessly-invoice.pdf', pdf: pdf);
+    return pdf.save();
   }
 
   // Elements ===========================================================================================

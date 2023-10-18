@@ -42,4 +42,5 @@ class ApiLink {
 
   //! Inventory items
   static const String getInventoryItems = BaseURL.CompleteURL + "product/";
+  static const String addInventoryItem = BaseURL.CompleteURL + "product/";
 }

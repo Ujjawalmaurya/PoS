@@ -52,7 +52,7 @@ class PoSAppTheme {
         statusBarColor: _primarySwatch,
         // systemNavigationBarContrastEnforced: true,
         systemNavigationBarColor: _primaryColor,
-        systemNavigationBarDividerColor: Colors.yellowAccent,
+        // systemNavigationBarDividerColor: Colors.yellowAccent,
       ),
     ),
     searchBarTheme: const SearchBarThemeData(

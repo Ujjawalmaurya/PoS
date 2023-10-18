@@ -288,4 +288,48 @@ class APIServices {
     ///////
     //
   }
+
+  //? Add Vendor
+  static Future addItem() async {
+    Map _body = {
+      "batchNum": "string",
+      "category": "General",
+      "cd": 0,
+      "cgst": 0,
+      "discQty": 0,
+      "discountPerProduct": 0,
+      "hsn": 0,
+      "id": 0,
+      "loc": "string",
+      "manufacturer": "string",
+      "mrp": 0,
+      "name": "string",
+      "quantityChild": 0,
+      "quantityMax": 0,
+      "quantityParent": 0,
+      "rate": 0,
+      "sgst": 0,
+      "subCategory": "string",
+      "td": 0,
+      "totalAmount": 0,
+      "type": "TABLET",
+      "unit": "string",
+      "vendorId": 0
+    };
+
+    log("Add item Req-Body=>> $_body ");
+    try {
+      var res = await http.post(
+        Uri.parse(ApiLink.addInventoryItem + businessID),
+        body: json.encode(_body),
+        headers: BaseURL.authHeader,
+      );
+      final _data = json.decode(res.body);
+      log(_data.toString());
+      log(res.statusCode.toString());
+      return res;
+    } catch (e) {
+      log("Exception@AddingItem => $e");
+    }
+  }
 }

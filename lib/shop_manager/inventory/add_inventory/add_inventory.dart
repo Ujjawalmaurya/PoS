@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/inventory/add_inventory/add_inventory_c.dart';
+import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
@@ -37,18 +38,29 @@ class AddInventory extends GetWidget<AddInventoryController> {
               const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Product Details"))),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: GestureDetector(
-                  onTap: () => controller.pickImage(context),
-                  child: controller.itemImage == null
-                      ? const MyDottedBorderWidget(
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Icon(Icons.add_a_photo_outlined),
-                          ),
-                        )
-                      : Image.file(File(controller.itemImage!.path),
-                          fit: BoxFit.cover, height: 100, width: 100),
+                child: GetBuilder<AddInventoryController>(
+                  init: AddInventoryController(),
+                  initState: (_) {},
+                  builder: (_) {
+                    double _imgDimension = 300;
+                    return GestureDetector(
+                      onTap: () => _.pickImage(context),
+                      child: _.itemImage == null
+                          ? MyDottedBorderWidget(
+                              child: SizedBox(
+                                height: _imgDimension,
+                                width: _imgDimension,
+                                child: const Icon(Icons.add_a_photo_outlined),
+                              ),
+                            )
+                          : Image.file(
+                              File(_.itemImage!.path),
+                              fit: BoxFit.cover,
+                              height: _imgDimension,
+                              width: _imgDimension,
+                            ),
+                    );
+                  },
                 ),
               ),
               PoSInputField(
@@ -91,7 +103,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                       log("Dropdown changed: - $val");
                       controller.selectedCategory.value = val.toString();
                     },
-                    validator: (value) => value.toString().trim().isEmpty ? "Please select role" : null,
+                    validator: (value) => value == null ? "Please select Category" : null,
                   ),
                 ),
               ),
@@ -130,8 +142,40 @@ class AddInventory extends GetWidget<AddInventoryController> {
                       log("Dropdown changed: - $val");
                       controller.selectedSubCategory.value = val.toString();
                     },
-                    validator: (value) => value.toString().trim() == '' ? "Please select Sub-category" : null,
+                    validator: (value) => value == null ? "Please select Sub-category" : null,
                   ),
+                ),
+              ),
+              // Vendor
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                child: DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                    labelText: "Select Vendor",
+                  ),
+                  isDense: true,
+                  onSaved: (nV) {
+                    log("vendor OnSaved ");
+                  },
+                  // value: controller.defaultSubCategory.isNotEmpty ? controller.defaultSubCategory : null,
+                  items: controller.vendorList.map((Vendor _vendor) {
+                    return DropdownMenuItem(
+                        value: _vendor,
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 6),
+                              child: Icon(Icons.view_agenda_rounded, color: Theme.of(context).primaryColor),
+                            ),
+                            Text(_vendor.supplierName.toString()),
+                          ],
+                        ));
+                  }).toList(),
+                  onChanged: (val) {
+                    log("vendor changed: - $val");
+                    controller.selectedVendor = val!;
+                  },
+                  validator: (value) => value == null ? "Please select Vendor" : null,
                 ),
               ),
 

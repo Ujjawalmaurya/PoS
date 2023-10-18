@@ -6,13 +6,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart';
 
 class PdfApi {
-  static Future<File> saveDocument({required String name, required Document pdf}) async {
-    final bytes = await pdf.save();
+  // static Future<File> saveDocument({required String name, required Document pdf}) async {
+  //   final bytes = await pdf.save();
 
-    final dir = await getExternalStorageDirectory();
-    final file = File("${dir!.absolute.path}/$name");
+  //   final dir = await getExternalStorageDirectory();
+  //   final file = File("${dir!.absolute.path}/$name");
 
-    await file.writeAsBytes(bytes);
+  //   await file.writeAsBytes(bytes);
+
+  //   return file;
+  // }
+
+  static Future savetoPrint({required pdf}) async {
+    final file = pdf.save();
 
     return file;
   }

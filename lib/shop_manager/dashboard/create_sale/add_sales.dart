@@ -17,7 +17,7 @@ class AddSales extends GetWidget<AddSalesController> {
 
   @override
   Widget build(BuildContext context) {
-    log(controller.selectedCustomer.value!.name.toString());
+    log("Selected Customer ${controller.selectedCustomer.value!.name}");
     final Color greyShade = Colors.grey.shade300;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -180,6 +180,7 @@ class AddSales extends GetWidget<AddSalesController> {
                   ),
                   Obx(
                     () => ListTile(
+                      selected: true,
                       // onTap: () => Get.to(const PaymentMode()),
                       leading: Icon(
                         controller.payType.value == PaymentType.card
@@ -230,7 +231,8 @@ class AddSales extends GetWidget<AddSalesController> {
                           ],
                         ),
                       ),
-                      title: Text("Payment Mode -  Selected ${controller.payType.value}"),
+                      // title: Text("Payment Mode -  Selected ${controller.payType.value}"),
+                      title: Text("${controller.payType.value}"),
                       // subtitle: Text("Selected Payment Type ${controller.payType.value}"),
                     ),
                   ),

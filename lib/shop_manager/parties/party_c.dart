@@ -128,22 +128,4 @@ class PartyController extends GetxController {
       ],
     );
   }
-
-  // Uri uri = Uri.parse("https://dummyjson.com/users");
-
-  // Future<List<Party>> getPartyList() async {
-  //   log("Getting parties");
-  //   var res = await http.get(uri, headers: BaseURL.header);
-  //   if (res.statusCode == 200) {
-  //     final List result = json.decode(res.body)["users"];
-  //     print("Party list : " + result.toString());
-
-  //     print(parties.toString());
-  // return result.map((e) => Party.fromJson(e)).toList();
-  //   } else {
-  //     throw Exception('response not oke: res:${res.statusCode}');
-  //   }
-  // }
-
-//
 } //

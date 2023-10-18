@@ -27,26 +27,4 @@ class InventoryController extends GetxController {
     // TODO: implement onReady
     super.onReady();
   }
-
-  // static
-//  Future<List<InventoryItems>>
-  //     getItems() async {
-  //   Uri uri = Uri.parse("http://dummyjson.com/products");
-  //   try {
-  //     var res = await http.get(uri, headers: BaseURL.header);
-  //     log(res.statusCode.toString());
-  //     if (res.statusCode == 200) {
-  //       final List result = json.decode(res.body)["products"];
-  //       log(result.toString());
-  //       // _list = result.map((e) => InventoryItems.fromJson(e)).toList();
-  //       return result;
-  //     } else {
-  //       throw Exception('response not oke: res:${res.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     log(e.toString());
-  //     throw e;
-  //   }
-  // }
-  //
 }//END

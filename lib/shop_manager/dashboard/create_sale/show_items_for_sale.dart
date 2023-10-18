@@ -40,12 +40,7 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
             controller: controller.searchController,
             leading: const Icon(Icons.search_rounded),
             hintText: "Search",
-            onChanged: (value) => {log(value.toString())},
-            // trailing:
-            // IconButton(
-            // onPressed: () {},
-            //   icon: Icon(Icons.search),
-            // ),
+            onChanged: (value) => {log("Search => $value")},
           ),
           Expanded(
             child: ListView.separated(
