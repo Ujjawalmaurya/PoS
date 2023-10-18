@@ -36,40 +36,47 @@ class AddInventory extends GetWidget<AddInventoryController> {
               //! ==========================================================================
               //! ==========================================================================
               const Align(alignment: Alignment.centerLeft, child: Chip(label: Text("Product Details"))),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GetBuilder<AddInventoryController>(
-                  init: AddInventoryController(),
-                  initState: (_) {},
-                  builder: (_) {
-                    double _imgDimension = 300;
-                    return GestureDetector(
-                      onTap: () => _.pickImage(context),
-                      child: _.itemImage == null
-                          ? MyDottedBorderWidget(
-                              child: SizedBox(
-                                height: _imgDimension,
-                                width: _imgDimension,
-                                child: const Icon(Icons.add_a_photo_outlined),
-                              ),
-                            )
-                          : Image.file(
-                              File(_.itemImage!.path),
-                              fit: BoxFit.cover,
-                              height: _imgDimension,
-                              width: _imgDimension,
-                            ),
-                    );
-                  },
-                ),
-              ),
-              PoSInputField(
-                controller: controller.itemNameCtr,
-                hint: "e.g., pen, bulb, Paracetamol",
-                label: "Item Name",
-                validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                maxLines: 3,
-                minLines: 1,
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PoSInputField(
+                    controller: controller.itemNameCtr,
+                    hint: "e.g., pen, bulb, Paracetamol",
+                    label: "Item Name",
+                    validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
+                    maxLines: 3,
+                    minLines: 1,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: GetBuilder<AddInventoryController>(
+                      init: AddInventoryController(),
+                      initState: (_) {},
+                      builder: (_) {
+                        double _imgDimension = 60;
+                        return GestureDetector(
+                          onTap: () => _.pickImage(context),
+                          child: _.itemImage == null
+                              ? MyDottedBorderWidget(
+                                  child: SizedBox(
+                                    height: _imgDimension,
+                                    width: _imgDimension,
+                                    child: const Icon(Icons.add_a_photo_outlined),
+                                  ),
+                                )
+                              : Image.file(
+                                  File(_.itemImage!.path),
+                                  fit: BoxFit.cover,
+                                  height: _imgDimension,
+                                  width: _imgDimension,
+                                ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
 
               Padding(
@@ -229,6 +236,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                 children: [
                   PoSInputField(
                     // flex: 2,
+                    suffixText: "Rs",
                     label: "MRP",
                     hint: "MRP in Rs",
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
@@ -266,7 +274,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     hint: "Rate",
                     controller: controller.rateCtr,
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                    suffixText: "INR",
+                    suffixText: "Rs",
                     maxLength: 5,
                   ),
                   PoSInputField(
@@ -276,7 +284,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     numbersOnly: true,
                     maxLength: 5,
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                    suffixText: "INR",
+                    suffixText: "Rs",
                     controller: controller.purchasePriceCtr,
                   ),
                 ],

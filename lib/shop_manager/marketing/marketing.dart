@@ -140,12 +140,10 @@ class Marketing extends GetWidget<MarketingController> {
                                     children: [
                                       OutlinedButton.icon(
                                         icon: const Icon(Icons.save_alt),
-                                        // onPressed: () => controller.saveAssetImageToDevice(index),
-                                        onPressed: () async {
-                                          WriteDataToStorage.writeImage(
-                                              rootBundle.load('assets/${index + 1}.jpg').toString(),
-                                              '${index + 1}.jpg');
-                                        },
+                                        onPressed: () => controller.saveAssetImageToDevice(index),
+                                        // onPressed: () async {
+                                        //   controller.saveAssetImageToDevice(index);
+                                        // },
                                         label: const Text("Save"),
                                       ),
                                       OutlinedButton.icon(
