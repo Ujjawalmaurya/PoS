@@ -15,7 +15,9 @@ enum PaymentType { cash, upi, card }
 class AddSalesController extends GetxController {
   RxBool finalDiscountType_isValue = false.obs;
   final selectedCustomer = Rxn<Customer>();
-  RxList<InvoiceItem> selectedItems = <InvoiceItem>[].obs;
+  RxList selectedItems = [].obs;
+  RxList<InvoiceItem> selectedInvoiceItems =
+      <InvoiceItem>[].obs; // selectedItems will be converted into InvoiceItem
   final TextEditingController searchController = TextEditingController();
   // Get controllers
   PartyController partyController = Get.find<PartyController>();
@@ -48,12 +50,45 @@ class AddSalesController extends GetxController {
   //   {'name': 'D J', 'age': '13', 'mob': '.4.240.42'},
   // ];
 
+  void convertToInvoiceItems() {
+    selectedInvoiceItems.value = [];
+    //
+    for (var i = 0; i < selectedItems.length; i++) {
+      // TO DO
+      var _data = selectedItems[i];
+      var item = InvoiceItem(
+        itemName: _data['name'],
+        quantity: _data['qty'],
+        gst: _data['gst'],
+        unitPrice: _data['price'],
+        expiryDate: DateTime(2030),
+      );
+      selectedInvoiceItems.add(item);
+    }
+
+    writeInvoice();
+
+    //
+  }
+
   increaseQuantity(int index) {
-    log("Increase in Qty${selectedItems[index].quantity}");
+    log(selectedItems.toString());
+    // log("Increase in Qty ${selectedItems[index].quantity}");
+    if (selectedItems[index]['qty'] >= 1) {
+      selectedItems[index]['qty']++;
+      calculatePrice();
+      update();
+    }
   }
 
   decreaseQuantity(int index) {
-    log("Decrease in Qty${selectedItems[index].quantity}");
+    log(selectedItems.toString());
+    // log("Decrease in Qty${selectedItems[index].quantity}");
+    if (selectedItems[index]['qty'] > 1) {
+      selectedItems[index]['qty']--;
+      calculatePrice();
+      update();
+    }
   }
 
   // final Customer constCustomer = Customer(
@@ -118,15 +153,16 @@ class AddSalesController extends GetxController {
     subTotal.value = 0;
     for (var i = 0; i < selectedItems.length; i++) {
       // TO DO
-      subTotal.value += selectedItems[i].unitPrice;
+      subTotal.value += selectedItems[i]['price'] * selectedItems[i]['qty'];
       log("Subtotal: ${subTotal.value}");
     }
     totalAmount.value = subTotal.value - discount.value;
   }
 
-  void addToSelectedItems(InvoiceItem item) {
+  void addToSelectedItems(Map item) {
     selectedItems.contains(item)
-        ? showSnackbar("Item already added", 'item${item.itemName} is already added')
+        // ? showSnackbar("Item already added", 'item${item["itemName"]} is already added')
+        ? increaseQuantity(selectedItems.indexOf(item))
         : {
             selectedItems.add(item),
             calculatePrice(),
@@ -134,7 +170,7 @@ class AddSalesController extends GetxController {
           };
   }
 
-  void removeFromSelectedItems(InvoiceItem item) {
+  void removeFromSelectedItems(Map item) {
     selectedItems.contains(item)
         ? {
             selectedItems.remove(item),
@@ -170,7 +206,7 @@ class AddSalesController extends GetxController {
         number:
             'PPl_${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}_${DateTime.now().millisecond}',
       ),
-      items: selectedItems,
+      items: selectedInvoiceItems,
     );
 
     // log(

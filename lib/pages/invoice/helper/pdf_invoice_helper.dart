@@ -275,7 +275,7 @@ class PDFInvoiceHelper {
       // if (!readData(StorageKey.hideGSTperItem)) 'GST(CGST+SGST)%',
       'MRP',
       'disc',
-      'Total (Rs)',
+      'Total(Rs)',
     ];
     final data = invoice.items.map((item) {
       final total = item.unitPrice * item.quantity;
@@ -288,9 +288,9 @@ class PDFInvoiceHelper {
         'XYZ97ABC',
         'HSN00',
         // if (!readData(StorageKey.hideGSTperItem)) '${item.gst}(${item.gst / 2} + ${item.gst / 2})%',
-        'Rs ${item.unitPrice}',
+        "${item.unitPrice}",
         '00',
-        'Rs ${total.toStringAsFixed(2)}',
+        Utils.parseInRs(total),
       ];
     }).toList();
 
@@ -302,8 +302,8 @@ class PDFInvoiceHelper {
 
       rowDecoration: const BoxDecoration(color: PdfColors.white),
       oddRowDecoration: const BoxDecoration(color: PdfColors.grey100),
-      cellStyle: const TextStyle(fontSize: 7),
-      headerStyle: TextStyle(fontSize: 7, fontWeight: FontWeight.bold),
+      cellStyle: const TextStyle(fontSize: 9),
+      headerStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       // cellHeight: 1,
       cellPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 3),

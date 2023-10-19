@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/pages/invoice/model/invoice.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
 import 'package:pos/src/utils/utils.dart';
 
@@ -49,17 +48,18 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
               itemCount: controller.inventoryData.length,
               itemBuilder: (context, index) {
                 var _data = controller.inventoryData[index];
-                var item = InvoiceItem(
-                  itemName: _data['name'],
-                  quantity: _data['qty'],
-                  gst: _data['gst'],
-                  unitPrice: _data['price'],
-                  expiryDate: DateTime(2030),
-                );
+                log("_Data: ${_data}");
+                // var item = InvoiceItem(
+                //   itemName: _data['name'],
+                //   quantity: _data['qty'],
+                //   gst: _data['gst'],
+                //   unitPrice: _data['price'],
+                //   expiryDate: DateTime(2030),
+                // );
                 return ListTile(
                   // tileColor: ,
                   // onTap: () => controller.selectedItems.add(item),
-                  onTap: () => controller.addToSelectedItems(item),
+                  onTap: () => controller.addToSelectedItems(_data),
                   title: Text(_data['name']),
                   subtitle: Text("GST ${_data['gst']}%"),
                   trailing: Text("Price: ${_data['price']} Rs"),

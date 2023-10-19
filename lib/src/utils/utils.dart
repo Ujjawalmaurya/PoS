@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 
 class Utils {
   // To format Dates
-  static formatDate(DateTime date) => DateFormat.yMMMMd().format(date);
+  static formatDate(DateTime date) => DateFormat.yMMMd().format(date);
 
   // to format price in INR
   static parseInINR(dynamic amount) => NumberFormat.currency(
@@ -23,13 +23,13 @@ class Utils {
         decimalDigits: 2,
       ).format(amount);
 
-  // static parseInRs(dynamic amount) => NumberFormat.currency(
-  //       symbol: 'Rs.',
-  //       locale: "HI",
-  //       decimalDigits: 2,
-  //     ).format(amount);
+  static parseInRs(dynamic amount) => NumberFormat.currency(
+        symbol: 'Rs',
+        locale: "HI",
+        decimalDigits: 2,
+      ).format(amount);
 
-  static parseInRs(double price) => '\Rs ${price.toStringAsFixed(2)}';
+  // static parseInRs(double price) => '\Rs ${price.toStringAsFixed(2)}';
 
   static uuid() {
     final now = DateTime.now();

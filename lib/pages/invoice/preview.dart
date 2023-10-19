@@ -22,12 +22,12 @@ class PDFPreview extends StatelessWidget {
         canChangePageFormat: false,
         canDebug: false,
         loadingWidget: const LinearProgressIndicator(),
-        onPrinted: (context) => showSnackbar("Print Success", "Invoice printed successfully"),
-        onError: (context, error) => showSnackbar('Error', "$error"),
+        onPrinted: (context) => notifyUser(context, "Invoice printed successfully"),
+        // onError: (context, error) => notifyUser(context, 'Error $error'),
         onShared: (context) => log("Shared"),
         shareActionExtraSubject: "Invoice for ${invoice.customer.name}'s purchase",
         build: (c) => PDFInvoiceHelper.generate(invoice),
-        onPrintError: (context, error) => showSnackbar("Error in Printing", "${error.message}"),
+        onPrintError: (context, error) => notifyUser("Error in Printing", "${error.message}"),
       ),
     );
   }

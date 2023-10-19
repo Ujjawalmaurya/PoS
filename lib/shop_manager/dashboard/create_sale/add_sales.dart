@@ -91,29 +91,35 @@ class AddSales extends GetWidget<AddSalesController> {
                                 label: const Text("Add more"),
                               ),
                               children: [
-                                ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: controller.selectedItems.length,
-                                  itemBuilder: (context, index) {
-                                    InvoiceItem _item = controller.selectedItems[index];
-                                    return SlidableWidget(
-                                      onDismissed: () {
-                                        controller.removeFromSelectedItems(_item);
+                                GetBuilder<AddSalesController>(
+                                  init: AddSalesController(),
+                                  initState: (_) {},
+                                  builder: (_) {
+                                    return ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: _.selectedItems.length,
+                                      itemBuilder: (context, index) {
+                                        Map _item = _.selectedItems[index];
+                                        return SlidableWidget(
+                                          onDismissed: () {
+                                            _.removeFromSelectedItems(_item);
+                                          },
+                                          child: CartItemTile(
+                                            onIncrease: () => _.increaseQuantity(index),
+                                            onDecrease: () => _.decreaseQuantity(index),
+                                            mrp: 5.0,
+                                            quantity: _item['qty'] ?? 00,
+                                            name: _item['name'] ?? "Null name",
+                                            price: _item['price'] ?? "Rs.0",
+
+                                            // tileColor: Colors.greenAccent,
+
+                                            // title: Text(_item.itemName),
+                                            // trailing: Text(Utils.parseInINR(_item.unitPrice)),
+                                          ),
+                                        );
                                       },
-                                      child: CartItemTile(
-                                        onIncrease: () => controller.increaseQuantity(index),
-                                        onDecrease: () => controller.decreaseQuantity(index),
-                                        mrp: 5.0,
-                                        quantity: _item.quantity,
-                                        name: _item.itemName,
-                                        price: _item.unitPrice,
-
-                                        // tileColor: Colors.greenAccent,
-
-                                        // title: Text(_item.itemName),
-                                        // trailing: Text(Utils.parseInINR(_item.unitPrice)),
-                                      ),
                                     );
                                   },
                                 ),
@@ -257,11 +263,12 @@ class AddSales extends GetWidget<AddSalesController> {
                         }
                       : {
                           // ! PROCEEED
-                          controller.writeInvoice(
-                              // controller.selectedItems,
-                              // controller.constCustomer,
-                              // controller.constSupplier,
-                              )
+                          // controller.writeInvoice(
+                          // controller.selectedItems,
+                          // controller.constCustomer,
+                          // controller.constSupplier,
+                          // )
+                          controller.convertToInvoiceItems(),
                         };
                 },
                 label: Text(
