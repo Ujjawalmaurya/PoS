@@ -17,14 +17,14 @@ class InventoryController extends GetxController {
   }
 
   @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
+  void onReady() {
+    //
+    super.onReady();
   }
 
   @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
+  void onClose() {
+    //
+    super.onClose();
   }
-}//END
+} //END

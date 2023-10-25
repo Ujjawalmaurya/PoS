@@ -46,8 +46,11 @@ class Routes {
 
     GetPage(
       name: '/STORE_MANAGER',
-      page: () => BottomNavigationBarPage(),
+      page: () => const BottomNavigationBarPage(),
       binding: BottomNavigationBarBinding(),
+      // middlewares: [
+      //   GetMiddleware(),
+      // ],
     ),
     // GetPage(
     //   name: '/home',

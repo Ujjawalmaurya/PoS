@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,10 +10,12 @@ import 'package:pos/shop_manager/parties/parties.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class BottomNavigationBarController extends GetxController {
+class NavigationBarController extends GetxController {
 // final MyRepository repository;
 // BottomNavBarController(this.repository);
   final GlobalKey<ScaffoldState> navbarScaffoldKey = GlobalKey();
+
+  String user = readData(StorageKey.user.userData)["role"];
 
   final List<Widget> widgetOptions = <Widget>[
     const TabOne(),
@@ -37,6 +40,24 @@ class BottomNavigationBarController extends GetxController {
 
   RxInt currentIndex = 0.obs;
   final Duration animationDuration = const Duration(seconds: 1);
+
+  @override
+  void onInit() {
+    log(user.toString());
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    //
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    //
+    super.onClose();
+  }
 
   void updateIndex() {
     //

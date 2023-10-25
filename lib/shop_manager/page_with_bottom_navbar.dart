@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class BottomNavigationBarPage extends GetWidget<BottomNavigationBarController> {
-  BottomNavigationBarPage({super.key});
+class BottomNavigationBarPage extends GetWidget<NavigationBarController> {
+  const BottomNavigationBarPage({super.key});
 
   @override
   Widget build(BuildContext context) {

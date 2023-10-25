@@ -33,7 +33,7 @@ class User {
   String get accessToken => 'accesstoken';
   String get refreshToken => 'refreshtoken';
   String get userData => 'userData';
-  // String get  => '';
+  UserData get moreUSER_Data => UserData();
   // String get  => '';
 
   // static const String accessToken = 'accesstoken';
@@ -41,6 +41,16 @@ class User {
   // static const String userData = 'userData';
 }
 
+class UserData {
+// {id: 7, name: Ujjawal Maurya, email: chocolateboyz0011@gmail.com, mobile: 85887878, role: STORE_MANAGER, businessDetails: null, businessId: 1, active: true}
+  String get id => 'id';
+  String get name => 'name';
+  String get email => 'email';
+  String get mobile => 'mobile';
+  String get role => 'role';
+  String get businessDetails => 'businessDetails';
+  String get businessId => 'businessId';
+}
 
 // 
 // 

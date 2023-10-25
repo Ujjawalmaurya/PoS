@@ -15,12 +15,14 @@ import '../shop_manager/dashboard/drawer/manage_user/manage_user_c.dart';
 class BottomNavigationBarBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<BottomNavigationBarController>(() => BottomNavigationBarController());
+    // Get.lazyPut<NavigationBarController>(() => NavigationBarController());
+    NavigationBarController controller = Get.put(NavigationBarController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<MarketingController>(() => MarketingController());
-    // Get.lazyPut<PartyController>(() => PartyController());
-    PartyController partyController = Get.put(PartyController());
-    InventoryController inventoryItemsController = Get.put(InventoryController());
+    Get.lazyPut<PartyController>(() => PartyController());
+    // PartyController partyController = Get.put(PartyController());
+    // InventoryController inventoryItemsController = Get.put(InventoryController());
+    Get.lazyPut<InventoryController>(() => InventoryController());
   }
 }
 

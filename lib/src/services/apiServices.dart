@@ -1,11 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:pos/pages/invoice/model/customer.dart';
-import 'package:pos/shop_manager/inventory/item_model.dart';
 import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
-import 'package:pos/shop_manager/parties/partyModel.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';

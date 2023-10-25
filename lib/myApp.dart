@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       theme: PoSAppTheme.lightTheme,
       darkTheme: PoSAppTheme.darkTheme,
       getPages: Routes.pages,
+      // enableLog: true,
       // home: route(),
       // initialRoute: '/bottomNavbar',
       initialRoute: role != null ? '/$role' : '/login',
