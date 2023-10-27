@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:get/get.dart';
+import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/constants/constants.dart';
@@ -10,6 +12,7 @@ import './api.dart';
 import 'package:http/http.dart' as http;
 
 final String businessID = readData(StorageKey.user.userData)['businessId'].toString();
+UserController userController = Get.find<UserController>();
 
 class APIServices {
   // Login
@@ -41,12 +44,12 @@ class APIServices {
     }
   }
 
-  static refreshToken() async {
-    Map _body = {"refreshToken": readData(StorageKey.user.refreshToken)};
+  static refreshAccessToken(reCallFunction) async {
+    Map _body = {"refreshToken": userController.refreshToken};
     log("Refresh Token Body=>> $_body ");
     try {
       var res = await http.post(
-        Uri.parse(ApiLink.refreshToken),
+        Uri.parse(ApiLink.refreshAccessTokenLink),
         body: json.encode(_body),
         headers: BaseURL.header,
       );
@@ -59,10 +62,13 @@ class APIServices {
         // writeData('date', _headerData['date']);
         print('Access Token ==>> ${_headerData["accesstoken"]}');
         writeData(StorageKey.user.accessToken, _headerData['accesstoken']);
+        userController.accessToken = _headerData['accesstoken'] ?? ''; // updateData in controller
         print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
+        userController.refreshToken = _headerData['refreshtoken'] ?? ''; // updateData in controller
         writeData(StorageKey.user.refreshToken, _headerData['refreshtoken']);
         log("================== Success ==================");
         print(_bodyData.toString());
+        // reCallFunction;
       }
     } catch (e) {
       log(e.toString());
@@ -123,7 +129,7 @@ class APIServices {
       if (res.statusCode == 200) {
         final List result = json.decode(res.body);
         // print("Party list : " + result.toString());
-        log("Vendors => " + result.toString());
+        print("Vendors => " + result.toString());
         return result.map((e) => Vendor.fromJson(e)).toList();
         // return result;
         // } else if (res.statusCode == 403) {
@@ -148,11 +154,11 @@ class APIServices {
       if (res.statusCode == 200) {
         final List result = json.decode(res.body);
         // print("Party list : " + result.toString());
-        log("Customers => " + result.toString());
+        print("Customers => " + result.toString());
         return result.map((e) => Customer.fromJson(e)).toList();
         // return result;
       } else if (res.statusCode == 403) {
-        return refreshToken();
+        return refreshAccessToken(getCustomers());
       } else {
         throw Exception('Getting customers=> response not oke: res:${res.statusCode}');
       }

@@ -92,7 +92,7 @@ class Routes {
     GetPage(
       name: '/addPurchase',
       page: () => const AddPurchase(),
-      //  binding: (),
+      binding: PurchaseBindings(),
     ),
 
     GetPage(
@@ -127,7 +127,7 @@ class Routes {
     ),
     GetPage(
       name: '/addParties',
-      page: () => const AddParties(),
+      page: () => AddParties(),
       binding: AddPartyBinding(),
     ),
     // GetPage(

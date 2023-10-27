@@ -5,7 +5,7 @@ import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class BottomNavigationBarPage extends GetWidget<NavigationBarController> {
+class BottomNavigationBarPage extends GetWidget<UserController> {
   const BottomNavigationBarPage({super.key});
 
   @override

@@ -24,7 +24,7 @@ class Parties extends GetWidget<PartyController> {
         title: const Text("Parties"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/addParties'),
+        onPressed: () => Get.toNamed('/addParties', arguments: controller.partyType == Type.customer ? 0 : 1),
         tooltip: "Add Parties",
         child: const Icon(Icons.add),
       ),

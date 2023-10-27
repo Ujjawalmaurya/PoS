@@ -35,7 +35,7 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: OutlinedButton.icon(
-              onPressed: () => Get.toNamed('/addParties'),
+              onPressed: () => Get.toNamed('/addParties', arguments: 0),
               icon: const Icon(Icons.add),
               label: const Text("Add new Customer"),
             ),

@@ -18,7 +18,7 @@ class TabOne extends GetWidget<HomeController> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              Get.find<NavigationBarController>().navbarScaffoldKey.currentState!.openDrawer();
+              Get.find<UserController>().navbarScaffoldKey.currentState!.openDrawer();
             },
             icon: const Icon(Icons.menu),
           ),

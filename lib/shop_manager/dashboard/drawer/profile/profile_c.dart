@@ -82,7 +82,7 @@ class MyProfileController extends GetxController {
         return _bodyData;
       } else if (res.statusCode == 403) {
         // showSnackbar("Alert", _bodyData['message'].toString());
-        APIServices.refreshToken();
+        APIServices.refreshAccessToken(getProfile());
       } else {
         showSnackbar("Alert", _bodyData['message']);
         // return AsyncError(_bodyData['message'], StackTrace.current);

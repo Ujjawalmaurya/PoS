@@ -10,12 +10,14 @@ import 'package:pos/shop_manager/parties/parties.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class NavigationBarController extends GetxController {
+class UserController extends GetxController {
 // final MyRepository repository;
 // BottomNavBarController(this.repository);
   final GlobalKey<ScaffoldState> navbarScaffoldKey = GlobalKey();
 
-  String user = readData(StorageKey.user.userData)["role"];
+  String userRole = readData(StorageKey.user.userData)["role"];
+  String refreshToken = readData(StorageKey.user.refreshToken);
+  String accessToken = readData(StorageKey.user.accessToken);
 
   final List<Widget> widgetOptions = <Widget>[
     const TabOne(),
@@ -43,7 +45,7 @@ class NavigationBarController extends GetxController {
 
   @override
   void onInit() {
-    log(user.toString());
+    log("======== USER: >> $userRole <<=========");
     super.onInit();
   }
 

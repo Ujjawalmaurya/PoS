@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:get/get.dart';
+import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
 // import 'package:http/http.dart' as http;
+
+UserController userController = Get.find<UserController>();
 
 class BaseURL {
   static const domain = "http://34.205.76.254:8085/";
@@ -15,7 +19,7 @@ class BaseURL {
   static var authHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer ${readData(StorageKey.user.accessToken)}',
+    'Authorization': 'Bearer ${userController.accessToken}',
   };
 }
 
@@ -24,7 +28,7 @@ class ApiLink {
   // ! Authentication
   static const String login = BaseURL.CompleteURL + "auth/login";
   static const String verifyUserViaOTP = BaseURL.CompleteURL + "user/verify";
-  static const String refreshToken = BaseURL.CompleteURL + "auth/refresh";
+  static const String refreshAccessTokenLink = BaseURL.CompleteURL + "auth/refresh";
   // static const String verifyUser = BaseURL.CompleteURL + "user/"; // {"otp": "","verifyToken": ""}
   // static const String Link = BaseURL.CompleteURL + "";
 

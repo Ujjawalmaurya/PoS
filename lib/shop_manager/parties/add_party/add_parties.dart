@@ -5,11 +5,14 @@ import 'package:pos/shop_manager/parties/add_party/forms/customer_form.dart';
 import 'package:pos/shop_manager/parties/add_party/forms/supplier_form.dart';
 
 class AddParties extends GetWidget<AddPartyController> {
-  const AddParties({super.key});
+  int initialIndex = Get.arguments;
+  // int initialIndex = 0;
+  AddParties({super.key});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: DefaultTabController(
+        initialIndex: initialIndex ?? 0,
         length: 2,
         child: Scaffold(
           // floatingActionButton: FloatingActionButton(

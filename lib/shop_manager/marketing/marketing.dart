@@ -33,6 +33,7 @@ class Marketing extends GetWidget<MarketingController> {
 
         SafeArea(
       child: DefaultTabController(
+        initialIndex: 0,
         length: 2,
         child: Scaffold(
           // appBar: AppBar(
@@ -43,7 +44,7 @@ class Marketing extends GetWidget<MarketingController> {
             // indicatorColor: Theme.of(context).primaryColor,
             labelColor: Theme.of(context).primaryColor,
 
-            tabs: [
+            tabs: const [
               Tab(
                 icon: Icon(Icons.mark_email_read_outlined),
                 text: "Marketing",
@@ -118,7 +119,7 @@ class Marketing extends GetWidget<MarketingController> {
                       height: 400,
                       child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: 12,
+                        itemCount: 13,
                         scrollDirection: Axis.horizontal,
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (context, index) {
