@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/src/constants/constants.dart';
@@ -15,8 +16,9 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-TextEditingController _userController = TextEditingController(text: "chocolateboyz0011@gmail.com");
-TextEditingController _passController = TextEditingController(text: "64009513");
+TextEditingController _userController =
+    TextEditingController(text: kDebugMode ? "chocolateboyz0011@gmail.com" : '');
+TextEditingController _passController = TextEditingController(text: kDebugMode ? "64009513" : '');
 bool isObscured = true;
 final _formKey = GlobalKey<FormState>();
 
@@ -162,6 +164,13 @@ class _LoginState extends State<Login> {
                           // style: TextStyle(fontSize: 30),
                         ),
                       ),
+                    ),
+                  ),
+                  Center(
+                    child: TextButton.icon(
+                      icon: const Icon(Icons.supervised_user_circle),
+                      onPressed: () => Get.toNamed('/signup'),
+                      label: const Text("Signup"),
                     ),
                   ),
                 ],

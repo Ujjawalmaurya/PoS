@@ -34,7 +34,7 @@ class ApiLink {
 
 // ! userr
   static const String addNewUser = BaseURL.CompleteURL + "user";
-  // static const String getUser = BaseURL.CompleteURL + "user/";
+  static const String getUser = BaseURL.CompleteURL + "user/";
 
   //! Parties
   static const String getVendors = BaseURL.CompleteURL + "vendor/"; // GET
@@ -45,6 +45,6 @@ class ApiLink {
   static const String deleteVendor = BaseURL.CompleteURL + "vendor/"; // DELETE
 
   //! Inventory items
-  static const String getInventoryItems = BaseURL.CompleteURL + "product/";
-  static const String addInventoryItem = BaseURL.CompleteURL + "product/";
+  static const String getInventoryItems = BaseURL.CompleteURL + "product/"; // GET
+  static const String addInventoryItem = BaseURL.CompleteURL + "product/"; // POST
 }

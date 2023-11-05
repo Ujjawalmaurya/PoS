@@ -14,6 +14,7 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Get.back(),
         icon: const Icon(Icons.check),
+        tooltip: "Proceed to buy",
         label: Obx(
           () => Text(
             'Proceed with ${controller.selectedItems.length} Item(s)',
@@ -21,10 +22,9 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
         ),
       ),
       appBar: AppBar(
-        title: Obx(
-          () => Text(
-            "Select items (Total:${Utils.parseInINR(controller.totalAmount.value)})",
-          ),
+        title: const Text(
+          // "Select items (Total:${Utils.parseInINR(controller.totalAmount.value)})",
+          "Select items",
         ),
         // actions: [
         //   Obx(() => (controller.selectedItems.isNotEmpty)
@@ -45,9 +45,9 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
             child: ListView.separated(
               shrinkWrap: false,
               separatorBuilder: (context, index) => const Divider(),
-              itemCount: controller.inventoryData.length,
+              itemCount: controller.inventoryController.inventoryData.length,
               itemBuilder: (context, index) {
-                var _data = controller.inventoryData[index];
+                var _data = controller.inventoryController.inventoryData[index];
                 log("_Data: ${_data}");
                 // var item = InvoiceItem(
                 //   itemName: _data['name'],
@@ -57,12 +57,50 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
                 //   expiryDate: DateTime(2030),
                 // );
                 return ListTile(
-                  // tileColor: ,
-                  // onTap: () => controller.selectedItems.add(item),
-                  onTap: () => controller.addToSelectedItems(_data),
-                  title: Text(_data['name']),
-                  subtitle: Text("GST ${_data['gst']}%"),
-                  trailing: Text("Price: ${_data['price']} Rs"),
+                  // onTap: () => controller.addToSelectedItems(_data),
+                  title: Text("${_data['name']}"),
+                  // subtitle: Text("GST ${_data['gst']}%"),
+                  subtitle: Text(
+                    "Price: ${_data['price']} Rs\n(${_data['stock']} items available in stock)",
+                  ),
+                  trailing: Container(
+                    width: 100,
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () => controller.addToSelectedItems(_data),
+                          child: Container(
+                            // width: 160,
+                            margin: const EdgeInsets.symmetric(horizontal: 3),
+                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              // color: Colors.white,
+                            ),
+                            child: const Text(
+                              "Add",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             ),

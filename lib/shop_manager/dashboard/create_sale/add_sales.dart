@@ -102,9 +102,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                       itemBuilder: (context, index) {
                                         Map _item = _.selectedItems[index];
                                         return SlidableWidget(
-                                          onDismissed: () {
-                                            _.removeFromSelectedItems(_item);
-                                          },
+                                          onDismissed: () => _.removeFromSelectedItems(_item),
                                           child: CartItemTile(
                                             onIncrease: () => _.increaseQuantity(index),
                                             onDecrease: () => _.decreaseQuantity(index),
@@ -112,8 +110,6 @@ class AddSales extends GetWidget<AddSalesController> {
                                             quantity: _item['qty'] ?? 00,
                                             name: _item['name'] ?? "Null name",
                                             price: _item['price'] ?? "Rs.0",
-
-                                            // tileColor: Colors.greenAccent,
 
                                             // title: Text(_item.itemName),
                                             // trailing: Text(Utils.parseInINR(_item.unitPrice)),
@@ -256,10 +252,11 @@ class AddSales extends GetWidget<AddSalesController> {
                   controller.selectedItems.isEmpty ||
                           controller.selectedCustomer.value!.name.toString().trim() == ''
                       ? {
-                          showSnackbar(
-                            "Incomplete Task",
-                            "Items or Customers are not selected properly",
-                          )
+                          // showSnackbar(
+                          //   "Incomplete selection",
+                          //   "Items or Customers are not selected properly",
+                          // )
+                          notifyUser(context, "ITEMS and CUSTOMER must be selected")
                         }
                       : {
                           // ! PROCEEED
@@ -274,8 +271,8 @@ class AddSales extends GetWidget<AddSalesController> {
                 label: Text(
                   controller.selectedItems.isEmpty ||
                           controller.selectedCustomer.value!.name.toString().trim() == ''
-                      ? "Please select Items and customer"
-                      : "Generate invoice from selected items",
+                      ? "Please SELECT Items and Customer"
+                      : "Generate invoice",
                 ),
               ),
             ),

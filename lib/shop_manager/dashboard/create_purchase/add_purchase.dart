@@ -30,37 +30,45 @@ class AddPurchase extends GetWidget<PurchaseController> {
             initState: (_) {},
             builder: (_) {
               return ListTile(
-                title: Text(
-                  _.selectedVendor.supplierName ?? "Select Supplier",
-                ),
+                title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
+                // isThreeLine: true,
+                subtitle: Text(_.selectedVendor.businessName ?? ''),
                 onTap: () {
                   Get.bottomSheet(
                     BottomSheet(
                       onClosing: () {},
                       builder: (context) {
                         PartyController partyController = Get.find<PartyController>();
-                        return Column(
-                          children: [
-                            Text(
-                              "Select suppliers",
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: partyController.vendors.length,
-                              itemBuilder: (context, index) {
-                                Vendor _data = partyController.vendors[index];
-                                return ListTile(
-                                  title: Text(_data.supplierName.toString()),
-                                  subtitle: Text(_data.businessName.toString()),
-                                  onTap: () {
-                                    _.updateSupplierSelection(_data);
-                                    log("${controller.selectedVendor.supplierName} Selected");
-                                  },
-                                );
-                              },
-                            ),
-                          ],
+                        return SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Select suppliers",
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
+                              ),
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: partyController.vendors.length,
+                                itemBuilder: (context, index) {
+                                  Vendor _data = partyController.vendors[index];
+                                  return ListTile(
+                                    // isThreeLine: true,
+                                    title: Text(_data.supplierName.toString()),
+                                    subtitle: Text(_data.businessName.toString()),
+                                    onTap: () {
+                                      _.updateSupplierSelection(_data);
+                                      log("${controller.selectedVendor.supplierName} Selected");
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),
@@ -70,10 +78,14 @@ class AddPurchase extends GetWidget<PurchaseController> {
             },
           ),
           ListTile(
+            onTap: () => Get.toNamed('/showItemsToPurchase'),
             // selected: true,
             title: const Text("Select items"),
             trailing: OutlinedButton.icon(
-                onPressed: () {}, icon: const Icon(Icons.add), label: const Text("Add Item")),
+              onPressed: () => Get.toNamed('/addInventory'),
+              icon: const Icon(Icons.add),
+              label: const Text("Add a new Item"),
+            ),
           ),
         ],
       ),

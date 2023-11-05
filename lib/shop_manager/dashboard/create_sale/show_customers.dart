@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
+import 'package:pos/src/widgets/search_field.dart';
 
 class ShowCustomersForSale extends GetWidget<AddSalesController> {
   const ShowCustomersForSale({super.key});
@@ -14,6 +15,7 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
       ),
       body: Column(
         children: [
+          SearchField(),
           Expanded(
             child: ListView.separated(
                 shrinkWrap: true,

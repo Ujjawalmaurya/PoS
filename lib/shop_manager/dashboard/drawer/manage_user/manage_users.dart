@@ -76,7 +76,10 @@ class ManageUser extends GetWidget<ManageUserController> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Add a new user", style: Theme.of(context).textTheme.displaySmall),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text("Add a new user", style: Theme.of(context).textTheme.displaySmall),
+                      ),
                       PoSInputField(
                         controller: controller.nameTxtController,
                         label: 'Name',
@@ -87,13 +90,14 @@ class ManageUser extends GetWidget<ManageUserController> {
                         },
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
                         child: DropdownButtonFormField(
                           decoration: const InputDecoration(
                             labelText: "Select role",
+                            contentPadding: EdgeInsets.all(14),
                           ),
                           isDense: true,
-                          // validator: (dd)=> ,
+                          validator: (dd) => dd == null ? "Role is required" : null,
                           onSaved: (nV) {
                             log("Dropdown OnSaved $nV");
                           },
@@ -119,7 +123,6 @@ class ManageUser extends GetWidget<ManageUserController> {
                             log("Dropdown changed: $val-${val.runtimeType}");
                             controller.selectedRole.value = val.toString();
                           },
-                          validator: (value) => value.toString().trim().isEmpty ? "Please select role" : null,
                         ),
                       ),
                       PoSInputField(
@@ -176,19 +179,22 @@ class ManageUser extends GetWidget<ManageUserController> {
                           ),
                         ],
                       ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          if (controller.signupKey.currentState!.validate()) {
-                            // proceed
-                            log("PERFECT");
-                            log('${controller.nameTxtController.text}\n${controller.selectedRole.value}\n${controller.mobileTxtController.text}\n${controller.emailTxtController.text}\n${controller.passTxtController.text}');
-                            controller.addUser();
-                          } else {
-                            // showSnackbar("Can't add user", "Please fill all fields perfectly");
-                          }
-                        },
-                        icon: const Icon(Icons.add_box_sharp),
-                        label: const Text("Add New User"),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            if (controller.signupKey.currentState!.validate()) {
+                              // proceed
+                              log("PERFECT");
+                              log('${controller.nameTxtController.text}\n${controller.selectedRole.value}\n${controller.mobileTxtController.text}\n${controller.emailTxtController.text}\n${controller.passTxtController.text}');
+                              controller.addUser();
+                            } else {
+                              // showSnackbar("Can't add user", "Please fill all fields perfectly");
+                            }
+                          },
+                          icon: const Icon(Icons.add_box_sharp),
+                          label: const Text("Add New User"),
+                        ),
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.all(8.0),

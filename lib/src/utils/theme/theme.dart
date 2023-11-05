@@ -46,6 +46,10 @@ class PoSAppTheme {
         borderRadius: BorderRadiusDirectional.circular(12),
       ),
     ),
+    // dropdownMenuTheme: const DropdownMenuThemeData(
+    //     inputDecorationTheme: InputDecorationTheme(
+    //   contentPadding: EdgeInsets.all(10),
+    // )),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle(

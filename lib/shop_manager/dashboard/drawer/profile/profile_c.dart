@@ -1,12 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
-import 'package:pos/src/constants/constants.dart';
-import 'package:pos/src/services/api.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:http/http.dart' as http;

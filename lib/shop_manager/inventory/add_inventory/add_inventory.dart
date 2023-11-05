@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/inventory/add_inventory/add_inventory_c.dart';
 import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
@@ -55,7 +56,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                       init: AddInventoryController(),
                       initState: (_) {},
                       builder: (_) {
-                        double _imgDimension = 60;
+                        double _imgDimension = 50;
                         return GestureDetector(
                           onTap: () => _.pickImage(context),
                           child: _.itemImage == null
@@ -80,10 +81,11 @@ class AddInventory extends GetWidget<AddInventoryController> {
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
                 child: Obx(
                   () => DropdownButtonFormField(
                     decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(14),
                       labelText: "Select Category",
                     ),
                     isDense: true,
@@ -118,10 +120,11 @@ class AddInventory extends GetWidget<AddInventoryController> {
               // PoSInputField(label: "Manufactured on", hint: 'DD-MM-YYYY'),
 
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
                 child: Obx(
                   () => DropdownButtonFormField(
                     decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(14),
                       labelText: "Select sub-category",
                     ),
                     isDense: true,
@@ -155,9 +158,10 @@ class AddInventory extends GetWidget<AddInventoryController> {
               ),
               // Vendor
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
                 child: DropdownButtonFormField(
                   decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(14),
                     labelText: "Select Vendor",
                   ),
                   isDense: true,
@@ -196,8 +200,20 @@ class AddInventory extends GetWidget<AddInventoryController> {
               Row(
                 children: [
                   PoSInputField(
+                    readOnly: true,
+                    onTap: () async {
+                      Future _exp = showDatePicker(
+                        initialDatePickerMode: DatePickerMode.year,
+                        context: context,
+                        // currentDate: DateTime.now(),
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2010),
+                        lastDate: DateTime(2030),
+                      );
+                      controller.itemExpCtr.text = Utils.formatDate(await _exp);
+                    },
                     label: "Expiry",
-                    hint: 'DD-MM-YYYY',
+                    hint: 'MMMDD-YYYY',
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                     controller: controller.itemExpCtr,
                   ),

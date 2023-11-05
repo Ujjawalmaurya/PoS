@@ -83,7 +83,7 @@ class AddInventoryController extends GetxController {
 
   void addItem() {
     // showSnackbar("Adding Item", "API");
-    final res = APIServices.addItem();
+    final res = APIServices.addItem(selectedVendor.id);
   }
 
   pickImage(context) async {

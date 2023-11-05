@@ -20,10 +20,10 @@ class BottomNavigationBarBinding implements Bindings {
     UserController _ = Get.put(UserController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<MarketingController>(() => MarketingController());
-    Get.lazyPut<PartyController>(() => PartyController());
-    // PartyController partyController = Get.put(PartyController());
-    // InventoryController inventoryItemsController = Get.put(InventoryController());
-    Get.lazyPut<InventoryController>(() => InventoryController());
+    PartyController partyController = Get.put(PartyController());
+    InventoryController inventoryItemsController = Get.put(InventoryController());
+    // Get.lazyPut<PartyController>(() => PartyController());
+    // Get.lazyPut<InventoryController>(() => InventoryController());
   }
 }
 

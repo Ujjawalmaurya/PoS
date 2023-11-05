@@ -91,39 +91,80 @@ class CartItemTile extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        // width: 60,
+                        padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade300,
-                          border: Border.all(
-                            width: 2,
-                            style: BorderStyle.solid,
-                          ),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Theme.of(context).primaryColor,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              InkWell(onTap: onDecrease, child: const Icon(Icons.remove)),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "Qty",
-                                      style: Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(quantity.toString()),
-                                  ],
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: onDecrease,
+                              child: const Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(3), color: Colors.white),
+                              child: Text(
+                                "$quantity",
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
                                 ),
                               ),
-                              // Text('+'),
-                              InkWell(onTap: onIncrease, child: const Icon(Icons.add)),
-                            ],
-                          ),
+                            ),
+                            InkWell(
+                              onTap: onIncrease,
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      // Container(
+                      //   margin: const EdgeInsets.symmetric(horizontal: 4),
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.grey.shade300,
+                      //     border: Border.all(
+                      //       width: 2,
+                      //       style: BorderStyle.solid,
+                      //     ),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.symmetric(horizontal: 4),
+                      //     child: Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         InkWell(onTap: onDecrease, child: const Icon(Icons.remove)),
+                      //         Padding(
+                      //           padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                      //           child: Column(
+                      //             mainAxisSize: MainAxisSize.min,
+                      //             children: [
+                      //               Text(
+                      //                 "Qty",
+                      //                 style: Theme.of(context).textTheme.bodySmall,
+                      //               ),
+                      //               Text(quantity.toString()),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         // Text('+'),
+                      //         InkWell(onTap: onIncrease, child: const Icon(Icons.add)),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                   Padding(

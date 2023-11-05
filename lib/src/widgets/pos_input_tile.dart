@@ -18,12 +18,14 @@ class PoSInputField extends StatelessWidget {
   String? Function(String?)? validator;
   void Function(String)? onChanged;
   bool obscureText;
+  bool readOnly;
 
   PoSInputField({
     super.key,
     required this.label,
     required this.hint,
     this.initialValue,
+    this.readOnly = false,
     this.maxLines = 1,
     this.minLines = 1,
     this.helperText,
@@ -44,8 +46,9 @@ class PoSInputField extends StatelessWidget {
     return Flexible(
       flex: flex,
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
         child: TextFormField(
+          readOnly: readOnly,
           controller: controller,
           maxLength: maxLength,
           onTap: onTap,
@@ -70,7 +73,7 @@ class PoSInputField extends StatelessWidget {
             helperText: helperText,
             helperMaxLines: 2,
             isDense: true,
-            contentPadding: const EdgeInsets.all(17),
+            contentPadding: const EdgeInsets.all(14),
             prefixText: prefixText,
             suffixText: suffixText,
             labelText: label,

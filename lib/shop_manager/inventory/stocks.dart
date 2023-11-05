@@ -21,7 +21,8 @@ class Stocks extends GetWidget<InventoryController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(
-                data.thumbnail,
+                data["image"] ??
+                    "https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg",
                 height: 150,
                 width: 150,
                 fit: BoxFit.cover,
@@ -29,22 +30,22 @@ class Stocks extends GetWidget<InventoryController> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Name: ${data.title}'),
+              child: Text("Name: ${data['name']}"),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Description: ${data.description ?? "No description provided"}',
+                'Description: ${data["description"] ?? "No description provided"}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Price: ${Utils.parseInINR(data.price * 83)}'),
-                  Text('MRP: ${Utils.parseInINR(data.price * 85)}'),
+                  // Text('Price: ${Utils.parseInINR(data["price"])}'),
+                  Text('MRP: ${Utils.parseInINR(data["price"])}'),
                 ],
               ),
             ),
@@ -72,28 +73,48 @@ class Stocks extends GetWidget<InventoryController> {
       body: SafeArea(
         child: Column(
           children: [
-            SearchField(),
+            const SearchField(),
             Flexible(
-              child: controller.items.isEmpty
-                  ? Center(child: Text("Nothing to Show"))
+              child: controller.inventoryData.isEmpty
+                  ? const Center(child: Text("Nothing to Show"))
                   : ListView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: controller.items.length,
+                      itemCount: controller.inventoryData.length,
                       // itemCount: 5,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        var _data = controller.items[index];
+                        var _data = controller.inventoryData[index];
                         return InventoryItemTile(
-                            stock: _data.stock,
-                            imageURL: _data.thumbnail,
-                            description: _data.description,
-                            price: _data.price * 85,
-                            name: _data.title,
-                            sellingPrice: _data.price * 85.0,
-                            purchasingPrice: _data.price * 83.0,
-                            ontap: () => _onTap(context, _data));
+                          stock: _data['stock'],
+                          gst: _data['gst'],
+                          // imageURL: _data.thumbnail,
+                          // description: _data.description,
+                          price: _data['price'],
+                          name: _data['name'],
+                          sellingPrice: _data['price'],
+                          purchasingPrice: _data['price'],
+                          ontap: () => _onTap(context, _data),
+                        );
                       },
                     ),
+              // : ListView.builder(
+              //     physics: const BouncingScrollPhysics(),
+              //     itemCount: controller.items.length,
+              //     // itemCount: 5,
+              //     shrinkWrap: true,
+              //     itemBuilder: (context, index) {
+              //       var _data = controller.items[index];
+              //       return InventoryItemTile(
+              //           stock: _data.stock,
+              //           imageURL: _data.thumbnail,
+              //           description: _data.description,
+              //           price: _data.price * 85,
+              //           name: _data.title,
+              //           sellingPrice: _data.price * 85.0,
+              //           purchasingPrice: _data.price * 83.0,
+              //           ontap: () => _onTap(context, _data));
+              //     },
+              //   ),
             ),
           ],
         ),

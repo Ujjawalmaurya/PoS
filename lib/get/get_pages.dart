@@ -3,8 +3,10 @@ import 'package:pos/get/bindings.dart';
 import 'package:pos/pages/login.dart';
 import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
+import 'package:pos/pages/signup.dart';
 import 'package:pos/shop_boy/shopboy.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/add_purchase.dart';
+import 'package:pos/shop_manager/dashboard/create_purchase/show_items_to_purchase.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/add_sales.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/show_customers.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/show_items_for_sale.dart';
@@ -27,6 +29,11 @@ class Routes {
     GetPage(
       name: '/login',
       page: () => const Login(),
+      //  binding: (),
+    ),
+    GetPage(
+      name: '/signup',
+      page: () => const SignUp(),
       //  binding: (),
     ),
     GetPage(
@@ -93,6 +100,11 @@ class Routes {
       name: '/addPurchase',
       page: () => const AddPurchase(),
       binding: PurchaseBindings(),
+    ),
+    GetPage(
+      name: '/showItemsToPurchase',
+      page: () => const ShowItemsToPurchase(),
+      // binding: PurchaseBindings(),
     ),
 
     GetPage(

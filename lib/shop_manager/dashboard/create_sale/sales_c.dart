@@ -16,8 +16,7 @@ class AddSalesController extends GetxController {
   RxBool finalDiscountType_isValue = false.obs;
   final selectedCustomer = Rxn<Customer>();
   RxList selectedItems = [].obs;
-  RxList<InvoiceItem> selectedInvoiceItems =
-      <InvoiceItem>[].obs; // selectedItems will be converted into InvoiceItem
+
   final TextEditingController searchController = TextEditingController();
   // Get controllers
   PartyController partyController = Get.find<PartyController>();
@@ -29,29 +28,13 @@ class AddSalesController extends GetxController {
   RxDouble discount = 00.0.obs;
   RxDouble totalAmount = 00.0.obs;
 
-  RxList<Map> inventoryData = [
-    {"name": "Apple cider", "price": 240.5, "gst": 10.0, "qty": 2},
-    {"name": "BenQ Monitor", "price": 56000.0, "gst": 28.0, "qty": 1},
-    {"name": "Lether belt", "price": 324.5, "gst": 18.0, "qty": 1},
-    {"name": "banana shake", "price": 300.0, "gst": 15.0, "qty": 1},
-    {"name": "Cup", "price": 49.0, "gst": 4.0, "qty": 1},
-    {"name": "Logitec Optical Mouse", "price": 3240.0, "gst": 34.0, "qty": 1},
-    {"name": "CosmicByte CB GK 03 Corona", "price": 2400.0, "gst": 22.0, "qty": 1},
-    {"name": "Apple53245234", "price": 32400.0, "gst": 34.0, "qty": 1},
-    {"name": "Vinegar", "price": 32.0, "gst": 4.0, "qty": 1},
-    {"name": "Frootieeeee", "price": 24.0, "gst": 14.0, "qty": 1},
-  ].obs;
-
-  // List<Map> customers = [
-  //   {'name': 'Ujjawal', 'age': '222', 'mob': '58455126322'},
-  //   {'name': 'Sachin', 'age': '25', 'mob': '7520453245'},
-  //   {'name': 'Shivmohan', 'age': '24', 'mob': '456242546'},
-  //   {'name': 'Arpit', 'age': '22', 'mob': '424552752'},
-  //   {'name': 'D J', 'age': '13', 'mob': '.4.240.42'},
-  // ];
+  RxList<Map> itemsToBuy = <Map>[].obs;
 
   void convertToInvoiceItems() {
-    selectedInvoiceItems.value = [];
+    // selectedItems will be converted into InvoiceItem-Class-objects
+    List<InvoiceItem> selectedInvoiceItems = <InvoiceItem>[];
+
+    selectedInvoiceItems = [];
     //
     for (var i = 0; i < selectedItems.length; i++) {
       // TO DO
@@ -66,7 +49,7 @@ class AddSalesController extends GetxController {
       selectedInvoiceItems.add(item);
     }
 
-    writeInvoice();
+    writeInvoice(selectedInvoiceItems);
 
     //
   }
@@ -116,19 +99,10 @@ class AddSalesController extends GetxController {
   }
 
   @override
-  // TODO: implement onStart
-  InternalFinalCallback<void> get onStart => super.onStart;
-
-  @override
   void onClose() {
-    // TODO: implement onClose
+    //
     super.onClose();
   }
-
-  @override
-  // TODO: implement onDelete
-  InternalFinalCallback<void> get onDelete => super.onDelete;
-  //
 
   updateDiscount() {
     // discount.value += (totalAmount / 100);
@@ -165,6 +139,12 @@ class AddSalesController extends GetxController {
         ? increaseQuantity(selectedItems.indexOf(item))
         : {
             selectedItems.add(item),
+            // selectedItems.add({
+            //   "name": item["name"],
+            //   "price": item['price'],
+            //   "gst": item['gst'],
+            //   "qty": 1
+            // }),
             calculatePrice(),
             // showQuickAlert("Item added", "${item.itemName} is added"),
           };
@@ -174,16 +154,17 @@ class AddSalesController extends GetxController {
     selectedItems.contains(item)
         ? {
             selectedItems.remove(item),
+            item['qty'] = 1,
             calculatePrice(),
           }
         : showSnackbar("Can't Delete", "Because item never added");
   }
 
   void writeInvoice(
-      // List<InvoiceItem> items,
-      // Customer customer,
-      // Supplier supplier
-      ) async {
+    List<InvoiceItem> items,
+    // Customer customer,
+    // Supplier supplier
+  ) async {
     final date = DateTime.now();
     final dueDate = date.add(
       const Duration(days: 7),
@@ -206,7 +187,7 @@ class AddSalesController extends GetxController {
         number:
             'PPl_${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}_${DateTime.now().millisecond}',
       ),
-      items: selectedInvoiceItems,
+      items: items,
     );
 
     // log(
@@ -218,4 +199,4 @@ class AddSalesController extends GetxController {
     // PdfApi.openFile(pdfFile);
     Get.to(() => PDFPreview(invoice: invoice));
   }
-}// END
+} // END

@@ -72,10 +72,10 @@ class MyProfile extends GetWidget<MyProfileController> {
                               "User-id: ${snapshot.data['id']}",
                               style: Theme.of(context).textTheme.headlineSmall,
                             ),
-                            Text(
-                              "Business-id: ${snapshot.data['businessId']}",
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
+                            // Text(
+                            //   "Business-id: ${snapshot.data['businessId']}",
+                            //   style: Theme.of(context).textTheme.headlineSmall,
+                            // ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(

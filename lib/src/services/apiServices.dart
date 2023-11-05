@@ -35,9 +35,10 @@ class APIServices {
   static Future getMyProfile() async {
     try {
       var res = await http.get(
-        Uri.parse(ApiLink.getVendors + "${readData(StorageKey.user.userData)['id']}"),
+        Uri.parse(ApiLink.getUser + "${readData(StorageKey.user.userData)['id']}"),
         headers: BaseURL.authHeader,
       );
+      log("${readData(StorageKey.user.userData)['id']}");
       return res;
     } catch (e) {
       log("EXCEPTION@MyProfile=> $e");
@@ -292,7 +293,7 @@ class APIServices {
   }
 
   //? Add Vendor
-  static Future addItem() async {
+  static Future addItem(dynamic vendorID) async {
     Map _body = {
       "batchNum": "SD7DF8C",
       "category": "General",
@@ -316,7 +317,8 @@ class APIServices {
       "totalAmount": 3000,
       "type": "TABLET",
       "unit": "string",
-      "vendorId": 2
+      "expiry": "2024-09-01T11:22:15.492+00:00",
+      "vendorId": vendorID,
     };
 
     log("Add item Req-Body=>> $_body ");
