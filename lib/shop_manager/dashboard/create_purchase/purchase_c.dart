@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/inventory/inventory_c.dart';
 import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
@@ -8,6 +9,8 @@ class PurchaseController extends GetxController {
   Vendor selectedVendor = Vendor();
 
   InventoryController inventoryController = Get.find<InventoryController>();
+
+  TextEditingController dateTxtCtr = TextEditingController();
 
   @override
   void onInit() {

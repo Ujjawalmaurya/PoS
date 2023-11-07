@@ -127,11 +127,13 @@ class AddSales extends GetWidget<AddSalesController> {
                     () => controller.totalAmount > 0
                         ? Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10, right: 5),
-                            child: SizedBox(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 8),
                               width: Get.width,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
+                                  const Divider(),
                                   Text(
                                     "Sub total: ${Utils.parseInINR(controller.subTotal.value)} Rs",
                                     textAlign: TextAlign.end,
@@ -144,7 +146,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                       children: [
                                         Row(
                                           children: [
-                                            Text('Discount:  In %'),
+                                            const Text('%'),
                                             Obx(
                                               () => Switch(
                                                 value: controller.finalDiscountType_isValue.value,
@@ -153,13 +155,13 @@ class AddSales extends GetWidget<AddSalesController> {
                                                 },
                                               ),
                                             ),
-                                            Text('in Amount (Rs)'),
+                                            const Text('Rs'),
                                           ],
                                         ),
                                         GestureDetector(
                                           onTap: () => controller.updateDiscount(),
                                           child: Obx(() => Text(
-                                                "- ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
+                                                "Discount: - ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
                                                 textAlign: TextAlign.end,
                                                 style: Theme.of(context).textTheme.titleMedium,
                                               )),
@@ -167,6 +169,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                       ],
                                     ),
                                   ),
+                                  const Divider(),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 10),
                                     child: Text(
@@ -174,6 +177,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                       style: Theme.of(context).textTheme.headlineSmall,
                                     ),
                                   ),
+                                  const Divider(),
                                 ],
                               ),
                             ),
@@ -182,6 +186,7 @@ class AddSales extends GetWidget<AddSalesController> {
                   ),
                   Obx(
                     () => ListTile(
+                      selectedTileColor: Colors.grey.shade300,
                       selected: true,
                       // onTap: () => Get.to(const PaymentMode()),
                       leading: Icon(
@@ -249,8 +254,7 @@ class AddSales extends GetWidget<AddSalesController> {
               () => ElevatedButton.icon(
                 icon: const Icon(Icons.done),
                 onPressed: () {
-                  controller.selectedItems.isEmpty ||
-                          controller.selectedCustomer.value!.name.toString().trim() == ''
+                  controller.selectedItems.isEmpty || controller.selectedCustomer.value!.name == null
                       ? {
                           // showSnackbar(
                           //   "Incomplete selection",
@@ -269,8 +273,7 @@ class AddSales extends GetWidget<AddSalesController> {
                         };
                 },
                 label: Text(
-                  controller.selectedItems.isEmpty ||
-                          controller.selectedCustomer.value!.name.toString().trim() == ''
+                  controller.selectedItems.isEmpty || controller.selectedCustomer.value!.name == null
                       ? "Please SELECT Items and Customer"
                       : "Generate invoice",
                 ),

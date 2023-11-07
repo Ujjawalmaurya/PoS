@@ -9,6 +9,7 @@ SingleChildScrollView addCustomerForm(controller) {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(height: 15),
           PoSInputField(
             controller: controller.cName,
             label: "Customer Name",
@@ -40,6 +41,7 @@ SingleChildScrollView addCustomerForm(controller) {
             validator: (p0) => p0.toString().trim() == '' ? "Cant be empty" : null,
             maxLines: 2,
           ),
+          const SizedBox(height: 15),
           ElevatedButton.icon(
             onPressed: () {
               if (controller.customerFormKey.currentState!.validate()) {
@@ -49,6 +51,7 @@ SingleChildScrollView addCustomerForm(controller) {
             icon: const Icon(Icons.add),
             label: const Text("Add new Customer"),
           ),
+          const SizedBox(height: 25),
         ],
       ),
     ),

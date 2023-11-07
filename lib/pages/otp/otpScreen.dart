@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:pos/pages/otp/otp_c.dart';
+import 'package:pos/src/utils/hapics.dart';
 
 class OTPScreen extends GetWidget<OTPController> {
   OTPScreen({super.key});
@@ -96,7 +97,7 @@ class OTPScreen extends GetWidget<OTPController> {
                     controller.pinController.setText(value);
                   },
                   keyboardAppearance: Brightness.dark,
-                  hapticFeedbackType: HapticFeedbackType.lightImpact,
+                  hapticFeedbackType: Haptics.heavy(),
                   onCompleted: (pin) {
                     debugPrint('onCompleted: $pin');
                     controller.verifyUserOTP();

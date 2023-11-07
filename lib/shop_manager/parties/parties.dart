@@ -77,7 +77,8 @@ class Parties extends GetWidget<PartyController> {
                 initState: (_) {},
                 builder: (_) {
                   return _.partyType == Type.supplier
-                      ? ListView.builder(
+                      ? ListView.separated(
+                          separatorBuilder: (context, index) => const Divider(),
                           physics: BouncingScrollPhysics(),
                           itemCount: _.vendors.length,
                           itemBuilder: (context, index) {
@@ -91,7 +92,8 @@ class Parties extends GetWidget<PartyController> {
                             );
                           },
                         )
-                      : ListView.builder(
+                      : ListView.separated(
+                          separatorBuilder: (context, index) => const Divider(),
                           physics: BouncingScrollPhysics(),
                           itemCount: _.customers.length,
                           itemBuilder: (context, index) {

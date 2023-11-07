@@ -11,6 +11,8 @@ class PoSInputField extends StatelessWidget {
   final String? prefixText;
   final String? suffixText;
   final String? helperText;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final bool numbersOnly;
   TextEditingController? controller;
   final TextCapitalization textCapitalization;
@@ -25,6 +27,8 @@ class PoSInputField extends StatelessWidget {
     required this.label,
     required this.hint,
     this.initialValue,
+    this.suffixIcon,
+    this.prefixIcon,
     this.readOnly = false,
     this.maxLines = 1,
     this.minLines = 1,
@@ -48,10 +52,12 @@ class PoSInputField extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
         child: TextFormField(
+          scrollPhysics: const BouncingScrollPhysics(),
           readOnly: readOnly,
           controller: controller,
           maxLength: maxLength,
           onTap: onTap,
+
           textCapitalization: textCapitalization,
           // inputFormatters: [
           // FilteringTextInputFormatter.digitsOnly,
@@ -69,11 +75,13 @@ class PoSInputField extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
             // isCollapsed: true,
-            counter: const SizedBox.shrink(),
+            // counter: const SizedBox.shrink(),
             helperText: helperText,
             helperMaxLines: 2,
             isDense: true,
-            contentPadding: const EdgeInsets.all(14),
+            contentPadding: const EdgeInsets.all(12),
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             prefixText: prefixText,
             suffixText: suffixText,
             labelText: label,

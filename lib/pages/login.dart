@@ -16,11 +16,16 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
-TextEditingController _userController =
-    TextEditingController(text: kDebugMode ? "chocolateboyz0011@gmail.com" : '');
-TextEditingController _passController = TextEditingController(text: kDebugMode ? "64009513" : '');
+TextEditingController _userController = TextEditingController();
+TextEditingController _passController = TextEditingController();
 bool isObscured = true;
 final _formKey = GlobalKey<FormState>();
+
+void fillCredentials() {
+  // TODO
+  _userController.text = 'chocolateboyz0011@gmail.com';
+  _passController.text = '64009513';
+}
 
 void login(context) async {
   var res = await APIServices.login(_userController.text, _passController.text);
@@ -102,7 +107,9 @@ class _LoginState extends State<Login> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                   Text("Paperlessly", style: Theme.of(context).textTheme.displayMedium),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Text("Point of Sale", style: Theme.of(context).textTheme.headlineMedium),
+                  GestureDetector(
+                      onLongPress: fillCredentials,
+                      child: Text("Point of Sale", style: Theme.of(context).textTheme.headlineMedium)),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -151,6 +158,7 @@ class _LoginState extends State<Login> {
                       height: 50,
                       width: 280,
                       child: ElevatedButton(
+                        // onLongPress: fillCredentials,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // Navigate the user to the Home page
@@ -166,12 +174,21 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: TextButton.icon(
-                      icon: const Icon(Icons.supervised_user_circle),
-                      onPressed: () => Get.toNamed('/signup'),
-                      label: const Text("Signup"),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(onPressed: () {}, child: const Text("Forget Password?")),
+                      const Text("|"),
+                      TextButton(
+                        // onLongPress: fillCredentials,
+                        // icon: const Icon(Icons.supervised_user_circle),
+                        onPressed: () => Get.toNamed('/signup'),
+                        child: const Text(
+                          "New here? Signup",
+                          // textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

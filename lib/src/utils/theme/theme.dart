@@ -62,7 +62,7 @@ class PoSAppTheme {
     searchBarTheme: const SearchBarThemeData(
       elevation: MaterialStatePropertyAll(0),
     ),
-    dividerTheme: const DividerThemeData(indent: 10, endIndent: 10),
+    dividerTheme: const DividerThemeData(indent: 10, endIndent: 10, color: Colors.black45),
     // Elevated Button
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(

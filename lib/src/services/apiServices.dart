@@ -90,6 +90,7 @@ class APIServices {
       "name": name,
       "password": password,
       "role": role,
+      "is2FAEnabled": "no"
     };
     log("Add user Req-Body=>> $_body ");
     try {

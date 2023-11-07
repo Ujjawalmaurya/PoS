@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 class SignUp extends StatefulWidget {
@@ -14,38 +13,49 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "username",
+        child: Form(
+          // key: _key,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Register your Business", style: Theme.of(context).textTheme.headlineMedium),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Text("with", style: Theme.of(context).textTheme.headlineSmall),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Text("Paperlessly", style: Theme.of(context).textTheme.displayMedium),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Text("Point of Sale", style: Theme.of(context).textTheme.headlineMedium),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "username",
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "password",
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "password",
+                  ),
+                  obscureText: true,
+                  // obscuringCharacter: 'o',
                 ),
-                obscureText: true,
-                // obscuringCharacter: 'o',
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  notifyUser(context, 'signup action');
-                },
-                icon: const Icon(Icons.upcoming),
-                label: const Text("Sign up"),
-              ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    notifyUser(context, 'signup action');
+                  },
+                  icon: const Icon(Icons.upcoming),
+                  label: const Text("Sign up"),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

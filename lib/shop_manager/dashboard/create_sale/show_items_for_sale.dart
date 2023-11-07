@@ -63,26 +63,24 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
                   subtitle: Text(
                     "Price: ${_data['price']} Rs\n(${_data['stock']} items available in stock)",
                   ),
-                  trailing: Container(
-                    width: 100,
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () => controller.addToSelectedItems(_data),
-                          child: Container(
-                            // width: 160,
+                  trailing: InkWell(
+                    onTap: () => controller.addToSelectedItems(_data),
+                    child: Container(
+                      width: 100,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
                             margin: const EdgeInsets.symmetric(horizontal: 3),
                             padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3),
-                              // color: Colors.white,
                             ),
                             child: const Text(
                               "Add",
@@ -92,13 +90,13 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
                               ),
                             ),
                           ),
-                        ),
-                        const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ],
+                          const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

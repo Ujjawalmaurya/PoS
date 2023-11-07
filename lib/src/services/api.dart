@@ -27,6 +27,7 @@ class BaseURL {
 class ApiLink {
   // ! Authentication
   static const String login = BaseURL.CompleteURL + "auth/login";
+  static const String resetPassword = BaseURL.CompleteURL + "user/forgot/password";
   static const String verifyUserViaOTP = BaseURL.CompleteURL + "user/verify";
   static const String refreshAccessTokenLink = BaseURL.CompleteURL + "auth/refresh";
   // static const String verifyUser = BaseURL.CompleteURL + "user/"; // {"otp": "","verifyToken": ""}
@@ -47,4 +48,12 @@ class ApiLink {
   //! Inventory items
   static const String getInventoryItems = BaseURL.CompleteURL + "product/"; // GET
   static const String addInventoryItem = BaseURL.CompleteURL + "product/"; // POST
+
+  // ! Sell invoice
+  static const String createSellInvoice = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} POST
+  static const String getSellInvoice = BaseURL.CompleteURL + ""; // +{} POST
+
+// ! Purchase invoice
+  static const String createPurchaseInvoice = BaseURL.CompleteURL + ""; // +{businessId} POST
+  static const String getPurchaseInvoice = BaseURL.CompleteURL + ""; // +{} POST
 }

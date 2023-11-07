@@ -16,7 +16,12 @@ class ManageUserController extends GetxController {
 
   RxBool isObscure = false.obs;
 
-  final List<String> roles = ['SALESMAN', 'STORE_MANAGER', 'STORE_OWNER', "ADMIN"];
+  final List<String> roles = [
+    'SALESMAN',
+    'STORE_MANAGER',
+    // 'STORE_OWNER',
+    //  "ADMIN"
+  ];
   RxString selectedRole = ''.obs;
   String defaultRole = '';
 

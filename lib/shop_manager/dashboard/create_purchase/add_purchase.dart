@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/purchase_c.dart';
 import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
+import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/dotted_border_widget.dart';
+import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class AddPurchase extends GetWidget<PurchaseController> {
   const AddPurchase({super.key});
@@ -25,66 +28,108 @@ class AddPurchase extends GetWidget<PurchaseController> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Column(
         children: [
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              PoSInputField(
+                numbersOnly: true,
+                suffixIcon: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.qr_code),
+                ),
+                label: "Invoice No",
+                hint: "PPL-XXX-XXXX",
+              ),
+              const SizedBox(width: 15),
+              PoSInputField(
+                controller: controller.dateTxtCtr,
+                readOnly: true,
+                onTap: () async {
+                  Future _date = showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2030),
+                  );
+                  controller.dateTxtCtr.text = Utils.formatDate(await _date);
+                },
+                label: "Date",
+                hint: "DD-MMM-YYYY",
+              ),
+            ],
+          ),
           GetBuilder<PurchaseController>(
             init: PurchaseController(),
             initState: (_) {},
             builder: (_) {
-              return ListTile(
-                title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
-                // isThreeLine: true,
-                subtitle: Text(_.selectedVendor.businessName ?? ''),
-                onTap: () {
-                  Get.bottomSheet(
-                    BottomSheet(
-                      onClosing: () {},
-                      builder: (context) {
-                        PartyController partyController = Get.find<PartyController>();
-                        return SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Select suppliers",
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                              ),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: partyController.vendors.length,
-                                itemBuilder: (context, index) {
-                                  Vendor _data = partyController.vendors[index];
-                                  return ListTile(
-                                    // isThreeLine: true,
-                                    title: Text(_data.supplierName.toString()),
-                                    subtitle: Text(_data.businessName.toString()),
-                                    onTap: () {
-                                      _.updateSupplierSelection(_data);
-                                      log("${controller.selectedVendor.supplierName} Selected");
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MyDottedBorderWidget(
+                  child: ListTile(
+                    title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
+                    // isThreeLine: true,
+                    subtitle: Text(_.selectedVendor.businessName ?? ''),
+                    onTap: () {
+                      Get.bottomSheet(
+                        BottomSheet(
+                          onClosing: () {},
+                          builder: (context) {
+                            PartyController partyController = Get.find<PartyController>();
+                            return SingleChildScrollView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Select suppliers",
+                                      style: Theme.of(context).textTheme.titleLarge,
+                                    ),
+                                  ),
+                                  ListView.builder(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: partyController.vendors.length,
+                                    itemBuilder: (context, index) {
+                                      Vendor _data = partyController.vendors[index];
+                                      return ListTile(
+                                        // isThreeLine: true,
+                                        title: Text(_data.supplierName.toString()),
+                                        subtitle: Text(_data.businessName.toString()),
+                                        onTap: () {
+                                          _.updateSupplierSelection(_data);
+                                          log("${controller.selectedVendor.supplierName} Selected");
+                                        },
+                                      );
                                     },
-                                  );
-                                },
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
               );
             },
           ),
-          ListTile(
-            onTap: () => Get.toNamed('/showItemsToPurchase'),
-            // selected: true,
-            title: const Text("Select items"),
-            trailing: OutlinedButton.icon(
-              onPressed: () => Get.toNamed('/addInventory'),
-              icon: const Icon(Icons.add),
-              label: const Text("Add a new Item"),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: MyDottedBorderWidget(
+              child: ListTile(
+                onTap: () => Get.toNamed('/showItemsToPurchase'),
+                // selected: true,
+                title: const Text("Select items"),
+                trailing: OutlinedButton.icon(
+                  onPressed: () => Get.toNamed('/addInventory'),
+                  icon: const Icon(Icons.add),
+                  label: const Text("Add a new Item"),
+                ),
+              ),
             ),
           ),
         ],

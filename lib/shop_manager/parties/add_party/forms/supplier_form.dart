@@ -10,6 +10,7 @@ SingleChildScrollView addVendorForm(controller) {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const SizedBox(height: 5),
           const Align(
             alignment: Alignment.topLeft,
             child: Chip(
@@ -92,6 +93,7 @@ SingleChildScrollView addVendorForm(controller) {
           //   validator: (p0) => p0.toString().trim() == '' ? "Cant be empty" : null,
           //   textCapitalization: TextCapitalization.characters,
           // ),
+          const SizedBox(height: 15),
           ElevatedButton.icon(
             onPressed: () {
               if (controller.vendorFormKey.currentState!.validate()) {
@@ -101,6 +103,7 @@ SingleChildScrollView addVendorForm(controller) {
             icon: const Icon(Icons.add),
             label: const Text("New Vendor/Supplier"),
           ),
+          const SizedBox(height: 25),
         ],
       ),
     ),

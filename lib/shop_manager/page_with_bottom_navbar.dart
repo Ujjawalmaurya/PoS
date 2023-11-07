@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/utils/hapics.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
 class BottomNavigationBarPage extends GetWidget<UserController> {
@@ -22,12 +23,15 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
             DrawerHeader(
               decoration: BoxDecoration(color: Theme.of(context).dividerColor),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     readData(StorageKey.user.userData)['name'],
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                    // textAlign: TextAlign.left,
                   ),
-                  Text("Role: ${readData(StorageKey.user.userData)['role']}"),
+                  // Text("Role: ${readData(StorageKey.user.userData)['role']}"),
                 ],
               ),
             ),
@@ -36,9 +40,10 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               child: Text("Account", style: Theme.of(context).textTheme.headlineSmall),
             ),
             ListTile(
-                leading: const Icon(Icons.person),
-                onTap: () => Get.toNamed('/myProfile'),
-                title: const Text("Profile")),
+              leading: const Icon(Icons.person),
+              onTap: () => Get.toNamed('/myProfile'),
+              title: const Text("Profile"),
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
@@ -54,20 +59,21 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               title: const Text("Account Settings"),
               onTap: () => Get.toNamed('/accountSettings'),
             ),
-            ListTile(
-              leading: const Icon(Icons.read_more_outlined),
-              title: const Text("Reminder Settings"),
-              onTap: () {},
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.read_more_outlined),
+            //   title: const Text("Reminder Settings"),
+            //   onTap: () {},
+            // ),
             ListTile(
               leading: const Icon(Icons.supervised_user_circle_sharp),
               title: const Text("Manage User"),
               onTap: () => Get.toNamed('/manageUser'),
             ),
-            ListTile(
-                leading: const Icon(Icons.delete_sweep_outlined),
-                title: const Text("Recover Deleted Invoices"),
-                onTap: () {}),
+            // ListTile(
+            //   leading: const Icon(Icons.delete_sweep_outlined),
+            //   title: const Text("Recover Deleted Invoices"),
+            //   onTap: () {},
+            // ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -87,11 +93,11 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               ),
             ),
             const Divider(),
-            ListTile(
-              leading: const Icon(Icons.help_center_sharp),
-              title: const Text("Help & Support"),
-              onTap: () {},
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.help_center_sharp),
+            //   title: const Text("Help & Support"),
+            //   onTap: () {},
+            // ),
             ListTile(
               leading: Icon(Icons.chrome_reader_mode_rounded),
               title: Text("About us"),
@@ -132,7 +138,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               onTap: () {
                 // setState(() {
                 controller.currentIndex.value = index;
-                HapticFeedback.lightImpact();
+                Haptics.light();
                 // });
               },
               splashColor: Colors.transparent,

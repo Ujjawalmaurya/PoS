@@ -100,7 +100,8 @@ class TabOne extends GetWidget<HomeController> {
                       init: HomeController(),
                       initState: (_) {},
                       builder: (_) {
-                        return ListView.builder(
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => const Divider(),
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: controller.actionType == callAnAction.sale ? 6 : 4,
                           shrinkWrap: true,
