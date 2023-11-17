@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
+import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,7 +23,7 @@ final _formKey = GlobalKey<FormState>();
 void fillCredentials() {
   // TODO
   _userController.text = 'chocolateboyz0011@gmail.com';
-  _passController.text = '64009513';
+  _passController.text = '3362584296';
 }
 
 void login(context) async {
@@ -67,16 +66,19 @@ void login(context) async {
 
     switch (_bodyData["role"]) {
       case 'SALESMAN':
-        Get.offAllNamed('/SALESMAN');
+        // Get.offAllNamed('/SALESMAN');
+        Get.offAllNamed('/STORE_MANAGER');
         break;
       case 'STORE_MANAGER':
         Get.offAllNamed('/STORE_MANAGER');
         break;
       case 'STORE_OWNER':
-        Get.offAllNamed('/STORE_OWNER');
+        Get.offAllNamed('/STORE_MANAGER');
+        // Get.offAllNamed('/STORE_OWNER');
         break;
       case 'ADMIN':
-        Get.offAllNamed('/ADMIN');
+        Get.offAllNamed('/STORE_MANAGER');
+        // Get.offAllNamed('/ADMIN');
 
         break;
       default:
@@ -177,7 +179,25 @@ class _LoginState extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextButton(onPressed: () {}, child: const Text("Forget Password?")),
+                      TextButton(
+                        onPressed: () => Get.defaultDialog(
+                          title: "Reset Password",
+                          content: PoSInputField(label: "Email", hint: "Email", controller: _userController),
+                          confirm: ElevatedButton(
+                            onPressed: () async {
+                              var res = await APIServices.resetForgottenPAssword(_userController.text);
+                              var body = json.decode(res.body);
+                              log(body);
+                              log(body['message']);
+
+                              // Get.closeAllSnackbars();
+                              // showSnackbar("response", body['message']);
+                            },
+                            child: const Text("Reset"),
+                          ),
+                        ),
+                        child: const Text("Forget Password?"),
+                      ),
                       const Text("|"),
                       TextButton(
                         // onLongPress: fillCredentials,

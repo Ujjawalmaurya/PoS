@@ -53,6 +53,7 @@ class Routes {
 
     GetPage(
       name: '/STORE_MANAGER',
+      // name: '/STORE_MANAGER',
       page: () => const BottomNavigationBarPage(),
       binding: BottomNavigationBarBinding(),
       // middlewares: [
@@ -101,11 +102,11 @@ class Routes {
       page: () => const AddPurchase(),
       binding: PurchaseBindings(),
     ),
-    GetPage(
-      name: '/showItemsToPurchase',
-      page: () => const ShowItemsToPurchase(),
-      // binding: PurchaseBindings(),
-    ),
+    // GetPage(
+    //   name: '/showItemsToPurchase',
+    //   page: () => const ShowItemsToPurchase(),
+    //   // binding: PurchaseBindings(),
+    // ),
 
     GetPage(
       name: '/invoiceSettings',

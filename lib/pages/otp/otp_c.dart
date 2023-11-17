@@ -9,7 +9,6 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 class OTPController extends GetxController {
 // args
   Map args = Get.arguments;
-//
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
@@ -34,7 +33,7 @@ class OTPController extends GetxController {
     super.onClose();
   }
 
-  verifyUserOTP() async {
+  void verifyUserOTP() async {
     var response = await APIServices.verifyOTP(pinController.text, args['token']);
     log(response.statusCode.toString());
     var body = jsonDecode(response.body);
@@ -43,6 +42,7 @@ class OTPController extends GetxController {
       Get.back();
       showSnackbar("${body['name']} added",
           "E-mail: ${body['email']}, Mobile: ${body['mobile']} with Role: ${body['role']}");
+      //
     } else {
       log(body.toString());
       Get.back();

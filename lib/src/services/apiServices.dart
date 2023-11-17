@@ -31,6 +31,51 @@ class APIServices {
     }
   }
 
+// Reset password
+  static Future resetForgottenPAssword(String email) async {
+    Map _body = {"email": email};
+    log("Req-Body=>> $_body ");
+    try {
+      var res = await http.post(
+        Uri.parse(ApiLink.resetForgottenPassword),
+        body: json.encode(_body),
+        headers: BaseURL.header,
+      );
+      return res;
+    } catch (e) {
+      log("Exception@Login => $e");
+    }
+  }
+
+  // Sign up
+  static Future signup(
+    String name,
+    String email,
+    // String role,
+    String mobile,
+    String password,
+  ) async {
+    Map _body = {
+      "email": email,
+      "mobile": mobile,
+      "name": name,
+      "password": password,
+      "role": "STORE_OWNER",
+      "is2FAEnabled": "N"
+    };
+    log("Add user Req-Body=>> $_body ");
+    try {
+      var res = await http.post(
+        Uri.parse(ApiLink.addNewUser),
+        body: json.encode(_body),
+        headers: BaseURL.header,
+      );
+      return res;
+    } catch (e) {
+      log("Exception@AddimgNewUser => $e");
+    }
+  }
+
   // Refresh token
   static Future getMyProfile() async {
     try {
@@ -90,7 +135,7 @@ class APIServices {
       "name": name,
       "password": password,
       "role": role,
-      "is2FAEnabled": "no"
+      "is2FAEnabled": "N"
     };
     log("Add user Req-Body=>> $_body ");
     try {
@@ -240,6 +285,7 @@ class APIServices {
     }
   }
 
+// DElete Customer
   static deleteCustomer(String customerID) async {
     Uri uri = Uri.parse(ApiLink.deleteCustomer + customerID + "/$businessID");
     try {
@@ -255,6 +301,7 @@ class APIServices {
     }
   }
 
+// Delete supplier
   static deleteSupplier(String supplierID) async {
     Uri uri = Uri.parse(ApiLink.deleteVendor + supplierID + "/$businessID");
     try {
@@ -335,6 +382,28 @@ class APIServices {
       return res;
     } catch (e) {
       log("Exception@AddingItem => $e");
+    }
+  }
+
+  // Create or Add Sale
+
+  //? Add Vendor
+  static Future createSale() async {
+    Map _body = {};
+
+    log("Sale creation Req-Body=>> $_body ");
+    try {
+      var res = await http.post(
+        Uri.parse(ApiLink.createSellInvoice + businessID),
+        body: json.encode(_body),
+        headers: BaseURL.authHeader,
+      );
+      final _data = json.decode(res.body);
+      log(_data.toString());
+      log(res.statusCode.toString());
+      return res;
+    } catch (e) {
+      log("Exception@CreatingSale => $e");
     }
   }
 }

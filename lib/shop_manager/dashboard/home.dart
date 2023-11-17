@@ -58,7 +58,7 @@ class TabOne extends GetWidget<HomeController> {
         ),
         body: Column(
           children: [
-            Flexible(
+            Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -103,7 +103,7 @@ class TabOne extends GetWidget<HomeController> {
                         return ListView.separated(
                           separatorBuilder: (context, index) => const Divider(),
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.actionType == callAnAction.sale ? 6 : 4,
+                          itemCount: controller.actionType == callAnAction.sale ? 20 : 10,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return controller.actionType == callAnAction.sale

@@ -57,17 +57,17 @@ class PartyController extends GetxController {
           onPressed: () {},
           child: const Text("Update Customer"),
         ),
-        ElevatedButton(
-          style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.red),
-          ),
-          onPressed: () {
-            Get.back();
-            APIServices.deleteCustomer(customerInfo.id.toString());
-            getCustomers();
-          },
-          child: const Text("Delete Customer"),
-        ),
+        // ElevatedButton(
+        //   style: const ButtonStyle(
+        //     backgroundColor: MaterialStatePropertyAll(Colors.red),
+        //   ),
+        //   onPressed: () {
+        //     Get.back();
+        //     APIServices.deleteCustomer(customerInfo.id.toString());
+        //     getCustomers();
+        //   },
+        //   child: const Text("Delete Customer"),
+        // ),
       ],
     );
     // {id: 2, uuid: 0abd0730-5183-11ee-ac01-010d0cb905f6,

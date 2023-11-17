@@ -1,8 +1,8 @@
 import 'dart:developer';
-
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:pos/shop_manager/navbar_c.dart';
 
 String formatDate(DateTime dateTime) {
   return DateFormat.yMMMMd('en_US').format(dateTime).toString();
@@ -35,7 +35,19 @@ void eraseStorage() => storage.erase().onError(
       (error, stackTrace) => log(
         "ERR while erasing storage $error",
       ),
-    ); 
+    );
 
+// User Roles
+// SALESMAN, STORE_MANAGER, STORE_OWNER, ADMIN
 
-//TODO store 
+bool ifSalesMan() {
+  String userRole = Get.find<UserController>().userRole;
+  return (userRole == 'SALESMAN'
+      // userRole == 'STORE_MANAGER' ||
+      // userRole == 'STORE_OWNER' ||
+      // userRole == 'ADMIN'
+      )
+      ? true
+      : false;
+  // return
+}

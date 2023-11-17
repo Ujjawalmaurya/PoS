@@ -27,7 +27,7 @@ class BaseURL {
 class ApiLink {
   // ! Authentication
   static const String login = BaseURL.CompleteURL + "auth/login";
-  static const String resetPassword = BaseURL.CompleteURL + "user/forgot/password";
+  static const String resetForgottenPassword = BaseURL.CompleteURL + "user/forgot/password";
   static const String verifyUserViaOTP = BaseURL.CompleteURL + "user/verify";
   static const String refreshAccessTokenLink = BaseURL.CompleteURL + "auth/refresh";
   // static const String verifyUser = BaseURL.CompleteURL + "user/"; // {"otp": "","verifyToken": ""}
@@ -51,9 +51,15 @@ class ApiLink {
 
   // ! Sell invoice
   static const String createSellInvoice = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} POST
-  static const String getSellInvoice = BaseURL.CompleteURL + ""; // +{} POST
+  static const String getSellInvoices = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} GET
+  static const String getSellInvoicesByInvoiceNumber =
+      BaseURL.CompleteURL + "/sell-invoice/"; // +{invoiceNumber}/{businessId} GET
 
 // ! Purchase invoice
-  static const String createPurchaseInvoice = BaseURL.CompleteURL + ""; // +{businessId} POST
-  static const String getPurchaseInvoice = BaseURL.CompleteURL + ""; // +{} POST
+  static const String getPurchases = BaseURL.CompleteURL + "purchase-invoice/"; // +{businessId} GET
+  static const String createPurchase = BaseURL.CompleteURL + "purchase-invoice/"; // +{businessId} POST
+  static const String getPurchaseInvoiceByID =
+      BaseURL.CompleteURL + "purchase-invoice/"; // {purchaseInvoiceId}/{businessId} POST
+  static const String getPurchaseInvoiceByInvoiceNumber =
+      BaseURL.CompleteURL + "/purchase-invoice/invoice-number/"; // +{invoiceNumber}/{businessId} POST
 }

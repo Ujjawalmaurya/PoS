@@ -59,6 +59,7 @@ class PoSAppTheme {
         // systemNavigationBarDividerColor: Colors.yellowAccent,
       ),
     ),
+    iconTheme: const IconThemeData(),
     searchBarTheme: const SearchBarThemeData(
       elevation: MaterialStatePropertyAll(0),
     ),

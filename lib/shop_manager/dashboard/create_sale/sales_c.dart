@@ -200,3 +200,179 @@ class AddSalesController extends GetxController {
     Get.to(() => PDFPreview(invoice: invoice));
   }
 } // END
+
+Map reqBody = {
+  "active": true,
+  "activity": {
+    "createdAt": "2023-11-10T16:14:04.277Z",
+    "createdBy": 0,
+    "updatedAt": "2023-11-10T16:14:04.277Z",
+    "updatedBy": 0
+  },
+  "businessDetails": {
+    "activity": {
+      "createdAt": "2023-11-10T16:14:04.277Z",
+      "createdBy": 0,
+      "updatedAt": "2023-11-10T16:14:04.277Z",
+      "updatedBy": 0
+    },
+    "address": "string",
+    "contact": "string",
+    "customers": [
+      {
+        "activity": {
+          "createdAt": "2023-11-10T16:14:04.277Z",
+          "createdBy": 0,
+          "updatedAt": "2023-11-10T16:14:04.277Z",
+          "updatedBy": 0
+        },
+        "address": "string",
+        "contact": "string",
+        "doctorName": "string",
+        "email": "string",
+        "id": 0,
+        "name": "string",
+        "uuid": "string"
+      }
+    ],
+    "description": "string",
+    "drugLicense": "string",
+    "fileName": "string",
+    "id": 0,
+    "name": "string",
+    "products": [
+      {
+        "activity": {
+          "createdAt": "2023-11-10T16:14:04.277Z",
+          "createdBy": 0,
+          "updatedAt": "2023-11-10T16:14:04.277Z",
+          "updatedBy": 0
+        },
+        "batchNum": "string",
+        "category": "General",
+        "cd": 0,
+        "discQty": 0,
+        "discountPerProduct": 0,
+        "expiry": "2023-11-10T16:14:04.277Z",
+        "hsn": 0,
+        "id": 0,
+        "loc": "string",
+        "manufacturer": "string",
+        "mrp": 0,
+        "name": "string",
+        "quantityChild": 0,
+        "quantityMax": 0,
+        "quantityParent": 0,
+        "rate": 0,
+        "subCategory": "string",
+        "td": 0,
+        "totalAmount": 0,
+        "type": "TABLET",
+        "unit": "string",
+        "vendorId": 0
+      }
+    ],
+    "termsAndConditions": "string",
+    "type": "string",
+    "vendors": [
+      {
+        "activity": {
+          "createdAt": "2023-11-10T16:14:04.278Z",
+          "createdBy": 0,
+          "updatedAt": "2023-11-10T16:14:04.278Z",
+          "updatedBy": 0
+        },
+        "businessAddress": "string",
+        "businessEmail": "string",
+        "businessName": "string",
+        "businessOwner": "string",
+        "contact": "string",
+        "drugLicense": "string",
+        "gstNumber": "string",
+        "id": 0,
+        "supplierName": "string",
+        "supplierNumber": "string",
+        "uuid": "string",
+        "website": "string"
+      }
+    ]
+  },
+  "category": "General",
+  "customer": {
+    "activity": {
+      "createdAt": "2023-11-10T16:14:04.278Z",
+      "createdBy": 0,
+      "updatedAt": "2023-11-10T16:14:04.278Z",
+      "updatedBy": 0
+    },
+    "address": "string",
+    "contact": "string",
+    "doctorName": "string",
+    "email": "string",
+    "id": 0,
+    "name": "string",
+    "uuid": "string"
+  },
+  "discountPerProduct": 0,
+  "id": 0,
+  "invoiceNumber": "string",
+  "orderItems": [
+    {
+      "amount": 0,
+      "batch": "string",
+      "cgst": 0,
+      "discount": 0,
+      "expiry": "2023-11-10T16:14:04.278Z",
+      "hsn": 0,
+      "id": 0,
+      "mrp": 0,
+      "name": "string",
+      "pack": "string",
+      "product": {
+        "activity": {
+          "createdAt": "2023-11-10T16:14:04.278Z",
+          "createdBy": 0,
+          "updatedAt": "2023-11-10T16:14:04.278Z",
+          "updatedBy": 0
+        },
+        "batchNum": "string",
+        "category": "General",
+        "cd": 0,
+        "discQty": 0,
+        "discountPerProduct": 0,
+        "expiry": "2023-11-10T16:14:04.278Z",
+        "hsn": 0,
+        "id": 0,
+        "loc": "string",
+        "manufacturer": "string",
+        "mrp": 0,
+        "name": "string",
+        "quantityChild": 0,
+        "quantityMax": 0,
+        "quantityParent": 0,
+        "rate": 0,
+        "subCategory": "string",
+        "td": 0,
+        "totalAmount": 0,
+        "type": "TABLET",
+        "unit": "string",
+        "vendorId": 0
+      },
+      "quantityChild": 0,
+      "quantityParent": 0,
+      "sgst": 0,
+      "type": "TABLET"
+    }
+  ],
+  "paymentDetail": {
+    "currency": "INR",
+    "id": 0,
+    "notes": "string",
+    "paidAmount": "string",
+    "paymentOption": "UPI"
+  },
+  "roundOff": 0,
+  "totalAmount": 0,
+  "totalAmountInWords": "string",
+  "totalDiscount": 0
+};

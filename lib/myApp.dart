@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
       // enableLog: true,
       // home: route(),
       // initialRoute: '/bottomNavbar',
-      initialRoute: role != null ? '/$role' : '/login',
+      // initialRoute: role != null ? '/$role' : '/login',
+      initialRoute: role != null ? '/STORE_MANAGER' : '/login',
     );
   }
 

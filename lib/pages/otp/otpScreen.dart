@@ -7,28 +7,9 @@ import 'package:pos/pages/otp/otp_c.dart';
 import 'package:pos/src/utils/hapics.dart';
 
 class OTPScreen extends GetWidget<OTPController> {
-  OTPScreen({super.key});
+  const OTPScreen({super.key});
 
   // final Map data;
-
-  verifyOTP() {
-    // switch (widget.data["role"]) {
-    //   case 'SALESMAN':
-    //     Get.offAllNamed('/SALESMAN');
-    //     break;
-    //   case 'STORE_MANAGER':
-    //     Get.offAllNamed('/STORE_MANAGER');
-    //     break;
-    //   case 'STORE_OWNER':
-    //     Get.offAllNamed('/STORE_OWNER');
-    //     break;
-    //   case 'ADMIN':
-    //     Get.offAllNamed('/ADMIN');
-    //     break;
-    //   default:
-    //     Get.offAllNamed('/login');
-    // }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +19,7 @@ class OTPScreen extends GetWidget<OTPController> {
     const fillColor = Color.fromRGBO(243, 246, 249, 0);
     const borderColor = Color.fromRGBO(23, 171, 144, 0.4);
 
-    const int otpLength = 8;
+    const int otpLength = 10;
 
     final defaultPinTheme = PinTheme(
       width: 56,
@@ -97,7 +78,7 @@ class OTPScreen extends GetWidget<OTPController> {
                     controller.pinController.setText(value);
                   },
                   keyboardAppearance: Brightness.dark,
-                  hapticFeedbackType: Haptics.heavy(),
+                  // hapticFeedbackType: Haptics.heavy(), // commented temporarily due to an exception
                   onCompleted: (pin) {
                     debugPrint('onCompleted: $pin');
                     controller.verifyUserOTP();

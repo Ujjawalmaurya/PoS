@@ -40,7 +40,10 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               child: Text("Account", style: Theme.of(context).textTheme.headlineSmall),
             ),
             ListTile(
-              leading: const Icon(Icons.person),
+              leading: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               onTap: () => Get.toNamed('/myProfile'),
               title: const Text("Profile"),
             ),
@@ -50,12 +53,18 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               child: Text("Settings", style: Theme.of(context).textTheme.headlineSmall),
             ),
             ListTile(
-              leading: const Icon(Icons.insert_drive_file_rounded),
+              leading: Icon(
+                Icons.insert_drive_file_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               title: const Text("Invoice Settings"),
               onTap: () => Get.toNamed('/invoiceSettings'),
             ),
             ListTile(
-              leading: const Icon(Icons.manage_accounts_rounded),
+              leading: Icon(
+                Icons.manage_accounts_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               title: const Text("Account Settings"),
               onTap: () => Get.toNamed('/accountSettings'),
             ),
@@ -64,11 +73,16 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
             //   title: const Text("Reminder Settings"),
             //   onTap: () {},
             // ),
-            ListTile(
-              leading: const Icon(Icons.supervised_user_circle_sharp),
-              title: const Text("Manage User"),
-              onTap: () => Get.toNamed('/manageUser'),
-            ),
+            Get.find<UserController>().userRole == 'STORE_MANAGER'
+                ? ListTile(
+                    leading: Icon(
+                      Icons.supervised_user_circle_sharp,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    title: const Text("Manage User"),
+                    onTap: () => Get.toNamed('/manageUser'),
+                  )
+                : const SizedBox.shrink(),
             // ListTile(
             //   leading: const Icon(Icons.delete_sweep_outlined),
             //   title: const Text("Recover Deleted Invoices"),
@@ -99,15 +113,22 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
             //   onTap: () {},
             // ),
             ListTile(
-              leading: Icon(Icons.chrome_reader_mode_rounded),
+              leading: Icon(
+                Icons.chrome_reader_mode_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
               title: Text("About us"),
               onTap: () => Get.toNamed('/aboutUs'),
             ),
             const Divider(),
             ListTile(
-                leading: const Icon(Icons.logout_rounded),
-                title: const Text("Logout"),
-                onTap: () => controller.logout(context)),
+              leading: Icon(
+                Icons.logout_rounded,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              title: const Text("Logout"),
+              onTap: () => controller.logout(context),
+            ),
             const SizedBox(height: 10)
           ],
         ),

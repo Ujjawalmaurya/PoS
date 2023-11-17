@@ -160,10 +160,12 @@ class AddSales extends GetWidget<AddSalesController> {
                                         ),
                                         GestureDetector(
                                           onTap: () => controller.updateDiscount(),
-                                          child: Obx(() => Text(
-                                                "Discount: - ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
-                                                textAlign: TextAlign.end,
-                                                style: Theme.of(context).textTheme.titleMedium,
+                                          child: Obx(() => MyDottedBorderWidget(
+                                                child: Text(
+                                                  "Discount: - ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
+                                                  textAlign: TextAlign.end,
+                                                  style: Theme.of(context).textTheme.titleMedium,
+                                                ),
                                               )),
                                         ),
                                       ],
