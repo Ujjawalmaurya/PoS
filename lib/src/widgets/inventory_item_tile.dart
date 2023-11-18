@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/party_tiles.dart';
 
 class InventoryItemTile extends StatelessWidget {
   const InventoryItemTile({
@@ -12,7 +13,10 @@ class InventoryItemTile extends StatelessWidget {
     required this.price,
     required this.sellingPrice,
     required this.purchasingPrice,
+    required this.category,
+    required this.subCategory,
     this.gst = 18,
+    required this.type,
     this.stock = 0,
     this.ontap,
   });
@@ -21,6 +25,9 @@ class InventoryItemTile extends StatelessWidget {
   final String name;
   final int stock;
   final String imageURL;
+  final String category;
+  final String subCategory;
+  final String type;
   final dynamic price;
   final String description;
   final double sellingPrice;
@@ -59,16 +66,33 @@ class InventoryItemTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Chip(
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 1),
+                    backgroundColor: Colors.grey.shade200,
+                    label: Text(
+                      category,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  Chip(
+                    padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 1),
+                    backgroundColor: Colors.grey.shade200,
+                    label: Text(
+                      subCategory,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5, right: 8, top: 5),
-                        child: Image.network(
-                          imageURL,
-                          height: 70,
-                          width: 70,
-                          fit: BoxFit.cover,
-                        ),
+                        // child: Image.network(imageURL, height: 70, width: 70, fit: BoxFit.cover),
+                        child: ImageLoader(image: imageURL),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
@@ -76,7 +100,7 @@ class InventoryItemTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              name,
+                              "$name ($type)",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(

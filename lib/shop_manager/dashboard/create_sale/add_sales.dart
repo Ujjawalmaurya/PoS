@@ -2,8 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/pages/invoice/model/invoice.dart';
-import 'package:pos/shop_manager/dashboard/create_sale/payment_mode.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/utils/utils.dart';
@@ -109,7 +107,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                             mrp: 5.0,
                                             quantity: _item['qty'] ?? 00,
                                             name: _item['name'] ?? "Null name",
-                                            price: _item['price'] ?? "Rs.0",
+                                            price: _item['rate'] ?? "Rs.0",
 
                                             // title: Text(_item.itemName),
                                             // trailing: Text(Utils.parseInINR(_item.unitPrice)),

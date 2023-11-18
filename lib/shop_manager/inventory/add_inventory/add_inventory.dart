@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/inventory/add_inventory/add_inventory_c.dart';
-import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
@@ -202,7 +202,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                   PoSInputField(
                     readOnly: true,
                     onTap: () async {
-                      Future _exp = showDatePicker(
+                      Future? _exp = showDatePicker(
                         initialDatePickerMode: DatePickerMode.year,
                         context: context,
                         // currentDate: DateTime.now(),
@@ -210,7 +210,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                         firstDate: DateTime(2010),
                         lastDate: DateTime(2030),
                       );
-                      controller.itemExpCtr.text = Utils.formatDate(await _exp);
+                      controller.itemExpCtr.text = Utils.formatDate(await _exp ?? DateTime.now());
                     },
                     label: "Expiry",
                     hint: 'MMMDD-YYYY',

@@ -4,7 +4,6 @@ import 'package:pos/pages/login.dart';
 import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
 import 'package:pos/pages/signup.dart';
-import 'package:pos/shop_boy/shopboy.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/add_purchase.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/show_items_to_purchase.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/add_sales.dart';
@@ -15,12 +14,11 @@ import 'package:pos/shop_manager/dashboard/drawer/account_settings.dart';
 import 'package:pos/shop_manager/dashboard/drawer/invoice_settings.dart';
 import 'package:pos/shop_manager/dashboard/drawer/manage_user/manage_users.dart';
 import 'package:pos/shop_manager/dashboard/drawer/profile/profile.dart';
-import 'package:pos/shop_manager/dashboard/home.dart';
 import 'package:pos/shop_manager/inventory/add_inventory/add_inventory.dart';
 import 'package:pos/shop_manager/marketing/marketing.dart';
 import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
 import 'package:pos/shop_manager/parties/add_party/add_parties.dart';
-import 'package:pos/shop_owner/shop_owner.dart';
+// import 'package:pos/shop_owner/shop_owner.dart';
 
 class Routes {
   static List<GetPage> pages = [
@@ -43,11 +41,11 @@ class Routes {
     ),
 
     // ! Shop owner
-    GetPage(
-      name: '/STORE_OWNER',
-      page: () => const ShopOwner(),
-      //  binding: (),
-    ),
+    // GetPage(
+    //   name: '/STORE_OWNER',
+    //   page: () => const ShopOwner(),
+    //   //  binding: (),
+    // ),
 
     // ! Shop Manager
 
@@ -150,11 +148,11 @@ class Routes {
     // ),
 
     // ! Shop Boy
-    GetPage(
-      name: '/SALESMAN',
-      page: () => const ShopBoy(),
-      // binding: (),
-    ),
+    // GetPage(
+    //   name: '/SALESMAN',
+    //   page: () => const ShopBoy(),
+    //   // binding: (),
+    // ),
 
     // GetPage(
     //   name: '/',

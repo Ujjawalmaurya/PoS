@@ -21,6 +21,7 @@ class InventoryController extends GetxController {
   @override
   void onInit() async {
     items = await APIServices.getItems();
+
     super.onInit();
   }
 

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
+import 'package:pos/shop_manager/inventory/item_Modal.dart';
 import 'package:pos/shop_manager/navbar_c.dart';
-import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
@@ -335,45 +336,18 @@ class APIServices {
       log(e.toString());
       throw e;
     }
-
-    ///////
     //
   }
 
   //? Add Vendor
-  static Future addItem(dynamic vendorID) async {
-    Map _body = {
-      "batchNum": "SD7DF8C",
-      "category": "General",
-      "cd": 2,
-      "cgst": 5,
-      "discQty": 5,
-      "discountPerProduct": 2,
-      "hsn": 4342,
-      "id": 3,
-      "loc": "LOC",
-      "manufacturer": "LOC_manufacturer",
-      "mrp": 300,
-      "name": "Dummy name",
-      "quantityChild": 3,
-      "quantityMax": 6,
-      "quantityParent": 10,
-      "rate": 300,
-      "sgst": 5,
-      "subCategory": "dummySubCategory",
-      "td": 23,
-      "totalAmount": 3000,
-      "type": "TABLET",
-      "unit": "string",
-      "expiry": "2024-09-01T11:22:15.492+00:00",
-      "vendorId": vendorID,
-    };
+  static Future addItem(Map bodyData) async {
+    // Map _body = {};
 
-    log("Add item Req-Body=>> $_body ");
+    log("Add item Req-Body=>> $bodyData ");
     try {
       var res = await http.post(
         Uri.parse(ApiLink.addInventoryItem + businessID),
-        body: json.encode(_body),
+        body: json.encode(bodyData),
         headers: BaseURL.authHeader,
       );
       final _data = json.decode(res.body);

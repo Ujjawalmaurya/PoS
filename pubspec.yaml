@@ -27,6 +27,7 @@ dependencies:
   get: ^4.6.6
   printing: ^5.11.0
   uuid:
+  cached_network_image: ^3.3.0
   flutter_slidable: ^3.0.0
   share_plus:
 

@@ -7,6 +7,7 @@ import 'package:pos/src/widgets/inventory_item_tile.dart';
 import 'package:pos/src/widgets/search_field.dart';
 
 class Stocks extends GetWidget<InventoryController> {
+  static const path = '/stocks';
   const Stocks({super.key});
 
   void _onTap(context, data) {
@@ -17,7 +18,7 @@ class Stocks extends GetWidget<InventoryController> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Item no: index", style: Theme.of(context).textTheme.headlineSmall),
+            // Text("Item no: index", style: Theme.of(context).textTheme.headlineSmall),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.network(
@@ -30,7 +31,7 @@ class Stocks extends GetWidget<InventoryController> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Name: ${data['name']}"),
+              child: Text("Name: ${data['name']} (${data['type']})"),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -39,13 +40,24 @@ class Stocks extends GetWidget<InventoryController> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
+            // Text("type: ${data['type']}"),
+            Text("Category: ${data['category']}"),
+            Text("Sub-Category: ${data['subCategory']}"),
+            Text("Unit: ${data['unit']}"),
+            Text("Batch number: ${data['batchNum']}"),
+            Text("HSN: ${data['hsn']}"),
+            Text("Manufacturer: ${data['manufacturer']}"),
+            Text("discountPerQuantity: ${data['discountPerProduct']}"),
+            Text("DiscQty: ${data['discQty']}"),
+            Text("Loc: ${data['loc']}"),
+            Text("Rate: ${data['rate']}"),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Text('Price: ${Utils.parseInINR(data["price"])}'),
-                  Text('MRP: ${Utils.parseInINR(data["price"])}'),
+                  Text('MRP: ${Utils.parseInINR(data["mrp"])}'),
                 ],
               ),
             ),
@@ -75,24 +87,24 @@ class Stocks extends GetWidget<InventoryController> {
           children: [
             const SearchField(),
             Flexible(
-              child: controller.inventoryData.isEmpty
-                  ? const Center(child: Text("Nothing to Show"))
+              child: controller.items.isEmpty
+                  ? Center(child: Text("No items \n ${controller.items}"))
                   : ListView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: controller.inventoryData.length,
+                      itemCount: controller.items.length,
                       // itemCount: 5,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        var _data = controller.inventoryData[index];
+                        var _data = controller.items[index];
                         return InventoryItemTile(
-                          stock: _data['stock'],
-                          gst: _data['gst'],
-                          // imageURL: _data.thumbnail,
-                          // description: _data.description,
-                          price: _data['price'],
+                          type: _data["type"],
+                          category: _data['category'],
+                          subCategory: _data['subCategory'],
+                          price: _data['mrp'],
                           name: _data['name'],
-                          sellingPrice: _data['price'],
-                          purchasingPrice: _data['price'],
+                          sellingPrice: 52.1,
+                          stock: _data['quantityMax'],
+                          purchasingPrice: 58.14,
                           ontap: () => _onTap(context, _data),
                         );
                       },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pos/shop_manager/parties/add_party/vendor_model.dart';
+import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
@@ -83,7 +83,32 @@ class AddInventoryController extends GetxController {
 
   void addItem() {
     // showSnackbar("Adding Item", "API");
-    final res = APIServices.addItem(selectedVendor.id);
+    final res = APIServices.addItem({
+      // "id": 3,
+      "name": itemNameCtr.text,
+      "batchNum": batchCtr.text,
+      "category": selectedCategory.value,
+      "subCategory": selectedCategory.value,
+      "manufacturer": manufacturerCtr.text,
+      "vendorId": selectedVendor.id,
+      "cd": cdCtr.text,
+      "td": tdCtr.text,
+      "cgst": cgstCtr.text,
+      "sgst": sgstCtr.text,
+      "discQty": discountQtyCtr.text,
+      "discountPerProduct": discountCtr.text,
+      "hsn": hsnCtr.text,
+      "loc": "LOC",
+      "mrp": mrpCtr.text,
+      "quantityChild": 0,
+      "quantityMax": 0,
+      "quantityParent": 0,
+      "rate": rateCtr.text,
+      "totalAmount": 5400,
+      "type": "TABLET",
+      "unit": "string",
+      "expiry": itemExpCtr.text,
+    });
   }
 
   pickImage(context) async {

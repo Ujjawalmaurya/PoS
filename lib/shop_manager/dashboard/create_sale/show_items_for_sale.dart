@@ -45,9 +45,9 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
             child: ListView.separated(
               shrinkWrap: false,
               separatorBuilder: (context, index) => const Divider(),
-              itemCount: controller.inventoryController.inventoryData.length,
+              itemCount: controller.inventoryController.items.length,
               itemBuilder: (context, index) {
-                var _data = controller.inventoryController.inventoryData[index];
+                var _data = controller.inventoryController.items[index];
                 log("_Data: ${_data}");
                 // var item = InvoiceItem(
                 //   itemName: _data['name'],
