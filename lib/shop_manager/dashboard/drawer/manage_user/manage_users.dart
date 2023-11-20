@@ -8,6 +8,7 @@ import 'package:pos/src/widgets/pos_input_tile.dart';
 import 'package:pos/src/widgets/search_field.dart';
 
 class ManageUser extends GetWidget<ManageUserController> {
+  static const path = '/manageUser';
   const ManageUser({super.key});
 
   @override
@@ -103,9 +104,9 @@ class ManageUser extends GetWidget<ManageUserController> {
                           },
                           // hint: const Text("Select USER_ROLE"),
                           value: controller.defaultRole.isNotEmpty ? controller.defaultRole : null,
-                          items: controller.roles.map((String category) {
+                          items: controller.roles.map((String role) {
                             return DropdownMenuItem(
-                                value: category,
+                                value: role,
                                 child: Row(
                                   children: <Widget>[
                                     Padding(
@@ -115,7 +116,7 @@ class ManageUser extends GetWidget<ManageUserController> {
                                         color: Theme.of(context).primaryColor,
                                       ),
                                     ),
-                                    Text(category),
+                                    Text(role),
                                   ],
                                 ));
                           }).toList(),

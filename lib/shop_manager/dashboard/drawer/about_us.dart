@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AboutUs extends StatelessWidget {
+  static const path = '/aboutUs';
   const AboutUs(
       {super.key,
       this.para =

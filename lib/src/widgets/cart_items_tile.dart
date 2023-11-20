@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
+import 'package:pos/src/widgets/party_tiles.dart';
 
 class CartItemTile extends StatelessWidget {
   const CartItemTile({
@@ -32,27 +34,7 @@ class CartItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   isThreeLine: true,
-    //   onTap: ontap,
-    //   leading: Image.network(
-    //     imageURL,
-    //     height: 60,
-    //     width: 60,
-    //     fit: BoxFit.cover,
-    //   ),
-    //   title: Text(name),
-    //   subtitle: Text(
-    //     description,
-    //     style: Theme.of(context).textTheme.bodySmall,
-    //   ),
-    //   trailing: Text(
-    //     Utils.parseInINR(price),
-    //     style: Theme.of(context).textTheme.bodyLarge,
-    //   ),
-    // );
     return GestureDetector(
-      // onTapDown: (details) => log(details.toString()),
       onTap: ontap,
       child: Card(
         child: Padding(
@@ -67,12 +49,13 @@ class CartItemTile extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5, right: 8, top: 5),
-                        child: Image.network(
-                          imageURL,
-                          height: 50,
-                          width: 50,
-                          fit: BoxFit.cover,
-                        ),
+                        child: NetworkImageLoader(image: imageURL),
+                        // Image.network(
+                        //   imageURL,
+                        //   height: 50,
+                        //   width: 50,
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.25,

@@ -10,6 +10,7 @@ import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class AddInventory extends GetWidget<AddInventoryController> {
+  static const path = '/addInventory';
   const AddInventory({super.key});
 
   @override
@@ -40,7 +41,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PoSInputField(
                     controller: controller.itemNameCtr,

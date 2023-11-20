@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/pages/scanner/scanner.dart';
+import 'package:pos/shop_manager/dashboard/create_purchase/add_purchase.dart';
+import 'package:pos/shop_manager/dashboard/create_sale/add_sales.dart';
 import 'package:pos/shop_manager/dashboard/home_c.dart';
 import 'package:pos/shop_manager/dashboard/read_files.dart';
 import 'package:pos/shop_manager/dashboard/analytics.dart';
@@ -22,17 +25,34 @@ class TabOne extends GetWidget<HomeController> {
             },
             icon: const Icon(Icons.menu),
           ),
-          title: TextField(
-            controller: controller.businessCtr,
-            decoration: const InputDecoration(
-              fillColor: Colors.transparent,
-              hintText: "Business name",
-              border: InputBorder.none,
-            ),
+          // title: TextField(
+          //   controller: controller.businessCtr,
+          //   decoration: const InputDecoration(
+          //     fillColor: Colors.transparent,
+          //     hintText: "Business DD",
+          //     border: InputBorder.none,
+          //   ),
+          // ),
+          centerTitle: false,
+          title: DropdownButtonFormField(
+            // alignment: Alignment.topLeft,
+            // isDense: true,
+            decoration: const InputDecoration(border: InputBorder.none, fillColor: Colors.transparent),
+            onSaved: (nV) {},
+            value: controller.businesses[0],
+            items: controller.businesses.map((String business) {
+              return DropdownMenuItem(
+                value: business,
+                child: Text(business),
+              );
+            }).toList(),
+            onChanged: (val) {
+              // TODO:
+            },
           ),
           actions: [
             IconButton(
-              onPressed: () => Get.toNamed('/scanner'),
+              onPressed: () => Get.toNamed(Scanner.path),
               icon: const Icon(Icons.qr_code_2),
             ),
             IconButton(
@@ -88,9 +108,7 @@ class TabOne extends GetWidget<HomeController> {
                               ),
                             ],
                             selected: <callAnAction>{controller.actionType},
-                            onSelectionChanged: (val) => controller.updateCallAction(val)
-                            // });
-                            ,
+                            onSelectionChanged: (val) => controller.updateCallAction(val),
                           );
                         },
                       ),
@@ -133,8 +151,8 @@ class TabOne extends GetWidget<HomeController> {
                     ElevatedButton(
                       onLongPress: () => Utils.getUUID(),
                       onPressed: () => controller.actionType == callAnAction.sale
-                          ? Get.toNamed('/addSales')
-                          : Get.toNamed('/addPurchase'),
+                          ? Get.toNamed(AddSales.path)
+                          : Get.toNamed(AddPurchase.path),
                       child: Row(
                         children: [
                           const Icon(Icons.add_circle_outline),

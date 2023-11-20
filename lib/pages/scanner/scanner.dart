@@ -7,6 +7,7 @@ import 'package:pos/pages/scanner/scanner_error_widget.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 class Scanner extends StatefulWidget {
+  static const path = '/scanner';
   const Scanner({Key? key}) : super(key: key);
 
   @override

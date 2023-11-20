@@ -8,8 +8,10 @@ class PurchaseController extends GetxController {
   //
   Vendor selectedVendor = Vendor();
 
+  final purchaseFormKey = GlobalKey<FormState>();
+
   InventoryController inventoryController = Get.find<InventoryController>();
-  RxList<Map> items = <Map>[].obs;
+  RxList<Map> items = <Map>[{}, {}].obs;
 
   TextEditingController dateTxtCtr = TextEditingController();
   TextEditingController itemName = TextEditingController();
@@ -17,14 +19,13 @@ class PurchaseController extends GetxController {
   TextEditingController gst = TextEditingController();
   // TextEditingController dateTxtCtr = TextEditingController();
   // TextEditingController dateTxtCtr = TextEditingController();
-  // TextEditingController dateTxtCtr = TextEditingController();
 
-  RxInt index = 0.obs;
-  int maxIndex = 2;
+  // RxInt index = 0.obs;
+  // int maxIndex = 2;
 
   @override
   void onInit() {
-    PartyController controller = Get.put(PartyController());
+    PartyController partyController = Get.put(PartyController());
     super.onInit();
   }
 

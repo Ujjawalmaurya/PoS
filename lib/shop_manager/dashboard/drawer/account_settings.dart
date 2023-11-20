@@ -3,6 +3,7 @@ import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
 class AccountSettings extends StatefulWidget {
+  static const String path = '/accountSettings';
   const AccountSettings({super.key});
 
   @override

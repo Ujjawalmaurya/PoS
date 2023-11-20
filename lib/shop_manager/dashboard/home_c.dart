@@ -22,6 +22,10 @@ class HomeController extends GetxController {
   final TextEditingController businessCtr = TextEditingController(text: "");
   callAnAction actionType = callAnAction.sale;
 
+  List<String> businesses = ['Business1', 'Business2', 'Business3'];
+
+  String selectedBusiness = '';
+
   List moreSalesOption = [
     {
       'color': Colors.pinkAccent,

@@ -8,6 +8,7 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class SignUp extends StatefulWidget {
+  static const String path = '/signup';
   const SignUp({super.key});
 
   @override

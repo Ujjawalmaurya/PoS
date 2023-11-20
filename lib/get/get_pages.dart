@@ -5,7 +5,6 @@ import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
 import 'package:pos/pages/signup.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/add_purchase.dart';
-import 'package:pos/shop_manager/dashboard/create_purchase/show_items_to_purchase.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/add_sales.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/show_customers.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/show_items_for_sale.dart';
@@ -25,33 +24,23 @@ class Routes {
 // ! Common
 
     GetPage(
-      name: '/login',
+      name: Login.path,
       page: () => const Login(),
       //  binding: (),
     ),
     GetPage(
-      name: '/signup',
+      name: SignUp.path,
       page: () => const SignUp(),
       //  binding: (),
     ),
     GetPage(
-      name: '/otp',
-      page: () => OTPScreen(),
+      name: OTPScreen.path,
+      page: () => const OTPScreen(),
       binding: OTPBindings(),
     ),
 
-    // ! Shop owner
-    // GetPage(
-    //   name: '/STORE_OWNER',
-    //   page: () => const ShopOwner(),
-    //   //  binding: (),
-    // ),
-
-    // ! Shop Manager
-
     GetPage(
-      name: '/STORE_MANAGER',
-      // name: '/STORE_MANAGER',
+      name: BottomNavigationBarPage.path,
       page: () => const BottomNavigationBarPage(),
       binding: BottomNavigationBarBinding(),
       // middlewares: [
@@ -64,30 +53,30 @@ class Routes {
     // binding: HomeBinding(),
     // ),
     GetPage(
-      name: '/marketing',
+      name: Marketing.path,
       page: () => Marketing(),
       // binding: MarketingBinding(),
     ),
     GetPage(
-      name: '/myProfile',
+      name: MyProfile.path,
       page: () => MyProfile(),
       binding: MyProfileBinding(),
     ),
 
     GetPage(
-      name: '/addSales',
+      name: AddSales.path,
       page: () => AddSales(),
       binding: AddSalesBinding(),
     ),
 
     GetPage(
-      name: '/showCustomersForSale',
+      name: ShowCustomersForSale.path,
       page: () => const ShowCustomersForSale(),
       //  binding: (),
     ),
 
     GetPage(
-      name: '/showItemsToSale',
+      name: ShowItemsForSale.path,
       page: () => const ShowItemsForSale(),
       transition: Transition.zoom,
       // transition: Transition.size,
@@ -96,48 +85,42 @@ class Routes {
     ),
 
     GetPage(
-      name: '/addPurchase',
+      name: AddPurchase.path,
       page: () => const AddPurchase(),
       binding: PurchaseBindings(),
     ),
-    // GetPage(
-    //   name: '/showItemsToPurchase',
-    //   page: () => const ShowItemsToPurchase(),
-    //   // binding: PurchaseBindings(),
-    // ),
-
     GetPage(
-      name: '/invoiceSettings',
+      name: InvoiceSettings.path,
       page: () => const InvoiceSettings(),
       //  binding: (),
     ),
     GetPage(
-      name: '/accountSettings',
+      name: AccountSettings.path,
       page: () => const AccountSettings(),
       //  binding: (),
     ),
     GetPage(
-      name: '/manageUser',
+      name: ManageUser.path,
       page: () => ManageUser(),
       binding: ManageUserBindings(),
     ),
     GetPage(
-      name: '/aboutUs',
+      name: AboutUs.path,
       page: () => const AboutUs(),
       //  binding: (),
     ),
     GetPage(
-      name: '/scanner',
+      name: Scanner.path,
       page: () => const Scanner(),
       //  binding: (),
     ),
     GetPage(
-      name: '/addInventory',
+      name: AddInventory.path,
       page: () => const AddInventory(),
       binding: AddInventoryBinding(),
     ),
     GetPage(
-      name: '/addParties',
+      name: AddParties.path,
       page: () => AddParties(),
       binding: AddPartyBinding(),
     ),
@@ -145,13 +128,6 @@ class Routes {
     //   name: '/',
     //   page: () => const (),
     //    binding: (),
-    // ),
-
-    // ! Shop Boy
-    // GetPage(
-    //   name: '/SALESMAN',
-    //   page: () => const ShopBoy(),
-    //   // binding: (),
     // ),
 
     // GetPage(

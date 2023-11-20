@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/pages/login.dart';
 import 'package:pos/shop_manager/dashboard/home.dart';
 import 'package:pos/shop_manager/inventory/stocks.dart';
 import 'package:pos/shop_manager/marketing/marketing.dart';
@@ -81,7 +82,7 @@ class UserController extends GetxController {
                 ? storage.erase().then(
                       (value) => Get.back(),
                     )
-                : storage.erase().then((value) => Get.offAllNamed('/login')),
+                : storage.erase().then((value) => Get.offAllNamed(Login.path)),
             child: const Text("Logout"),
           ),
         ],

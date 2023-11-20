@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
 import 'package:pos/src/widgets/party_tiles.dart';
 
 class InventoryItemTile extends StatelessWidget {
@@ -92,7 +93,7 @@ class InventoryItemTile extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5, right: 8, top: 5),
                         // child: Image.network(imageURL, height: 70, width: 70, fit: BoxFit.cover),
-                        child: ImageLoader(image: imageURL),
+                        child: NetworkImageLoader(image: imageURL),
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,

@@ -64,15 +64,17 @@ class AddInventoryController extends GetxController {
   }
 
   final List<String> categories = [
-    'Food and Beverages ',
-    "Personal Care and Hygiene",
-    "Household Cleaning and Care",
-    "Health and Wellness",
-    "Baby and Childcare",
-    "Confectionery and Chocolates",
-    "Beauty and Cosmetics",
-    "Pharmaceuticals",
-    "Tobacco and Cigarettes",
+    // 'Food and Beverages ',
+    // "Personal Care and Hygiene",
+    // "Household Cleaning and Care",
+    // "Health and Wellness",
+    // "Baby and Childcare",
+    // "Confectionery and Chocolates",
+    // "Beauty and Cosmetics",
+    // "Pharmaceuticals",
+    // "Tobacco and Cigarettes",
+    "General",
+    "Pharma"
   ];
   final List<String> subCategories = [
     'subcategory1',

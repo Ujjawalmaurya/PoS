@@ -42,8 +42,9 @@ class AddSalesController extends GetxController {
       var item = InvoiceItem(
         itemName: _data['name'],
         quantity: _data['qty'],
-        gst: _data['gst'],
-        unitPrice: _data['rate'],
+        // gst: _data['gst'],
+        gst: 18,
+        unitPrice: _data['mrp'],
         expiryDate: DateTime(2030),
       );
       selectedInvoiceItems.add(item);
@@ -127,7 +128,7 @@ class AddSalesController extends GetxController {
     subTotal.value = 0;
     for (var i = 0; i < selectedItems.length; i++) {
       // TO DO
-      subTotal.value += selectedItems[i]['rate'] * selectedItems[i]['qty'];
+      subTotal.value += selectedItems[i]['mrp'] * selectedItems[i]['qty'];
       log("Subtotal: ${subTotal.value}");
     }
     totalAmount.value = subTotal.value - discount.value;

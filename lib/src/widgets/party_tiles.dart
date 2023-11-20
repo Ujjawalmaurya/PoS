@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
 
 class CustomerTile extends StatelessWidget {
   const CustomerTile({
@@ -33,7 +33,7 @@ class CustomerTile extends StatelessWidget {
       onTap: onTap,
       isThreeLine: true,
       // leading: Image.network(image),
-      leading: ImageLoader(image: image),
+      leading: NetworkImageLoader(image: image),
       title: Text(name, style: const TextStyle(fontSize: 18)),
       subtitle: Text(subtitle ?? "${Utils.formatDate(DateTime.now())}"),
       trailing: Column(
@@ -48,35 +48,12 @@ class CustomerTile extends StatelessWidget {
   }
 }
 
-class ImageLoader extends StatelessWidget {
-  const ImageLoader({
-    super.key,
-    required this.image,
-  });
-
-  final String image;
-
-  @override
-  Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: image,
-      placeholder: (context, url) => const CircularProgressIndicator(strokeWidth: 1),
-      errorWidget: (context, url, error) => const Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(Icons.error),
-          Text("Error"),
-        ],
-      ),
-    );
-  }
-}
-
 class SupplierTile extends StatelessWidget {
   const SupplierTile({
     super.key,
     required this.name,
+    // this.image = 'https://robohash.org/odioquivero.png',
+    this.image = 'https://robohash.org/ujjawal',
     required this.amount,
     required this.amountType,
     required this.businessName,
@@ -87,17 +64,16 @@ class SupplierTile extends StatelessWidget {
   final dynamic amount;
   final String amountType;
   final String businessName;
+  final String image;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: NetworkImageLoader(image: image),
       onTap: onTap,
       isThreeLine: true,
-      title: Text(
-        name,
-        style: const TextStyle(fontSize: 18),
-      ),
+      title: Text(name, style: const TextStyle(fontSize: 18)),
       subtitle: Text(businessName),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,

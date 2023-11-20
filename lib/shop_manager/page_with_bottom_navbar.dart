@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:pos/shop_manager/dashboard/drawer/about_us.dart';
+import 'package:pos/shop_manager/dashboard/drawer/account_settings.dart';
+import 'package:pos/shop_manager/dashboard/drawer/invoice_settings.dart';
+import 'package:pos/shop_manager/dashboard/drawer/manage_user/manage_users.dart';
+import 'package:pos/shop_manager/dashboard/drawer/profile/profile.dart';
 import 'package:pos/shop_manager/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/hapics.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
 class BottomNavigationBarPage extends GetWidget<UserController> {
+  static const String path = '/dashboard';
   const BottomNavigationBarPage({super.key});
 
   @override
@@ -44,7 +50,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                 Icons.person,
                 color: Theme.of(context).colorScheme.onSurface,
               ),
-              onTap: () => Get.toNamed('/myProfile'),
+              onTap: () => Get.toNamed(MyProfile.path),
               title: const Text("Profile"),
             ),
             const Divider(),
@@ -58,7 +64,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               title: const Text("Invoice Settings"),
-              onTap: () => Get.toNamed('/invoiceSettings'),
+              onTap: () => Get.toNamed(InvoiceSettings.path),
             ),
             ListTile(
               leading: Icon(
@@ -66,7 +72,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               title: const Text("Account Settings"),
-              onTap: () => Get.toNamed('/accountSettings'),
+              onTap: () => Get.toNamed(AccountSettings.path),
             ),
             // ListTile(
             //   leading: const Icon(Icons.read_more_outlined),
@@ -80,7 +86,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                       color: Theme.of(context).colorScheme.onSurface,
                     ),
                     title: const Text("Manage User"),
-                    onTap: () => Get.toNamed('/manageUser'),
+                    onTap: () => Get.toNamed(ManageUser.path),
                   )
                 : const SizedBox.shrink(),
             // ListTile(
@@ -118,7 +124,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
               title: Text("About us"),
-              onTap: () => Get.toNamed('/aboutUs'),
+              onTap: () => Get.toNamed(AboutUs.path),
             ),
             const Divider(),
             ListTile(

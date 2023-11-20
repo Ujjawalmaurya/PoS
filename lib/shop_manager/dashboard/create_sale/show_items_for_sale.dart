@@ -6,6 +6,7 @@ import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
 import 'package:pos/src/utils/utils.dart';
 
 class ShowItemsForSale extends GetWidget<AddSalesController> {
+  static const String path = '/showItemsToSale';
   const ShowItemsForSale({super.key});
 
   @override
@@ -61,7 +62,7 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
                   title: Text("${_data['name']}"),
                   // subtitle: Text("GST ${_data['gst']}%"),
                   subtitle: Text(
-                    "Price: ${_data['price']} Rs\n(${_data['stock']} items available in stock)",
+                    "Price: ${_data['mrp']} Rs\n(${_data['stock']} items available in stock)",
                   ),
                   trailing: InkWell(
                     onTap: () => controller.addToSelectedItems(_data),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/shop_manager/parties/add_party/add_parties.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
 import 'package:pos/src/widgets/party_tiles.dart';
 import 'package:pos/src/widgets/search_field.dart';
@@ -24,7 +25,8 @@ class Parties extends GetWidget<PartyController> {
         title: const Text("Parties"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed('/addParties', arguments: controller.partyType == Type.customer ? 0 : 1),
+        onPressed: () =>
+            Get.toNamed(AddParties.path, arguments: controller.partyType == Type.customer ? 0 : 1),
         tooltip: "Add Parties",
         child: const Icon(Icons.add),
       ),

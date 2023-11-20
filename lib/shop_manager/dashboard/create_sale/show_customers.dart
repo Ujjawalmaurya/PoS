@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
+import 'package:pos/shop_manager/parties/add_party/add_parties.dart';
 import 'package:pos/src/widgets/search_field.dart';
 
 class ShowCustomersForSale extends GetWidget<AddSalesController> {
+  static const String path = '/showCustomersForSale';
   const ShowCustomersForSale({super.key});
 
   @override
@@ -15,7 +16,7 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
       ),
       body: Column(
         children: [
-          SearchField(),
+          const SearchField(),
           Expanded(
             child: ListView.separated(
                 shrinkWrap: true,
@@ -37,7 +38,7 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: OutlinedButton.icon(
-              onPressed: () => Get.toNamed('/addParties', arguments: 0),
+              onPressed: () => Get.toNamed(AddParties.path, arguments: 0),
               icon: const Icon(Icons.add),
               label: const Text("Add new Customer"),
             ),

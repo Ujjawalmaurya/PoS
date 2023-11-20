@@ -7,6 +7,7 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:printing/printing.dart';
 
 class PDFPreview extends StatelessWidget {
+  static const path = '/pdfPreview';
   final Invoice invoice;
   const PDFPreview({super.key, required this.invoice});
 

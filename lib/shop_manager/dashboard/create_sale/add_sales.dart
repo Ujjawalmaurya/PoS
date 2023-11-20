@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
+import 'package:pos/shop_manager/dashboard/create_sale/show_customers.dart';
+import 'package:pos/shop_manager/dashboard/create_sale/show_items_for_sale.dart';
+import 'package:pos/shop_manager/dashboard/drawer/invoice_settings.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/cart_items_tile.dart';
@@ -11,6 +14,7 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/slidable_widget.dart';
 
 class AddSales extends GetWidget<AddSalesController> {
+  static const String path = '/addSales';
   const AddSales({super.key});
 
   @override
@@ -23,7 +27,7 @@ class AddSales extends GetWidget<AddSalesController> {
         title: const Text("Add Sales"),
         actions: [
           IconButton(
-            onPressed: () => Get.toNamed('/invoiceSettings'),
+            onPressed: () => Get.toNamed(InvoiceSettings.path),
             icon: const Icon(Icons.settings),
           ),
         ],
@@ -41,7 +45,7 @@ class AddSales extends GetWidget<AddSalesController> {
                           ? MyDottedBorderWidget(
                               child: ListTile(
                                 title: const Text("Select customer"),
-                                onTap: () => Get.toNamed('/showCustomersForSale'),
+                                onTap: () => Get.toNamed(ShowCustomersForSale.path),
                               ),
                             )
                           : ListTile(
@@ -51,7 +55,7 @@ class AddSales extends GetWidget<AddSalesController> {
                               // isThreeLine: true,
                               subtitle: Text("Tap to change Customer",
                                   style: Theme.of(context).textTheme.bodySmall),
-                              onTap: () => Get.toNamed('/showCustomersForSale'),
+                              onTap: () => Get.toNamed(ShowCustomersForSale.path),
                               title: Text(
                                   "Customer: ${controller.selectedCustomer.value!.name}\n(+91-${controller.selectedCustomer.value!.contact})"),
                               trailing: IconButton(
@@ -68,7 +72,7 @@ class AddSales extends GetWidget<AddSalesController> {
                           ? MyDottedBorderWidget(
                               child: ListTile(
                                 title: const Text("Select Items"),
-                                onTap: () => Get.toNamed('/showItemsToSale'),
+                                onTap: () => Get.toNamed(ShowItemsForSale.path),
                               ),
                             )
                           : ExpansionTile(
@@ -84,7 +88,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                 "${controller.selectedItems.length} Items are selected",
                               ),
                               trailing: OutlinedButton.icon(
-                                onPressed: () => Get.toNamed('/showItemsToSale'),
+                                onPressed: () => Get.toNamed(ShowItemsForSale.path),
                                 icon: const Icon(Icons.add),
                                 label: const Text("Add more"),
                               ),
@@ -107,7 +111,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                             mrp: 5.0,
                                             quantity: _item['qty'] ?? 00,
                                             name: _item['name'] ?? "Null name",
-                                            price: _item['rate'] ?? "Rs.0",
+                                            price: _item['mrp'] ?? "Rs.0",
 
                                             // title: Text(_item.itemName),
                                             // trailing: Text(Utils.parseInINR(_item.unitPrice)),
@@ -188,7 +192,6 @@ class AddSales extends GetWidget<AddSalesController> {
                     () => ListTile(
                       selectedTileColor: Colors.grey.shade300,
                       selected: true,
-                      // onTap: () => Get.to(const PaymentMode()),
                       leading: Icon(
                         controller.payType.value == PaymentType.card
                             ? Icons.credit_card

@@ -5,6 +5,7 @@ import 'package:pos/shop_manager/marketing/marketing_c.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 
 class Marketing extends GetWidget<MarketingController> {
+  static const String path = '/marketing';
   Marketing({super.key});
 
   @override

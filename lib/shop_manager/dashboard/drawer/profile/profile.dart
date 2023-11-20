@@ -4,6 +4,7 @@ import 'package:pos/shop_manager/dashboard/drawer/profile/profile_c.dart';
 import 'package:pos/src/widgets/pos_loading.dart';
 
 class MyProfile extends GetWidget<MyProfileController> {
+  static const String path = '/myProfile';
   const MyProfile({super.key});
 
   @override

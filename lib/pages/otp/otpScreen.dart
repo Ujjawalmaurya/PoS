@@ -7,6 +7,7 @@ import 'package:pos/pages/otp/otp_c.dart';
 import 'package:pos/src/utils/hapics.dart';
 
 class OTPScreen extends GetWidget<OTPController> {
+  static const String path = '/otp';
   const OTPScreen({super.key});
 
   // final Map data;

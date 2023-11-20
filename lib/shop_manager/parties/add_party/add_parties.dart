@@ -5,6 +5,7 @@ import 'package:pos/shop_manager/parties/add_party/forms/customer_form.dart';
 import 'package:pos/shop_manager/parties/add_party/forms/supplier_form.dart';
 
 class AddParties extends GetWidget<AddPartyController> {
+  static const path = "/addParties";
   int initialIndex = Get.arguments;
   // int initialIndex = 0;
   AddParties({super.key});

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/pages/signup.dart';
+import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/utils/storage_keys.dart';
@@ -10,6 +12,7 @@ import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
+  static const String path = '/login';
 
   @override
   State<Login> createState() => _LoginState();
@@ -64,26 +67,7 @@ void login(context) async {
     //  active: true }
     log("================== Success ===================");
 
-    switch (_bodyData["role"]) {
-      case 'SALESMAN':
-        // Get.offAllNamed('/SALESMAN');
-        Get.offAllNamed('/STORE_MANAGER');
-        break;
-      case 'STORE_MANAGER':
-        Get.offAllNamed('/STORE_MANAGER');
-        break;
-      case 'STORE_OWNER':
-        Get.offAllNamed('/STORE_MANAGER');
-        // Get.offAllNamed('/STORE_OWNER');
-        break;
-      case 'ADMIN':
-        Get.offAllNamed('/STORE_MANAGER');
-        // Get.offAllNamed('/ADMIN');
-
-        break;
-      default:
-        Get.offAllNamed('/login');
-    }
+    _bodyData["role"] != null ? Get.offAllNamed(BottomNavigationBarPage.path) : Get.offAllNamed(Login.path);
   } else {
     notifyUser(context, "${_bodyData["message"]}");
   }
@@ -202,7 +186,7 @@ class _LoginState extends State<Login> {
                       TextButton(
                         // onLongPress: fillCredentials,
                         // icon: const Icon(Icons.supervised_user_circle),
-                        onPressed: () => Get.toNamed('/signup'),
+                        onPressed: () => Get.toNamed(SignUp.path),
                         child: const Text(
                           "New here? Signup",
                           // textAlign: TextAlign.center,
