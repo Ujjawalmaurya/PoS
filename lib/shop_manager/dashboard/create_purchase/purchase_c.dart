@@ -5,13 +5,12 @@ import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
 
 class PurchaseController extends GetxController {
-  //
   Vendor selectedVendor = Vendor();
 
   final purchaseFormKey = GlobalKey<FormState>();
 
   InventoryController inventoryController = Get.find<InventoryController>();
-  RxList<Map> items = <Map>[{}, {}].obs;
+  RxList<Map> items = <Map>[].obs;
 
   TextEditingController dateTxtCtr = TextEditingController();
   TextEditingController itemName = TextEditingController();
@@ -20,8 +19,7 @@ class PurchaseController extends GetxController {
   // TextEditingController dateTxtCtr = TextEditingController();
   // TextEditingController dateTxtCtr = TextEditingController();
 
-  // RxInt index = 0.obs;
-  // int maxIndex = 2;
+  RxInt index = 0.obs;
 
   @override
   void onInit() {

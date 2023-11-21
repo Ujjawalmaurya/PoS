@@ -13,6 +13,14 @@ showSnackbar(String title, String body) => Get.isSnackbarOpen
         title,
         body,
       );
+failedSnackbar(String title, String body) => Get.isSnackbarOpen
+    ? Get.closeCurrentSnackbar()
+    : Get.snackbar(title, body,
+        backgroundColor: Colors.pinkAccent,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        overlayBlur: 8,
+        icon: const Icon(Icons.sms_failed_outlined));
 
 showQuickAlert(String title, String body) => Get.isSnackbarOpen
     ? Get.closeCurrentSnackbar()

@@ -40,89 +40,95 @@ class AddSales extends GetWidget<AddSalesController> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Obx(
-                      () => controller.selectedCustomer.value!.name == null
-                          ? MyDottedBorderWidget(
-                              child: ListTile(
-                                title: const Text("Select customer"),
+                    child: Card(
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+                      child: Obx(
+                        () => controller.selectedCustomer.value!.name == null
+                            ? MyDottedBorderWidget(
+                                child: ListTile(
+                                  title: const Text("Select customer"),
+                                  onTap: () => Get.toNamed(ShowCustomersForSale.path),
+                                ),
+                              )
+                            : ListTile(
+                                selected: true,
+                                // dense: true,
+                                selectedTileColor: greyShade,
+                                // isThreeLine: true,
+                                subtitle: Text("Tap to change Customer",
+                                    style: Theme.of(context).textTheme.bodySmall),
                                 onTap: () => Get.toNamed(ShowCustomersForSale.path),
+                                title: Text(
+                                    "Customer: ${controller.selectedCustomer.value!.name}\n(+91-${controller.selectedCustomer.value!.contact})"),
+                                trailing: IconButton(
+                                  onPressed: () => controller.selectedCustomer.value = Customer(),
+                                  icon: const Icon(Icons.cancel),
+                                ),
                               ),
-                            )
-                          : ListTile(
-                              selected: true,
-                              // dense: true,
-                              selectedTileColor: greyShade,
-                              // isThreeLine: true,
-                              subtitle: Text("Tap to change Customer",
-                                  style: Theme.of(context).textTheme.bodySmall),
-                              onTap: () => Get.toNamed(ShowCustomersForSale.path),
-                              title: Text(
-                                  "Customer: ${controller.selectedCustomer.value!.name}\n(+91-${controller.selectedCustomer.value!.contact})"),
-                              trailing: IconButton(
-                                onPressed: () => controller.selectedCustomer.value = Customer(),
-                                icon: const Icon(Icons.cancel),
-                              ),
-                            ),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Obx(
-                      () => controller.selectedItems.isEmpty
-                          ? MyDottedBorderWidget(
-                              child: ListTile(
-                                title: const Text("Select Items"),
-                                onTap: () => Get.toNamed(ShowItemsForSale.path),
-                              ),
-                            )
-                          : ExpansionTile(
-                              backgroundColor: Colors.grey.shade300,
-                              // trailing: IconButton(
-                              //   onPressed: () => Get.toNamed('/showItemsToSale'),
-                              //   icon: const Icon(Icons.add),
-                              // ),
-                              subtitle:
-                                  Obx(() => Text("Total is ${Utils.parseInINR(controller.subTotal.value)}")),
-                              initiallyExpanded: true,
-                              title: Text(
-                                "${controller.selectedItems.length} Items are selected",
-                              ),
-                              trailing: OutlinedButton.icon(
-                                onPressed: () => Get.toNamed(ShowItemsForSale.path),
-                                icon: const Icon(Icons.add),
-                                label: const Text("Add more"),
-                              ),
-                              children: [
-                                GetBuilder<AddSalesController>(
-                                  init: AddSalesController(),
-                                  initState: (_) {},
-                                  builder: (_) {
-                                    return ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: _.selectedItems.length,
-                                      itemBuilder: (context, index) {
-                                        Map _item = _.selectedItems[index];
-                                        return SlidableWidget(
-                                          onDismissed: () => _.removeFromSelectedItems(_item),
-                                          child: CartItemTile(
-                                            onIncrease: () => _.increaseQuantity(index),
-                                            onDecrease: () => _.decreaseQuantity(index),
-                                            mrp: 5.0,
-                                            quantity: _item['qty'] ?? 00,
-                                            name: _item['name'] ?? "Null name",
-                                            price: _item['mrp'] ?? "Rs.0",
-
-                                            // title: Text(_item.itemName),
-                                            // trailing: Text(Utils.parseInINR(_item.unitPrice)),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
+                    child: Card(
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
+                      child: Obx(
+                        () => controller.selectedItems.isEmpty
+                            ? MyDottedBorderWidget(
+                                child: ListTile(
+                                  title: const Text("Select Items"),
+                                  onTap: () => Get.toNamed(ShowItemsForSale.path),
                                 ),
-                              ],
-                            ),
+                              )
+                            : ExpansionTile(
+                                backgroundColor: Colors.grey.shade300,
+                                // trailing: IconButton(
+                                //   onPressed: () => Get.toNamed('/showItemsToSale'),
+                                //   icon: const Icon(Icons.add),
+                                // ),
+                                subtitle: Obx(
+                                    () => Text("Total is ${Utils.parseInINR(controller.subTotal.value)}")),
+                                initiallyExpanded: true,
+                                title: Text(
+                                  "${controller.selectedItems.length} Items are selected",
+                                ),
+                                trailing: OutlinedButton.icon(
+                                  onPressed: () => Get.toNamed(ShowItemsForSale.path),
+                                  icon: const Icon(Icons.add),
+                                  label: const Text("Add more"),
+                                ),
+                                children: [
+                                  GetBuilder<AddSalesController>(
+                                    init: AddSalesController(),
+                                    initState: (_) {},
+                                    builder: (_) {
+                                      return ListView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: _.selectedItems.length,
+                                        itemBuilder: (context, index) {
+                                          Map _item = _.selectedItems[index];
+                                          return SlidableWidget(
+                                            onDismissed: () => _.removeFromSelectedItems(_item),
+                                            child: CartItemTile(
+                                              onIncrease: () => _.increaseQuantity(index),
+                                              onDecrease: () => _.decreaseQuantity(index),
+                                              mrp: 5.0,
+                                              quantity: _item['qty'] ?? 00,
+                                              name: _item['name'] ?? "Null name",
+                                              price: _item['mrp'] ?? "Rs.0",
+
+                                              // title: Text(_item.itemName),
+                                              // trailing: Text(Utils.parseInINR(_item.unitPrice)),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                      ),
                     ),
                   ),
                   Obx(
@@ -146,29 +152,34 @@ class AddSales extends GetWidget<AddSalesController> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
-                                          children: [
-                                            const Text('%'),
-                                            Obx(
-                                              () => Switch(
-                                                value: controller.finalDiscountType_isValue.value,
-                                                onChanged: (value) {
-                                                  controller.finalDiscountType_isValue.value = value;
-                                                },
-                                              ),
-                                            ),
-                                            const Text('Rs'),
-                                          ],
-                                        ),
-                                        GestureDetector(
-                                          onTap: () => controller.updateDiscount(),
-                                          child: Obx(() => MyDottedBorderWidget(
-                                                child: Text(
-                                                  "Discount: - ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
-                                                  textAlign: TextAlign.end,
-                                                  style: Theme.of(context).textTheme.titleMedium,
-                                                ),
-                                              )),
+                                        // Row(
+                                        //   children: [
+                                        //     const Text('%'),
+                                        //     Obx(
+                                        //       () => Switch(
+                                        //         value: controller.finalDiscountType_isValue.value,
+                                        //         onChanged: (value) {
+                                        //           controller.finalDiscountType_isValue.value = value;
+                                        //         },
+                                        //       ),
+                                        //     ),
+                                        //     const Text('Rs'),
+                                        //   ],
+                                        // ),
+                                        const SizedBox.shrink(),
+                                        Card(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(Radius.zero)),
+                                          child: GestureDetector(
+                                            onTap: () => controller.updateDiscount(),
+                                            child: Obx(() => MyDottedBorderWidget(
+                                                  child: Text(
+                                                    "Discount: - ${Utils.parseInINR(controller.discount.value)} ${controller.finalDiscountType_isValue.value ? "Rs" : "%"}",
+                                                    textAlign: TextAlign.end,
+                                                    style: Theme.of(context).textTheme.titleMedium,
+                                                  ),
+                                                )),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -189,61 +200,63 @@ class AddSales extends GetWidget<AddSalesController> {
                         : const SizedBox.shrink(),
                   ),
                   Obx(
-                    () => ListTile(
-                      selectedTileColor: Colors.grey.shade300,
-                      selected: true,
-                      leading: Icon(
-                        controller.payType.value == PaymentType.card
-                            ? Icons.credit_card
-                            : Icons.currency_exchange_sharp,
-                      ),
-                      onTap: () => Get.defaultDialog(
-                        title: "Select a payment Method:",
-                        contentPadding: const EdgeInsets.all(10),
-                        titlePadding: const EdgeInsets.all(10),
-                        content: Wrap(
-                          alignment: WrapAlignment.center,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: OutlinedButton.icon(
-                                onPressed: () {
-                                  controller.payType.value = PaymentType.card;
-                                  Get.back();
-                                },
-                                icon: const Icon(Icons.credit_card),
-                                label: const Text("Credit/Debit Card"),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: OutlinedButton.icon(
-                                onPressed: () {
-                                  controller.payType.value = PaymentType.cash;
-                                  Get.back();
-                                },
-                                icon: const Icon(Icons.currency_rupee_rounded),
-                                label: const Text("Cash"),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: OutlinedButton.icon(
-                                onPressed: () {
-                                  controller.payType.value = PaymentType.upi;
-                                  Get.back();
-                                },
-                                icon: const Icon(Icons.system_update_outlined),
-                                label: const Text("UPI"),
-                              ),
-                            ),
-                          ],
+                    () => Card(
+                      child: ListTile(
+                        selectedTileColor: Colors.grey.shade300,
+                        selected: true,
+                        leading: Icon(
+                          controller.payType.value == PaymentType.card
+                              ? Icons.credit_card
+                              : Icons.currency_exchange_sharp,
                         ),
+                        onTap: () => Get.defaultDialog(
+                          title: "Select a payment Method:",
+                          contentPadding: const EdgeInsets.all(10),
+                          titlePadding: const EdgeInsets.all(10),
+                          content: Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    controller.payType.value = PaymentType.card;
+                                    Get.back();
+                                  },
+                                  icon: const Icon(Icons.credit_card),
+                                  label: const Text("Credit/Debit Card"),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    controller.payType.value = PaymentType.cash;
+                                    Get.back();
+                                  },
+                                  icon: const Icon(Icons.currency_rupee_rounded),
+                                  label: const Text("Cash"),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    controller.payType.value = PaymentType.upi;
+                                    Get.back();
+                                  },
+                                  icon: const Icon(Icons.system_update_outlined),
+                                  label: const Text("UPI"),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // title: Text("Payment Mode -  Selected ${controller.payType.value}"),
+                        title: Text("${controller.payType.value}"),
+                        // subtitle: Text("Selected Payment Type ${controller.payType.value}"),
                       ),
-                      // title: Text("Payment Mode -  Selected ${controller.payType.value}"),
-                      title: Text("${controller.payType.value}"),
-                      // subtitle: Text("Selected Payment Type ${controller.payType.value}"),
                     ),
                   ),
                   // DropdownButton(items: DropdownMenuItem['',''], onChanged: (_val){})

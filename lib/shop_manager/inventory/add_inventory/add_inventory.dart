@@ -211,7 +211,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                         firstDate: DateTime(2010),
                         lastDate: DateTime(2030),
                       );
-                      controller.itemExpCtr.text = Utils.formatDate(await _exp ?? DateTime.now());
+                      controller.itemExpCtr.text = (await _exp ?? DateTime.now()).toString();
                     },
                     label: "Expiry",
                     hint: 'MMMDD-YYYY',
@@ -222,6 +222,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     label: "HSN",
                     hint: 'HSN Code',
                     controller: controller.hsnCtr,
+                    numbersOnly: true,
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                     textCapitalization: TextCapitalization.characters,
                   ),

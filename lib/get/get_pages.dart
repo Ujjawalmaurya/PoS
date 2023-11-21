@@ -59,13 +59,13 @@ class Routes {
     ),
     GetPage(
       name: MyProfile.path,
-      page: () => MyProfile(),
+      page: () => const MyProfile(),
       binding: MyProfileBinding(),
     ),
 
     GetPage(
       name: AddSales.path,
-      page: () => AddSales(),
+      page: () => const AddSales(),
       binding: AddSalesBinding(),
     ),
 
@@ -101,7 +101,7 @@ class Routes {
     ),
     GetPage(
       name: ManageUser.path,
-      page: () => ManageUser(),
+      page: () => const ManageUser(),
       binding: ManageUserBindings(),
     ),
     GetPage(

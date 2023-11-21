@@ -294,6 +294,7 @@ class APIServices {
       if (res.statusCode == 200) {
         showSnackbar("Succeed", "Deleted successfully");
       } else {
+        failedSnackbar("Customer NOT Deleted", "Failed to delete customer");
         throw Exception('response not oke while deleting: res:${res.statusCode}');
       }
     } catch (e) {
@@ -308,8 +309,9 @@ class APIServices {
     try {
       var res = await http.delete(uri, headers: BaseURL.authHeader);
       if (res.statusCode == 200) {
-        showSnackbar("Succeed", "Deleted successfully");
+        notifyUser("Succeed", "Deleted successfully");
       } else {
+        failedSnackbar("Supplier NOT Deleted", "Failed to delete due to some error");
         throw Exception('response not oke while deleting: res:${res.statusCode}');
       }
     } catch (e) {

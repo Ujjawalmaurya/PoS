@@ -86,6 +86,8 @@ class Parties extends GetWidget<PartyController> {
                           itemBuilder: (context, index) {
                             var _data = _.vendors[index];
                             return SupplierTile(
+                              gstNumber: "GST54DF587SD82SD7",
+                              ownerName: "Owner",
                               name: _data.supplierName.toString(),
                               businessName: "${_data.businessName}",
                               onTap: () => controller.showVendorInfo(_data),

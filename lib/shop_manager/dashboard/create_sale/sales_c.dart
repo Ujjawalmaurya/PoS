@@ -13,7 +13,7 @@ import 'package:pos/src/widgets/notify_snackbar.dart';
 enum PaymentType { cash, upi, card }
 
 class AddSalesController extends GetxController {
-  RxBool finalDiscountType_isValue = false.obs;
+  RxBool finalDiscountType_isValue = true.obs;
   final selectedCustomer = Rxn<Customer>();
   RxList selectedItems = [].obs;
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
 import 'package:pos/shop_manager/parties/add_party/add_parties.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
 import 'package:pos/src/widgets/search_field.dart';
 
 class ShowCustomersForSale extends GetWidget<AddSalesController> {
@@ -24,14 +25,18 @@ class ShowCustomersForSale extends GetWidget<AddSalesController> {
                 itemCount: controller.partyController.customers.length,
                 itemBuilder: (context, index) {
                   var customer = controller.partyController.customers[index];
-                  return ListTile(
-                    title: Text(customer.name.toString()),
-                    trailing: Text(customer.contact.toString()),
-                    subtitle: Text(customer.address.toString()),
-                    onTap: () {
-                      controller.selectedCustomer.value = controller.partyController.customers[index];
-                      Get.back();
-                    },
+                  return Card(
+                    child: ListTile(
+                      leading: const NetworkImageLoader(image: 'https://robohash.org/odioquivero.png'),
+                      isThreeLine: true,
+                      title: Text(customer.name.toString()),
+                      trailing: Text(customer.contact.toString()),
+                      subtitle: Text(customer.address.toString()),
+                      onTap: () {
+                        controller.selectedCustomer.value = controller.partyController.customers[index];
+                        Get.back();
+                      },
+                    ),
                   );
                 }),
           ),

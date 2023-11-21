@@ -40,6 +40,12 @@ class TabOne extends GetWidget<HomeController> {
             decoration: const InputDecoration(border: InputBorder.none, fillColor: Colors.transparent),
             onSaved: (nV) {},
             value: controller.businesses[0],
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+            dropdownColor: Theme.of(context).colorScheme.background,
+            alignment: Alignment.topLeft,
             items: controller.businesses.map((String business) {
               return DropdownMenuItem(
                 value: business,
@@ -94,6 +100,7 @@ class TabOne extends GetWidget<HomeController> {
                         initState: (_) {},
                         builder: (_) {
                           return SegmentedButton(
+                            style: const ButtonStyle(elevation: MaterialStatePropertyAll(15)),
                             showSelectedIcon: false,
                             segments: const <ButtonSegment<callAnAction>>[
                               ButtonSegment<callAnAction>(
@@ -161,6 +168,7 @@ class TabOne extends GetWidget<HomeController> {
                       ),
                     ),
                     OutlinedButton(
+                      // style: ButtonStyle(elevation: MaterialStatePropertyAll(5)),
                       onPressed: () => controller.moreOptionsBbottomSheet(
                           context,
                           controller.actionType == callAnAction.sale

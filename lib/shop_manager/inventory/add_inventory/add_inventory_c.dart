@@ -99,7 +99,7 @@ class AddInventoryController extends GetxController {
       "sgst": sgstCtr.text,
       "discQty": discountQtyCtr.text,
       "discountPerProduct": discountCtr.text,
-      "hsn": hsnCtr.text,
+      "hsn": int.parse(hsnCtr.text),
       "loc": "LOC",
       "mrp": mrpCtr.text,
       "quantityChild": 0,

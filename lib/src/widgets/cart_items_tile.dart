@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/lazy_network_image.dart';
-import 'package:pos/src/widgets/party_tiles.dart';
 
 class CartItemTile extends StatelessWidget {
   const CartItemTile({
@@ -40,16 +37,19 @@ class CartItemTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 5, bottom: 5, right: 8, top: 5),
-                        child: NetworkImageLoader(image: imageURL),
+                        child: NetworkImageLoader(image: imageURL, height: 60, width: 50),
                         // Image.network(
                         //   imageURL,
                         //   height: 50,
@@ -58,58 +58,43 @@ class CartItemTile extends StatelessWidget {
                         // ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.3,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(name, style: Theme.of(context).textTheme.titleMedium),
                             Text(
-                              name,
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              description,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodySmall,
                             ),
-                            // Text(
-                            //   description,
-                            //   style: Theme.of(context).textTheme.bodySmall,
-                            // ),
                           ],
                         ),
                       ),
                       Container(
-                        // width: 60,
                         padding: const EdgeInsets.all(3),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Theme.of(context).primaryColor,
                         ),
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             InkWell(
                               onTap: onDecrease,
-                              child: const Icon(
-                                Icons.remove,
-                                color: Colors.white,
-                                size: 18,
-                              ),
+                              child: const Icon(Icons.remove, color: Colors.white, size: 18),
                             ),
                             Container(
                               margin: const EdgeInsets.symmetric(horizontal: 5),
                               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                               decoration:
                                   BoxDecoration(borderRadius: BorderRadius.circular(3), color: Colors.white),
-                              child: Text(
-                                "$quantity",
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                              ),
+                              child: Text("$quantity", style: Theme.of(context).textTheme.bodyLarge),
                             ),
                             InkWell(
                               onTap: onIncrease,
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                                size: 18,
-                              ),
+                              child: const Icon(Icons.add, color: Colors.white, size: 18),
                             ),
                           ],
                         ),

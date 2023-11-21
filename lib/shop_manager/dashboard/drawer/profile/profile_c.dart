@@ -1,20 +1,39 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:http/http.dart' as http;
 
 class MyProfileController extends GetxController {
+  final profileFormKey = GlobalKey<FormState>();
   //
 
   // Map body = {};
   // RxBool isLoading = false.obs;
 
+  TextEditingController storeNameCrt = TextEditingController();
+  TextEditingController emailCtr = TextEditingController();
+  TextEditingController numberCtr = TextEditingController();
+  TextEditingController businessAddCtr = TextEditingController();
+//   TextEditingController _Ctr = TextEditingController();
+//   TextEditingController _Ctr = TextEditingController();
+// TextEditingController _Ctr = TextEditingController();
+
   @override
-  void onInit() {
-    getProfile();
+  void onInit() async {
+    getProfile().then((value) {
+      //
+      // storeNameCrt.text = value['businessDetails']['name'];
+      storeNameCrt.text = "Some business Name";
+      emailCtr.text = value['email'];
+      numberCtr.text = value['mobile'];
+      // businessAddCtr.text = value['businessDetails']['address'];
+      businessAddCtr.text = "Some Business Address";
+      // storeNameCrt.text = value['name'];
+    });
     super.onInit();
   }
 

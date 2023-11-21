@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/shop_manager/parties/customer_model.dart';
 import 'package:pos/src/services/apiServices.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
 
 enum Type { customer, supplier }
 
@@ -41,22 +42,33 @@ class PartyController extends GetxController {
   Future showCustomerInfo(Customer customerInfo) {
     return Get.defaultDialog(
       title: customerInfo.name.toString(),
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Contact: ${customerInfo.contact}"),
-          Text("Email: ${customerInfo.email}"),
-          Text("Address: ${customerInfo.address}"),
-        ],
+      content: SizedBox(
+        width: Get.width * 0.9,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Align(
+              alignment: Alignment.center,
+              child: NetworkImageLoader(
+                height: 120,
+                width: 120,
+                image: "https://robohash.org/odioquivero.png",
+              ),
+            ),
+            Text("Contact: ${customerInfo.contact}"),
+            Text("Email: ${customerInfo.email}"),
+            Text("Address: ${customerInfo.address}"),
+          ],
+        ),
       ),
       titlePadding: const EdgeInsets.symmetric(vertical: 10),
-      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      contentPadding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
       actions: [
-        OutlinedButton(
-          onPressed: () {},
-          child: const Text("Update Customer"),
-        ),
+        // OutlinedButton(
+        //   onPressed: () {},
+        //   child: const Text("Update Customer"),
+        // ),
         ElevatedButton(
           style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.red),
@@ -91,29 +103,41 @@ class PartyController extends GetxController {
 
     return Get.defaultDialog(
       title: "Supplier Details",
-      content: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Chip(label: Text("Supplier")),
-          Text("Name: ${vendorInfo.supplierName}"),
-          Text("Contact: ${vendorInfo.supplierNumber}"),
-          const Chip(label: Text("Business")),
-          Text("Name: ${vendorInfo.businessName}"),
-          Text("Owner: ${vendorInfo.businessOwner}"),
-          Text("Email: ${vendorInfo.businessEmail}"),
-          Text("Address: ${vendorInfo.businessAddress}"),
-          Text("GST Number: ${vendorInfo.gstNumber}"),
-          Text("Drug License: ${vendorInfo.drugLicense}"),
-        ],
+      content: SizedBox(
+        width: Get.width * 0.95,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Align(
+              alignment: Alignment.center,
+              child: NetworkImageLoader(
+                height: 100,
+                width: 100,
+                image: "https://robohash.org/ujjawal",
+              ),
+            ),
+            const Chip(label: Text("Supplier")),
+            Text("Name: ${vendorInfo.supplierName}"),
+            Text("Contact: ${vendorInfo.supplierNumber}"),
+            const Chip(label: Text("Business")),
+            Text("Name: ${vendorInfo.businessName}"),
+            Text("Owner: ${vendorInfo.businessOwner}"),
+            Text("Email: ${vendorInfo.businessEmail}"),
+            Text("Address: ${vendorInfo.businessAddress}"),
+            Text("GST Number: ${vendorInfo.gstNumber}"),
+            Text("Drug License: ${vendorInfo.drugLicense}"),
+          ],
+        ),
       ),
       titlePadding: const EdgeInsets.symmetric(vertical: 10),
-      contentPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+      contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       actions: [
-        OutlinedButton(
-          onPressed: () {},
-          child: const Text("Update Supplier"),
-        ),
+        // OutlinedButton(
+        //   onPressed: () {},
+        //   child: const Text("Update Supplier"),
+        // ),
         ElevatedButton(
           style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.red),
