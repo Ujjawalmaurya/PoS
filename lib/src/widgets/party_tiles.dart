@@ -23,12 +23,12 @@ class CustomerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(vertical: 18, horizontal: 5),
+      child: ListTile(
+        // tilePadding: EdgeInsets.symmetric(vertical: 18, horizontal: 5),
         // return ExpansionTile(
 
-        // onTap: onTap,
-        // isThreeLine: true,
+        onTap: onTap,
+        isThreeLine: true,
         leading: NetworkImageLoader(image: image),
         title: Text(name, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Text(subtitle ?? "${Utils.formatDate(DateTime.now())}",
@@ -50,11 +50,11 @@ class CustomerTile extends StatelessWidget {
                 icon: const Icon(Icons.more_vert_outlined))
           ],
         ),
-        children: const [
-          ListTile(title: Text("Recent transaction 01")),
-          ListTile(title: Text("Recent transaction 02")),
-          ListTile(title: Text("Recent transaction 03")),
-        ],
+        // children: const [
+        //   ListTile(title: Text("Recent transaction 01")),
+        //   ListTile(title: Text("Recent transaction 02")),
+        //   ListTile(title: Text("Recent transaction 03")),
+        // ],
       ),
     );
   }

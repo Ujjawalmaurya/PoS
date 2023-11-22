@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/shop_manager/dashboard/create_purchase/purchase_c.dart';
@@ -7,7 +8,6 @@ import 'package:pos/shop_manager/parties/vendor_model.dart';
 import 'package:pos/shop_manager/parties/party_c.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
-import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
 class AddPurchase extends GetWidget<PurchaseController> {
@@ -91,56 +91,61 @@ class AddPurchase extends GetWidget<PurchaseController> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
-                      child: MyDottedBorderWidget(
-                        child: ListTile(
-                          title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
-                          // isThreeLine: true,
-                          subtitle: Text(_.selectedVendor.businessName ?? ''),
-                          onTap: () {
-                            Get.bottomSheet(
-                              BottomSheet(
-                                onClosing: () {},
-                                builder: (context) {
-                                  PartyController partyController = Get.find<PartyController>();
-                                  return SingleChildScrollView(
-                                    physics: const AlwaysScrollableScrollPhysics(),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "Select suppliers",
-                                            style: Theme.of(context).textTheme.titleLarge,
+                      child: _.selectedVendor != Vendor()
+                          ? MyDottedBorderWidget(
+                              child: ListTile(
+                                title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
+                                // isThreeLine: true,
+                                subtitle: Text(_.selectedVendor.businessName ?? ''),
+                                onTap: () {
+                                  Get.bottomSheet(
+                                    BottomSheet(
+                                      onClosing: () {},
+                                      builder: (context) {
+                                        PartyController partyController = Get.find<PartyController>();
+                                        return SingleChildScrollView(
+                                          physics: const AlwaysScrollableScrollPhysics(),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "Select suppliers",
+                                                  style: Theme.of(context).textTheme.titleLarge,
+                                                ),
+                                              ),
+                                              ListView.separated(
+                                                shrinkWrap: true,
+                                                itemCount: partyController.vendors.length,
+                                                separatorBuilder: (c, i) =>
+                                                    const Divider(color: Colors.black),
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                itemBuilder: (context, index) {
+                                                  Vendor _data = partyController.vendors[index];
+                                                  return ListTile(
+                                                    // isThreeLine: true,
+                                                    title: Text(_data.supplierName.toString()),
+                                                    subtitle: Text(_data.businessName.toString()),
+                                                    onTap: () {
+                                                      _.updateSupplierSelection(_data);
+                                                      log("${controller.selectedVendor.supplierName} Selected");
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        ListView.separated(
-                                          separatorBuilder: (c, i) => const Divider(color: Colors.black),
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: partyController.vendors.length,
-                                          itemBuilder: (context, index) {
-                                            Vendor _data = partyController.vendors[index];
-                                            return ListTile(
-                                              // isThreeLine: true,
-                                              title: Text(_data.supplierName.toString()),
-                                              subtitle: Text(_data.businessName.toString()),
-                                              onTap: () {
-                                                _.updateSupplierSelection(_data);
-                                                log("${controller.selectedVendor.supplierName} Selected");
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ],
+                                        );
+                                      },
                                     ),
                                   );
                                 },
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                            )
+                          : ListTile(
+                              title: Text("DATAAAAA"),
+                            ),
                     ),
                   );
                 },
@@ -150,9 +155,11 @@ class AddPurchase extends GetWidget<PurchaseController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Add items", style: Theme.of(context).textTheme.headlineSmall),
-                    IconButton(
-                      icon: const Icon(Icons.plus_one_outlined),
+                    Obx(() => Text("${controller.items.length} item(s)",
+                        style: Theme.of(context).textTheme.headlineSmall)),
+                    OutlinedButton.icon(
+                      label: const Text("Add more"),
+                      icon: const Icon(Icons.add_circle_outline_sharp),
                       onPressed: () {
                         controller.items.add({});
                       },
@@ -176,25 +183,36 @@ class AddPurchase extends GetWidget<PurchaseController> {
                           child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
+                            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                             itemCount: controller.items.length,
-                            itemBuilder: (c, i) => PoSInputField(
-                              validator: (_v) {
-                                return _v!.trim() == '' ? "Required" : null;
-                              },
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  // TODO: Remove
-                                  controller.items.remove(controller.items[i]);
-                                },
-                                icon: const Icon(Icons.highlight_remove),
-                              ),
-                              label: "Add ${i + 1} Item",
-                              hint: "Name",
-                              onChanged: (value) {
-                                controller.items[i]['itemName'] = value;
-                                log("${controller.items}");
-                              },
-                            ),
+                            itemBuilder: (c, i) {
+                              var data = controller.items[i];
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  validator: (_v) {
+                                    return _v!.trim() == '' ? "Name is required" : null;
+                                  },
+                                  // controller: controller.txtControllers[i],
+                                  decoration: InputDecoration(
+                                    hintText: "Item name",
+                                    label: Text("Item ${i + 1}"),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        controller.items.remove(data);
+                                        log(controller.items.toString());
+                                      },
+                                      color: Theme.of(context).colorScheme.primary,
+                                      icon: const Icon(Icons.cancel_outlined),
+                                    ),
+                                  ),
+                                  onChanged: (_v) {
+                                    controller.items[i]['name'] = _v;
+                                    log(controller.items.toString());
+                                  },
+                                ),
+                              );
+                            },
                           ),
                         ),
                 ),

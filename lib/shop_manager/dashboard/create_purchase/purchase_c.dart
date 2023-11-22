@@ -9,6 +9,8 @@ class PurchaseController extends GetxController {
 
   final purchaseFormKey = GlobalKey<FormState>();
 
+  // RxList<TextEditingController> txtControllers = <TextEditingController>[].obs;
+
   InventoryController inventoryController = Get.find<InventoryController>();
   RxList<Map> items = <Map>[].obs;
 
