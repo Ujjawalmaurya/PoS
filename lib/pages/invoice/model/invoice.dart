@@ -1,4 +1,4 @@
-import 'package:pos/shop_manager/parties/customer_model.dart';
+import 'package:pos/pages/parties/customer_model.dart';
 
 import 'supplier.dart';
 

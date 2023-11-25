@@ -4,19 +4,20 @@ import 'package:pos/pages/login.dart';
 import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
 import 'package:pos/pages/signup.dart';
-import 'package:pos/shop_manager/dashboard/create_purchase/add_purchase.dart';
-import 'package:pos/shop_manager/dashboard/create_sale/add_sales.dart';
-import 'package:pos/shop_manager/dashboard/create_sale/show_customers.dart';
-import 'package:pos/shop_manager/dashboard/create_sale/show_items_for_sale.dart';
-import 'package:pos/shop_manager/dashboard/drawer/about_us.dart';
-import 'package:pos/shop_manager/dashboard/drawer/account_settings.dart';
-import 'package:pos/shop_manager/dashboard/drawer/invoice_settings.dart';
-import 'package:pos/shop_manager/dashboard/drawer/manage_user/manage_users.dart';
-import 'package:pos/shop_manager/dashboard/drawer/profile/profile.dart';
-import 'package:pos/shop_manager/inventory/add_inventory/add_inventory.dart';
-import 'package:pos/shop_manager/marketing/marketing.dart';
-import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
-import 'package:pos/shop_manager/parties/add_party/add_parties.dart';
+import 'package:pos/pages/dashboard/create_purchase/add_item_details.dart';
+import 'package:pos/pages/dashboard/create_purchase/add_purchase.dart';
+import 'package:pos/pages/dashboard/create_sale/add_sales.dart';
+import 'package:pos/pages/dashboard/create_sale/show_customers.dart';
+import 'package:pos/pages/dashboard/create_sale/show_items_for_sale.dart';
+import 'package:pos/pages/dashboard/drawer/about_us.dart';
+import 'package:pos/pages/dashboard/drawer/account_settings.dart';
+import 'package:pos/pages/dashboard/drawer/invoice_settings.dart';
+import 'package:pos/pages/dashboard/drawer/manage_user/manage_users.dart';
+import 'package:pos/pages/dashboard/drawer/profile/profile.dart';
+import 'package:pos/pages/inventory/add_inventory/add_inventory.dart';
+import 'package:pos/pages/marketing/marketing.dart';
+import 'package:pos/pages/page_with_bottom_navbar.dart';
+import 'package:pos/pages/parties/add_party/add_parties.dart';
 // import 'package:pos/shop_owner/shop_owner.dart';
 
 class Routes {
@@ -88,6 +89,11 @@ class Routes {
       name: AddPurchase.path,
       page: () => const AddPurchase(),
       binding: PurchaseBindings(),
+    ),
+    GetPage(
+      name: PutItemDetails.path,
+      page: () => PutItemDetails(),
+      // binding: PurchaseBindings(),
     ),
     GetPage(
       name: InvoiceSettings.path,

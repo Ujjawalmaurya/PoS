@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/signup.dart';
-import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
+import 'package:pos/pages/page_with_bottom_navbar.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/utils/storage_keys.dart';

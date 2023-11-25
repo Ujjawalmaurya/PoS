@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:pos/shop_manager/navbar_c.dart';
+import 'package:pos/pages/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 

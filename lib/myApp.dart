@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/get/get_pages.dart';
 import 'package:pos/pages/login.dart';
-import 'package:pos/shop_manager/page_with_bottom_navbar.dart';
+import 'package:pos/pages/page_with_bottom_navbar.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 import 'package:pos/src/utils/theme/theme.dart';

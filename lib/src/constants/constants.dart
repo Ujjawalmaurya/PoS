@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:pos/shop_manager/navbar_c.dart';
+import 'package:pos/pages/navbar_c.dart';
 
 String formatDate(DateTime dateTime) {
   return DateFormat.yMMMMd('en_US').format(dateTime).toString();

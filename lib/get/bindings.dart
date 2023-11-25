@@ -1,17 +1,17 @@
 import 'package:get/get.dart';
 import 'package:pos/pages/otp/otp_c.dart';
-import 'package:pos/shop_manager/dashboard/create_purchase/purchase_c.dart';
-import 'package:pos/shop_manager/dashboard/create_sale/sales_c.dart';
-import 'package:pos/shop_manager/dashboard/drawer/profile/profile_c.dart';
-import 'package:pos/shop_manager/dashboard/home_c.dart';
-import 'package:pos/shop_manager/inventory/add_inventory/add_inventory_c.dart';
-import 'package:pos/shop_manager/inventory/inventory_c.dart';
-import 'package:pos/shop_manager/marketing/marketing_c.dart';
-import 'package:pos/shop_manager/navbar_c.dart';
-import 'package:pos/shop_manager/parties/add_party/add_party_c.dart';
-import 'package:pos/shop_manager/parties/party_c.dart';
+import 'package:pos/pages/dashboard/create_purchase/purchase_c.dart';
+import 'package:pos/pages/dashboard/create_sale/sales_c.dart';
+import 'package:pos/pages/dashboard/drawer/profile/profile_c.dart';
+import 'package:pos/pages/dashboard/home_c.dart';
+import 'package:pos/pages/inventory/add_inventory/add_inventory_c.dart';
+import 'package:pos/pages/inventory/inventory_c.dart';
+import 'package:pos/pages/marketing/marketing_c.dart';
+import 'package:pos/pages/navbar_c.dart';
+import 'package:pos/pages/parties/add_party/add_party_c.dart';
+import 'package:pos/pages/parties/party_c.dart';
 
-import '../shop_manager/dashboard/drawer/manage_user/manage_user_c.dart';
+import '../pages/dashboard/drawer/manage_user/manage_user_c.dart';
 
 class BottomNavigationBarBinding implements Bindings {
   @override
