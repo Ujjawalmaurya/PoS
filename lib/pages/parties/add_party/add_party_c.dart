@@ -54,7 +54,7 @@ class AddPartyController extends GetxController {
     var response = jsonDecode(_res.body);
     log("RES=> $response");
 
-    showSnackbar('Response', response.toString());
+    Snackbar.quickAlert('Response', response.toString());
     partyController.getCustomers();
   }
 
@@ -74,7 +74,7 @@ class AddPartyController extends GetxController {
       vGST.text,
     );
     var response = jsonDecode(_res.body);
-    showSnackbar("Response", response.toString());
+    Snackbar.quickAlert("Response", response.toString());
     partyController.getVendors();
   }
 } // END

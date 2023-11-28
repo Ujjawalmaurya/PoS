@@ -8,18 +8,70 @@ class PurchaseController extends GetxController {
   Vendor selectedVendor = Vendor();
 
   final purchaseFormKey = GlobalKey<FormState>();
+  final purchaseItemsFormKey = GlobalKey<FormState>();
 
   // RxList<TextEditingController> txtControllers = <TextEditingController>[].obs;
 
   InventoryController inventoryController = Get.find<InventoryController>();
   RxList<Map> items = <Map>[].obs;
+  // {
+  //   'itemName': '',
+  //   'mrp': '',
+  //   'rate': '',
+  //   'qty': '',
+  //   'category': '',
+  //   'subcategory': '',
+  //   'discount': '',
+  //   'discountQTY': '',
+  //   'cd': '',
+  //   'td': '',
+  //   'cgst': '',
+  //   'sgst': '',
+  //   'expiry': '',
+  //   'hsn': '',
+  //   'batch': '',
+  //   'packsize': '',
+  //   'manufacturer': '',
+  // }
 
-  TextEditingController dateTxtCtr = TextEditingController();
-  TextEditingController itemName = TextEditingController();
-  TextEditingController mrp = TextEditingController();
-  TextEditingController gst = TextEditingController();
-  // TextEditingController dateTxtCtr = TextEditingController();
-  // TextEditingController dateTxtCtr = TextEditingController();
+  Map singleItemData = {};
+
+  TextEditingController itemNameTextCtr = TextEditingController();
+  TextEditingController mrpTextCtr = TextEditingController();
+  TextEditingController expDateTxtCtr = TextEditingController();
+  TextEditingController gstTextCtr = TextEditingController();
+  TextEditingController rateTextCtr = TextEditingController();
+  TextEditingController qtyTextCtr = TextEditingController();
+  TextEditingController cdTextCtr = TextEditingController();
+  TextEditingController tdTextCtr = TextEditingController();
+  TextEditingController cgstTextCtr = TextEditingController();
+  TextEditingController sgstTextCtr = TextEditingController();
+  TextEditingController hsnTextCtr = TextEditingController();
+  TextEditingController batchTextCtr = TextEditingController();
+  TextEditingController packSizeTextCtr = TextEditingController();
+  TextEditingController manufacturerTextCtr = TextEditingController();
+  TextEditingController discountTextCtr = TextEditingController();
+  TextEditingController discountQtyTextCtr = TextEditingController();
+  // TextEditingController TextCtr = TextEditingController();
+  void clearFormFields() {
+    itemNameTextCtr.clear();
+    mrpTextCtr.clear();
+    expDateTxtCtr.clear();
+    gstTextCtr.clear();
+    rateTextCtr.clear();
+    qtyTextCtr.clear();
+    cdTextCtr.clear();
+    tdTextCtr.clear();
+    cgstTextCtr.clear();
+    sgstTextCtr.clear();
+    hsnTextCtr.clear();
+    batchTextCtr.clear();
+    packSizeTextCtr.clear();
+    manufacturerTextCtr.clear();
+    discountTextCtr.clear();
+    discountQtyTextCtr.clear();
+    // TextEditingController TextCtr = TextEditingController();
+  }
 
   RxInt index = 0.obs;
 
@@ -36,10 +88,14 @@ class PurchaseController extends GetxController {
     "General",
     "Pharma"
   ];
+
   final List<String> subCategories = [
     'subcategory1',
     'subcategory2',
   ];
+
+  String selectedCategory = '';
+  String selectedSubCategory = '';
 
   @override
   void onInit() {

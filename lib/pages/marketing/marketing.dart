@@ -82,7 +82,7 @@ class Marketing extends GetWidget<MarketingController> {
                     ElevatedButton.icon(
                       onPressed: () => controller.textMessage.trim() != ''
                           ? controller.share()
-                          : showSnackbar("No message", "No text to share or wrong format"),
+                          : Snackbar.trigger("No message", "No text to share or wrong format"),
                       icon: const Icon(Icons.send),
                       label: const Text("Send/Share"),
                     ),

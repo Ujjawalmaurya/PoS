@@ -16,7 +16,7 @@ class RecentPurchaseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      // onTap: () {},
       title: Text(name),
       subtitle: Text("on ${dateTime ?? Utils.formatDate(DateTime.now())}"),
       trailing: Column(

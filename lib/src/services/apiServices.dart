@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:pos/shop_manager/inventory/item_Modal.dart';
 import 'package:pos/pages/navbar_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
 import 'package:pos/pages/parties/customer_model.dart';
@@ -292,13 +291,14 @@ class APIServices {
     try {
       var res = await http.delete(uri, headers: BaseURL.authHeader);
       if (res.statusCode == 200) {
-        showSnackbar("Succeed", "Deleted successfully");
+        Snackbar.trigger("Succeed", "Deleted successfully");
       } else {
-        failedSnackbar("Customer NOT Deleted", "Failed to delete customer");
+        Snackbar.failed("Customer NOT Deleted", "Failed to delete customer");
         throw Exception('response not oke while deleting: res:${res.statusCode}');
       }
     } catch (e) {
       log(e.toString());
+      Snackbar.failed("Customer NOT Deleted", "Failed to delete customer due to an error");
       throw e;
     }
   }
@@ -309,9 +309,9 @@ class APIServices {
     try {
       var res = await http.delete(uri, headers: BaseURL.authHeader);
       if (res.statusCode == 200) {
-        notifyUser("Succeed", "Deleted successfully");
+        Snackbar.trigger("Succeed", "Deleted successfully");
       } else {
-        failedSnackbar("Supplier NOT Deleted", "Failed to delete due to some error");
+        Snackbar.failed("Supplier NOT Deleted", "Failed to delete due to some error");
         throw Exception('response not oke while deleting: res:${res.statusCode}');
       }
     } catch (e) {
@@ -355,6 +355,11 @@ class APIServices {
       final _data = json.decode(res.body);
       log(_data.toString());
       log(res.statusCode.toString());
+      if (res.statusCode == 201) {
+        Snackbar.trigger("Success", "${bodyData['name']} added successfully");
+      } else {
+        Snackbar.failed("Failed", "Error while adding ${bodyData['name']} in inventory");
+      }
       return res;
     } catch (e) {
       log("Exception@AddingItem => $e");
@@ -363,7 +368,6 @@ class APIServices {
 
   // Create or Add Sale
 
-  //? Add Vendor
   static Future createSale() async {
     Map _body = {};
 

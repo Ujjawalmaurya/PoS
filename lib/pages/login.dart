@@ -69,7 +69,7 @@ void login(context) async {
 
     _bodyData["role"] != null ? Get.offAllNamed(BottomNavigationBarPage.path) : Get.offAllNamed(Login.path);
   } else {
-    notifyUser(context, "${_bodyData["message"]}");
+    Snackbar.trigger(context, "${_bodyData["message"]}");
   }
   // }
 }
@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                             // Navigate the user to the Home page
                             login(context);
                           } else {
-                            notifyUser(context, 'Please fill input');
+                            MassengerScaffold.notifyUser(context, 'Please fill input');
                           }
                         },
                         child: const Text(
@@ -175,7 +175,7 @@ class _LoginState extends State<Login> {
                               log(body['message']);
 
                               // Get.closeAllSnackbars();
-                              // showSnackbar("response", body['message']);
+                              // Snackbar.trigger("response", body['message']);
                             },
                             child: const Text("Reset"),
                           ),

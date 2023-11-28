@@ -24,7 +24,7 @@ class _ScannerState extends State<Scanner> {
     setState(() {
       _barcode = barcode.barcodes.first;
       Get.back();
-      notifyUser(context, "result: ${_barcode!.displayValue}");
+      MassengerScaffold.notifyUser(context, "result: ${_barcode!.displayValue}");
     });
   }
 

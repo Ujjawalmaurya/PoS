@@ -95,16 +95,16 @@ class MyProfileController extends GetxController {
         log(_bodyData.toString());
         return _bodyData;
       } else if (res.statusCode == 403) {
-        // showSnackbar("Alert", _bodyData['message'].toString());
+        // Snackbar.trigger("Alert", _bodyData['message'].toString());
         APIServices.refreshAccessToken(getProfile());
       } else {
-        showSnackbar("Alert", _bodyData['message']);
+        Snackbar.trigger("Alert", _bodyData['message']);
         // return AsyncError(_bodyData['message'], StackTrace.current);
         // return AsyncSnapshot.withError(ConnectionState.done, [_bodyData['message'].toString()]);
       }
     } catch (e) {
       log(e.toString());
-      showSnackbar("Error", e.toString());
+      Snackbar.trigger("Error", e.toString());
       throw Exception(e);
     }
 

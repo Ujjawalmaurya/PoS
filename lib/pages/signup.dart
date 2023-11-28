@@ -95,8 +95,8 @@ class _SignUpState extends State<SignUp> {
                               //   'token': body['verifyToken'],
                               // },
                             )
-                          : showSnackbar("ERROR", "${body['message']}");
-                      // showSnackbar(body['type'], body['message']);
+                          : Snackbar.trigger("ERROR", "${body['message']}");
+                      // Snackbar.trigger(body['type'], body['message']);
                     },
                     icon: const Icon(Icons.upcoming),
                     label: const Text("Sign up"),

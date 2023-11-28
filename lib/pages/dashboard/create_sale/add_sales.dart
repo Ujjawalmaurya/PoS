@@ -276,7 +276,7 @@ class AddSales extends GetWidget<AddSalesController> {
                           //   "Incomplete selection",
                           //   "Items or Customers are not selected properly",
                           // )
-                          notifyUser(context, "ITEMS and CUSTOMER must be selected")
+                          MassengerScaffold.notifyUser(context, "ITEMS and CUSTOMER must be selected")
                         }
                       : {
                           // ! PROCEEED

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/inventory/add_inventory/add_inventory_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
+import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
@@ -205,12 +206,12 @@ class AddInventory extends GetWidget<AddInventoryController> {
                       Future? _exp = showDatePicker(
                         initialDatePickerMode: DatePickerMode.year,
                         context: context,
-                        // currentDate: DateTime.now(),
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2010),
                         lastDate: DateTime(2030),
                       );
-                      controller.itemExpCtr.text = (await _exp ?? DateTime.now()).toString();
+                      controller.itemExpCtr.text =
+                          (Utils.formatDate(await _exp) ?? Utils.formatDate(DateTime.now()));
                     },
                     label: "Expiry",
                     hint: 'MMMDD-YYYY',
@@ -402,13 +403,6 @@ class AddInventory extends GetWidget<AddInventoryController> {
                   ),
                 ],
               ),
-
-              // ElevatedButton(onPressed: () {}, child: Text("Add Item")),
-
-              // PoSInputField(
-              //     label: "Shelf life", hint: 'xyz', suffixText: "Months", numbersOnly: true, maxLength: 3),
-              // PoSInputField(flex: 1, label: "Unit", hint: 'Unit of measurement'),
-
               const SizedBox(height: 80)
             ],
           ),

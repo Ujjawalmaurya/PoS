@@ -50,7 +50,7 @@ class ManageUserController extends GetxController {
       );
     } else {
       log(body.toString());
-      showSnackbar(body["type"], body['message']);
+      Snackbar.trigger(body["type"], body['message']);
     }
 
     //  "email": "string",

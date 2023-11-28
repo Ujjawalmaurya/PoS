@@ -76,7 +76,7 @@ pickCSVFile(context) async {
       csvListData(context, fields);
     } catch (e) {
       log(e.toString());
-      notifyUser(context, e.toString());
+      MassengerScaffold.notifyUser(context, e.toString());
       log(e.runtimeType.toString());
     }
   } else {

@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pos/pages/inventory/inventory_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
 import 'package:pos/pages/parties/party_c.dart';
 import 'package:pos/src/services/apiServices.dart';
@@ -84,13 +88,12 @@ class AddInventoryController extends GetxController {
   XFile? itemImage;
 
   void addItem() {
-    // showSnackbar("Adding Item", "API");
     final res = APIServices.addItem({
       // "id": 3,
       "name": itemNameCtr.text,
       "batchNum": batchCtr.text,
       "category": selectedCategory.value,
-      "subCategory": selectedCategory.value,
+      "subCategory": selectedSubCategory.value,
       "manufacturer": manufacturerCtr.text,
       "vendorId": selectedVendor.id,
       "cd": cdCtr.text,
@@ -110,7 +113,10 @@ class AddInventoryController extends GetxController {
       "type": "TABLET",
       "unit": "string",
       "expiry": itemExpCtr.text,
-    });
+    }).then((value) => {
+          Get.find<InventoryController>().getItems(),
+          // log("RESS ====================> \n${json.decode(value.body)}\n ====================="),
+        });
   }
 
   pickImage(context) async {

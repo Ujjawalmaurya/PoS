@@ -57,7 +57,7 @@ class Analytics extends StatelessWidget {
         itemBuilder: (context, index) {
           var _d = _data[index];
           return InkWell(
-            onTap: () => notifyUser(context, "${_d['title']} pressed"),
+            onTap: () => MassengerScaffold.notifyUser(context, "${_d['title']} pressed"),
             child: SizedBox(
               width: Get.width * 0.75,
               child: Card(

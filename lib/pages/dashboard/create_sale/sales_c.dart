@@ -136,7 +136,7 @@ class AddSalesController extends GetxController {
 
   void addToSelectedItems(Map item) {
     selectedItems.contains(item)
-        // ? showSnackbar("Item already added", 'item${item["itemName"]} is already added')
+        // ? Snackbar.trigger("Item already added", 'item${item["itemName"]} is already added')
         ? increaseQuantity(selectedItems.indexOf(item))
         : {
             selectedItems.add(item),
@@ -158,7 +158,7 @@ class AddSalesController extends GetxController {
             item['qty'] = 1,
             calculatePrice(),
           }
-        : showSnackbar("Can't Delete", "Because item never added");
+        : Snackbar.trigger("Can't Delete", "Because item never added");
   }
 
   void writeInvoice(

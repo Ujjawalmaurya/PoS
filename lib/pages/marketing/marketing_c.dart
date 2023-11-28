@@ -16,8 +16,8 @@ class MarketingController extends GetxController {
         await Share.shareWithResult(textMessage.value.trim(), subject: "Marketing Test (Paperlessly)");
 
     result.status == ShareResultStatus.success
-        ? showSnackbar("Thank you", "Thank you for using our services to market yourself")
-        : showSnackbar("Sharing failed", "Unable to share due to cancellation");
+        ? Snackbar.trigger("Thank you", "Thank you for using our services to market yourself")
+        : Snackbar.trigger("Sharing failed", "Unable to share due to cancellation");
   }
 
   shareAssetImage(String asset) async {

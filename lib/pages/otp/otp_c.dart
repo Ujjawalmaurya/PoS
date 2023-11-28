@@ -40,13 +40,13 @@ class OTPController extends GetxController {
     if (response.statusCode == 201) {
       log(body.toString());
       Get.back();
-      showSnackbar("${body['name']} added",
+      Snackbar.quickAlert("${body['name']} added",
           "E-mail: ${body['email']}, Mobile: ${body['mobile']} with Role: ${body['role']}");
       //
     } else {
       log(body.toString());
       Get.back();
-      showSnackbar(body['type'], body['message']);
+      Snackbar.trigger(body['type'], body['message']);
     }
   }
 
