@@ -78,6 +78,13 @@ class PoSAppTheme {
         ),
       ),
     ),
+    segmentedButtonTheme: const SegmentedButtonThemeData(
+      style: ButtonStyle(
+        elevation: MaterialStatePropertyAll(15),
+        enableFeedback: true,
+        // shadowColor: MaterialStatePropertyAll(Colors.amber),
+      ),
+    ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
         side: MaterialStatePropertyAll<BorderSide>(BorderSide(width: 2, color: _primarySwatch)),

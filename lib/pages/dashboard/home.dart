@@ -90,9 +90,6 @@ class TabOne extends GetWidget<HomeController> {
                 child: Column(
                   children: [
                     Analytics(),
-                    // const RecentTransactions(),
-                    // const BillInvoice(),
-                    // const SalesAndPurchases(),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GetBuilder<HomeController>(
@@ -100,7 +97,6 @@ class TabOne extends GetWidget<HomeController> {
                         initState: (_) {},
                         builder: (_) {
                           return SegmentedButton(
-                            style: const ButtonStyle(elevation: MaterialStatePropertyAll(15)),
                             showSelectedIcon: false,
                             segments: const <ButtonSegment<callAnAction>>[
                               ButtonSegment<callAnAction>(

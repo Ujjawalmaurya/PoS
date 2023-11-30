@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pos/pages/dashboard/create_purchase/add_item_details.dart';
 import 'package:pos/pages/dashboard/create_purchase/purchase_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
 import 'package:pos/pages/parties/party_c.dart';
@@ -48,7 +47,7 @@ class AddPurchase extends GetWidget<PurchaseController> {
                     numbersOnly: true,
                     suffixIcon: IconButton(
                       onPressed: () {
-                        // TODO: implementt ivoice input
+                        // TODO: implementt invoice input other than textfield
                       },
                       icon: const Icon(Icons.qr_code),
                     ),
@@ -60,7 +59,7 @@ class AddPurchase extends GetWidget<PurchaseController> {
                     validator: (_v) {
                       return _v!.trim() == '' ? "Required" : null;
                     },
-                    controller: controller.expDateTxtCtr,
+                    controller: controller.purchaseDateTxtCtr,
                     readOnly: true,
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -75,9 +74,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                         firstDate: DateTime(2010),
                         lastDate: DateTime(2030),
                       );
-                      controller.expDateTxtCtr.text = Utils.formatDate(await _date);
+                      controller.purchaseDateTxtCtr.text = Utils.formatDate(await _date ?? DateTime.now());
                     },
-                    label: "Date",
+                    label: "Purchase Date",
                     hint: "DD-MMM-YYYY",
                   ),
                 ],
@@ -128,10 +127,7 @@ class AddPurchase extends GetWidget<PurchaseController> {
                                                     // isThreeLine: true,
                                                     title: Text(_data.supplierName.toString()),
                                                     subtitle: Text(_data.businessName.toString()),
-                                                    onTap: () {
-                                                      _.updateSupplierSelection(_data);
-                                                      log("${controller.selectedVendor.supplierName} Selected");
-                                                    },
+                                                    onTap: () => _.updateSupplierSelection(_data),
                                                   );
                                                 },
                                               ),
@@ -207,22 +203,10 @@ class AddPurchase extends GetWidget<PurchaseController> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: _ItemInputForm(
-                                  data['itemName'] ?? "Null Name",
-                                  data['mrp'] ?? "Null MRP",
-                                  data['qty'] ?? "Null qty",
-                                  () => Get.defaultDialog(
-                                    title: "Are you sure to Delete?",
-                                    content: ElevatedButton(
-                                      onPressed: () {
-                                        controller.items.removeAt(i);
-                                        Get.back();
-                                      },
-                                      style: const ButtonStyle(
-                                        backgroundColor: MaterialStatePropertyAll(Colors.red),
-                                      ),
-                                      child: const Text("Delete"),
-                                    ),
-                                  ),
+                                  "Item " + data['name'] ?? "Null Name",
+                                  "MRP: " + data['mrp'] ?? "Null MRP",
+                                  data['quantityMax'] ?? "Null qty",
+                                  () => controller.removeItem(i),
                                 ),
                               );
                             },
@@ -252,115 +236,6 @@ class AddPurchase extends GetWidget<PurchaseController> {
           ),
         ),
       ),
-
-      //        Padding(
-      //           padding: const EdgeInsets.only(bottom: 20, top: 10),
-      //           child: ElevatedButton.icon(
-      //             onPressed: () {
-      //               //TODO:
-      //               if (controller.purchaseFormKey.currentState!.validate()) {
-      //                 // Navigate the user to the Home page
-      //                 showSnackbar("Validated", "All forms are filled");
-      //               } else {
-      //                 // notifyUser(context, 'Please fill input');
-      //               }
-      //             },
-      //             icon: const Icon(Icons.add),
-      //             label: const Text("Complete purchase"),
-      //           ),
-      //         )
-
-      // Obx(
-      //   () => Column(
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: [
-      //       controller.index.value == 0
-      //           ? Expanded(
-      //               child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: [
-      //                 PoSInputField(
-      // validator: (_v){
-      //
-      // },
-      //                   label: "Item name",
-      //                   hint: "Item name",
-      //                   controller: controller.itemName,
-      //                 ),
-      //                 PoSInputField(
-      // validator: (_v){
-      //
-      // },
-      //                   label: 'Price',
-      //                   hint: "MRP in INR",
-      //                   controller: controller.mrp,
-      //                 ),
-      //                 const Text("Item Exp"),
-      //               ],
-      //             ))
-      //           : const SizedBox.shrink(),
-      //       controller.index.value == 1
-      //           ? Expanded(
-      //               child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: [
-      //                 Text(
-      //                   "Item: " + "${controller.itemName.text}",
-      //                   style: Theme.of(context).textTheme.titleMedium,
-      //                 ),
-      //                 const Text("Item Exp page 2"),
-      //               ],
-      //             ))
-      //           : const SizedBox.shrink(),
-      //       controller.index.value == 2
-      //           ? const Expanded(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 children: [
-      //                   Text("Item Exp page 3"),
-      //                 ],
-      //               ),
-      //             )
-      //           : const SizedBox.shrink(),
-      //       Padding(
-      //         padding: const EdgeInsets.all(8.0),
-      //         child: Align(
-      //           alignment: Alignment.bottomRight,
-      //           child: controller.index <= controller.maxIndex
-      //               ? Row(
-      //                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //                   children: [
-      //                     ElevatedButton.icon(
-      //                       onPressed: () {
-      //                         if (controller.index >= 1) {
-      //                           controller.index.value--;
-      //                         }
-      //                       },
-      //                       icon: const Icon(Icons.skip_previous),
-      //                       label: const Text("Back"),
-      //                     ),
-      //                     ElevatedButton.icon(
-      //                       onPressed: () {
-      //                         controller.index.value++;
-      //                         log(controller.index.value.toString());
-      //                       },
-      //                       icon: const Icon(Icons.skip_next),
-      //                       label: const Text("Next"),
-      //                     ),
-      //                   ],
-      //                 )
-      //               : ElevatedButton(
-      //                   onPressed: () {},
-      //                   child: const Text("Finish"),
-      //                 ),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
     );
   }
 
@@ -392,21 +267,28 @@ class AddPurchase extends GetWidget<PurchaseController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                "Add Items",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox.shrink(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    "Add Items",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ),
+                IconButton.filled(
+                    onPressed: () => controller.clearFormFields(), icon: const Icon(Icons.clear_all)),
+              ],
             ),
             PoSInputField(
               controller: controller.itemNameTextCtr,
               label: "Name",
               hint: "Item Name",
-              onChanged: (name) {
-                controller.singleItemData['itemName'] = name;
-              },
+              // },
               validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
             ),
             Padding(
@@ -464,6 +346,7 @@ class AddPurchase extends GetWidget<PurchaseController> {
                 },
                 // hint: const Text("Select USER_ROLE"),
                 value: controller.subCategories[0],
+                // value: controller.defaultSubCategory,
                 items: controller.subCategories.map(
                   (String category) {
                     return DropdownMenuItem(
@@ -496,9 +379,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
               label: "Manufacturer",
               hint: 'Name of manufaturer',
               validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-              onChanged: (val) {
-                controller.singleItemData['manufacturer'] = val;
-              },
+              // onChanged: (val) {
+              //   controller.singleItemData['manufacturer'] = val;
+              // },
               controller: controller.manufacturerTextCtr,
             ),
             Row(
@@ -509,18 +392,17 @@ class AddPurchase extends GetWidget<PurchaseController> {
                     Future? _exp = showDatePicker(
                       initialDatePickerMode: DatePickerMode.year,
                       context: context,
-                      // currentDate: DateTime.now(),
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2010),
                       lastDate: DateTime(2030),
                     );
-                    controller.expDateTxtCtr.text = (await _exp ?? DateTime.now()).toString();
+                    controller.itemExpiryDateTxtCtr.text = (Utils.formatDate(await _exp ?? DateTime.now()));
                     log(controller.singleItemData.toString());
                   },
-                  label: "Expiry",
+                  label: "Item Expiry",
                   hint: 'MMMDD-YYYY',
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                  // controller: controller.itemExpCtr,
+                  controller: controller.itemExpiryDateTxtCtr,
                 ),
                 PoSInputField(
                   label: "HSN",
@@ -529,9 +411,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   numbersOnly: true,
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   textCapitalization: TextCapitalization.characters,
-                  onChanged: (val) {
-                    controller.singleItemData['hsn'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['hsn'] = val;
+                  // },
                 ),
               ],
             ),
@@ -543,9 +425,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   controller: controller.batchTextCtr,
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   textCapitalization: TextCapitalization.characters,
-                  onChanged: (val) {
-                    controller.singleItemData['batch'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['batch'] = val;
+                  // },
                 ),
                 PoSInputField(
                   controller: controller.packSizeTextCtr,
@@ -553,9 +435,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   hint: 'Size',
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   textCapitalization: TextCapitalization.characters,
-                  onChanged: (val) {
-                    controller.singleItemData['packSize'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['packSize'] = val;
+                  // },
                 ),
               ],
             ),
@@ -573,9 +455,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   hint: "MRP in Rs",
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   maxLength: 5,
-                  onChanged: (val) {
-                    controller.singleItemData['mrp'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['mrp'] = val;
+                  // },
                   numbersOnly: true,
 
                   // controller: controller.mrpCtr,
@@ -589,9 +471,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   numbersOnly: true,
                   label: "Rate",
                   hint: "Rate",
-                  onChanged: (val) {
-                    controller.singleItemData['rate'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['rate'] = val;
+                  // },
                   // controller: controller.rateCtr,
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   suffixText: "Rs",
@@ -632,9 +514,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   label: "Quantity",
                   hint: "Quantity",
                   suffixText: "Qty",
-                  onChanged: (val) {
-                    controller.singleItemData['qty'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['qty'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   maxLength: 4,
                   // controller: controller.qtyCtr,
@@ -650,9 +532,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   label: "Discount",
                   controller: controller.discountTextCtr,
                   numbersOnly: true,
-                  onChanged: (val) {
-                    controller.singleItemData['discount'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['discount'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   hint: "Discount in %",
                   suffixText: "%",
@@ -665,11 +547,10 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   label: "Discount(Qty)",
                   numbersOnly: true,
                   hint: "Discount ",
-                  onChanged: (val) {
-                    controller.singleItemData['discountQTY'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['discountQTY'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                  // controller: controller.discountQtyCtr,
                   maxLength: 2,
                 ),
               ],
@@ -681,9 +562,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   numbersOnly: true,
                   hint: "TD% ",
                   controller: controller.tdTextCtr,
-                  onChanged: (val) {
-                    controller.singleItemData['td'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['td'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   // controller: controller.tdCtr,
                   maxLength: 2,
@@ -693,9 +574,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   label: "CD%",
                   numbersOnly: true,
                   hint: "CD%",
-                  onChanged: (val) {
-                    controller.singleItemData['cd'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['cd'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   maxLength: 2,
                 ),
@@ -714,9 +595,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   hint: "CGST in%",
                   suffixText: "%",
                   maxLength: 2,
-                  onChanged: (val) {
-                    controller.singleItemData['cgst'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['cgst'] = val;
+                  // },
                   // controller: controller.cgstCtr,
                 ),
                 PoSInputField(
@@ -724,9 +605,9 @@ class AddPurchase extends GetWidget<PurchaseController> {
                   label: "SGST%",
                   numbersOnly: true,
                   hint: "SGST in%",
-                  onChanged: (val) {
-                    controller.singleItemData['cgst'] = val;
-                  },
+                  // onChanged: (val) {
+                  //   controller.singleItemData['cgst'] = val;
+                  // },
                   validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
                   // controller: controller.sgstCtr,
                   suffixText: "%",
@@ -743,26 +624,25 @@ class AddPurchase extends GetWidget<PurchaseController> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   OutlinedButton.icon(
-                    icon: Icon(Icons.cancel),
+                    icon: const Icon(Icons.cancel),
                     style: const ButtonStyle(
                       overlayColor: MaterialStatePropertyAll(Colors.red),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      log("Cancel clicked");
+                    },
                     label: const Text("Cancel"),
                   ),
                   ElevatedButton.icon(
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       if (controller.purchaseItemsFormKey.currentState!.validate()) {
-                        controller.items.add(controller.singleItemData);
-                        controller.singleItemData = {};
-                        controller.clearFormFields();
-                        log(controller.items.toString());
+                        controller.insertItem();
                       } else {
                         MassengerScaffold.notifyUser(context, "Complete Form");
                       }
                     },
-                    label: const Text("Add"),
+                    label: const Text("Submit"),
                   ),
                 ],
               ),
@@ -790,318 +670,3 @@ class AddPurchase extends GetWidget<PurchaseController> {
     );
   }
 }
-
-// Column(
-//   children: [
-//     const SizedBox(height: 10),
-// Row(
-//   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//   mainAxisSize: MainAxisSize.max,
-//   children: [
-// PoSInputField(
-// validator: (_v){
-//
-// },
-//   numbersOnly: true,
-//   suffixIcon: IconButton(
-//     onPressed: () {},
-//     icon: const Icon(Icons.qr_code),
-//   ),
-//   label: "Invoice No",
-//   hint: "PPL-XXX-XXXX",
-// ),
-// const SizedBox(width: 15),
-// PoSInputField(
-// validator: (_v){
-//
-// },
-//   controller: controller.dateTxtCtr,
-//   readOnly: true,
-//   onTap: () async {
-//     Future _date = showDatePicker(
-//       context: context,
-//       initialDate: DateTime.now(),
-//       firstDate: DateTime(2010),
-//       lastDate: DateTime(2030),
-//     );
-//     controller.dateTxtCtr.text = Utils.formatDate(await _date);
-//   },
-//   label: "Date",
-//   hint: "DD-MMM-YYYY",
-// ),
-//   ],
-// ),
-//     GetBuilder<PurchaseController>(
-//       init: PurchaseController(),
-//       initState: (_) {},
-//       builder: (_) {
-//         return Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: MyDottedBorderWidget(
-//             child: ListTile(
-//               title: Text(_.selectedVendor.supplierName ?? "Select Supplier"),
-//               // isThreeLine: true,
-//               subtitle: Text(_.selectedVendor.businessName ?? ''),
-//               onTap: () {
-//                 Get.bottomSheet(
-//                   BottomSheet(
-//                     onClosing: () {},
-//                     builder: (context) {
-//                       PartyController partyController = Get.find<PartyController>();
-//                       return SingleChildScrollView(
-//                         physics: const AlwaysScrollableScrollPhysics(),
-//                         child: Column(
-//                           children: [
-//                             Padding(
-//                               padding: const EdgeInsets.all(8.0),
-//                               child: Text(
-//                                 "Select suppliers",
-//                                 style: Theme.of(context).textTheme.titleLarge,
-//                               ),
-//                             ),
-//                             ListView.builder(
-//                               physics: const NeverScrollableScrollPhysics(),
-//                               shrinkWrap: true,
-//                               itemCount: partyController.vendors.length,
-//                               itemBuilder: (context, index) {
-//                                 Vendor _data = partyController.vendors[index];
-//                                 return ListTile(
-//                                   // isThreeLine: true,
-//                                   title: Text(_data.supplierName.toString()),
-//                                   subtitle: Text(_data.businessName.toString()),
-//                                   onTap: () {
-//                                     _.updateSupplierSelection(_data);
-//                                     log("${controller.selectedVendor.supplierName} Selected");
-//                                   },
-//                                 );
-//                               },
-//                             ),
-//                           ],
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 );
-//               },
-//             ),
-//           ),
-//         );
-//       },
-//     ),
-//     Padding(
-//       padding: const EdgeInsets.all(8),
-//       child: MyDottedBorderWidget(
-//         child: ListTile(
-//           onTap: () => Get.toNamed('/showItemsToPurchase'),
-//           // selected: true,
-//           title: const Text("Select items"),
-//           trailing: OutlinedButton.icon(
-//             onPressed: () => Get.toNamed('/addInventory'),
-//             icon: const Icon(Icons.add),
-//             label: const Text("Add a new Item"),
-//           ),
-//         ),
-//       ),
-//     ),
-//   ],
-// ),
-
-//                                    Padding(
-//                                     padding: const EdgeInsets.all(8.0),
-//                                     child: Align(
-//                                       alignment: Alignment.center,
-//                                       child: Text(
-//                                         "Item: ${item['itemName'] ?? 'none item name'}",
-//                                         softWrap: false,
-//                                         style: Theme.of(context).textTheme.titleMedium,
-//                                       ),
-//                                     ),
-//                                   ),
-//                                   PoSInputField(
-//                                     validator: (_v) {
-//                                       return _v!.trim() == '' ? "Required" : null;
-//                                     },
-//                                     label: "Category",
-//                                     hint: "Value",
-//                                     onChanged: (_v) {
-//                                       //TODO on-changed
-//                                       item['category'] = _v;
-//                                       log(item.toString());
-//                                     },
-//                                   ),
-//                                   PoSInputField(
-//                                     validator: (_v) {
-//                                       return _v!.trim() == '' ? "Required" : null;
-//                                     },
-//                                     label: "sub-category",
-//                                     hint: "Value",
-//                                     onChanged: (_v) {
-//                                       //TODO on-changed
-//                                       item['subcategory'] = _v;
-//                                       log(item.toString());
-//                                     },
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "MRP",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['mrp'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "Price",
-//                                         hint: "NXT Vluence",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['price'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   PoSInputField(
-//                                     validator: (_v) {
-//                                       return _v!.trim() == '' ? "Required" : null;
-//                                     },
-//                                     label: "Expiry",
-//                                     hint: "Value",
-//                                     onChanged: (_v) {
-//                                       //TODO on-changed
-//                                       item['expiry'] = _v;
-//                                       log(item.toString());
-//                                     },
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "CGST",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['cgst'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "SGST",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['sgst'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   PoSInputField(
-//                                     validator: (_v) {
-//                                       return _v!.trim() == '' ? "Required" : null;
-//                                     },
-//                                     label: "Manufacturer",
-//                                     hint: "Value",
-//                                     onChanged: (_v) {
-//                                       //TODO on-changed
-//                                       item['manufacturer'] = _v;
-//                                       log(item.toString());
-//                                     },
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "CD",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['cd'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "TD",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['td'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "HSN",
-//                                         hint: "HSN Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['hsn'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "Batch no",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['batch'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   Row(
-//                                     children: [
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim() == '' ? "Required" : null;
-//                                         },
-//                                         label: "quantity",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['qty'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                       PoSInputField(
-//                                         validator: (_v) {
-//                                           return _v!.trim().isEmpty ? "Required" : null;
-//                                         },
-//                                         label: "pack size",
-//                                         hint: "Value",
-//                                         onChanged: (_v) {
-//                                           //TODO on-changed
-//                                           item['pack'] = _v;
-//                                           log(item.toString());
-//                                         },
-//                                       ),
-//                                     ],
-//                                   ),

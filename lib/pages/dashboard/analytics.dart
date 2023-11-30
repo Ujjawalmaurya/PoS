@@ -72,7 +72,6 @@ class Analytics extends StatelessWidget {
                       size: 40,
                       color: Colors.white,
                     ),
-                    // SizedBox(height: 10),
                     Text(
                       _d['value'],
                       style: const TextStyle(color: Colors.white, fontSize: 28),
@@ -94,45 +93,5 @@ class Analytics extends StatelessWidget {
         },
       ),
     );
-
-    // return GridView.builder(
-    //   physics: const NeverScrollableScrollPhysics(),
-    //   shrinkWrap: true,
-    //   itemCount: _data.length,
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //       mainAxisExtent: 80, crossAxisCount: 2, crossAxisSpacing: 0, mainAxisSpacing: 4.0),
-    //   itemBuilder: (BuildContext context, int index) {
-    //     var data = _data[index];
-    //     return InkWell(
-    //       child: SizedBox(
-    //         height: 50,
-    //         child: Card(
-    //           margin: const EdgeInsets.all(6),
-    //           color: data['color'].shade300.withOpacity(0.9),
-    //           child: Padding(
-    //             padding: const EdgeInsets.all(8.0),
-    //             child: Row(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //                 Column(
-    //                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //                   crossAxisAlignment: CrossAxisAlignment.start,
-    //                   children: [
-    //                     const Text("Amount"),
-    //                     Text(data['title'].toString()),
-    //                   ],
-    //                 ),
-    //                 const Icon(
-    //                   Icons.arrow_forward_ios_rounded,
-    //                   size: 14,
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   },
-    // );
   }
 }
