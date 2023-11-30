@@ -266,19 +266,21 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     // flex: 1,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text("Tax Included"),
-                          Obx(
-                            () => Switch(
-                              value: controller.isTaxable.value,
-                              onChanged: (_val) => controller.isTaxable.value = _val,
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Tax Included"),
+                            Obx(
+                              () => Switch(
+                                value: controller.isTaxable.value,
+                                onChanged: (_val) => controller.isTaxable.value = _val,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

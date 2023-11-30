@@ -21,6 +21,7 @@ class AddInventoryController extends GetxController {
   TextEditingController itemExpCtr = TextEditingController();
   TextEditingController manufacturerCtr = TextEditingController();
   TextEditingController hsnCtr = TextEditingController();
+  TextEditingController locCtr = TextEditingController();
   TextEditingController batchCtr = TextEditingController();
   TextEditingController packSizeCtr = TextEditingController();
   TextEditingController mrpCtr = TextEditingController();
@@ -87,8 +88,8 @@ class AddInventoryController extends GetxController {
 
   XFile? itemImage;
 
-  void addItem() {
-    final res = APIServices.addItem({
+  void addItem() async {
+    var res = await APIServices.addItem({
       // "id": 3,
       "name": itemNameCtr.text,
       "batchNum": batchCtr.text,
@@ -103,7 +104,7 @@ class AddInventoryController extends GetxController {
       "discQty": discountQtyCtr.text,
       "discountPerProduct": discountCtr.text,
       "hsn": int.parse(hsnCtr.text),
-      "loc": "LOC",
+      "loc": locCtr.text,
       "mrp": mrpCtr.text,
       "quantityChild": 0,
       "quantityMax": 0,
@@ -117,6 +118,16 @@ class AddInventoryController extends GetxController {
           Get.find<InventoryController>().getItems(),
           // log("RESS ====================> \n${json.decode(value.body)}\n ====================="),
         });
+
+    // final _data = json.decode(res.body);
+    // log(_data.toString());
+
+    // if (res.statusCode == 201) {
+    //   Snackbar.success("Success", "${itemNameCtr.text} added successfully");
+    //   addItemFormKey.currentState!.reset();
+    // } else {
+    //   Snackbar.failed("Failed", "Error while adding ${itemNameCtr.text} in inventory");
+    // }
   }
 
   pickImage(context) async {

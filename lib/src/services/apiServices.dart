@@ -237,6 +237,12 @@ class APIServices {
         body: json.encode(_body),
         headers: BaseURL.authHeader,
       );
+      log("Adding customer respose Status code ${res.statusCode}");
+      // if (res.statusCode == 201) {
+      //   Snackbar.success("Customer added", "$name added successfully");
+      // } else {
+      //   Snackbar.failed("Failed", "Failed to add $name");
+      // }
       return res;
     } catch (e) {
       log("Exception@AddingCustomer => $e");
@@ -279,6 +285,11 @@ class APIServices {
         body: json.encode(_body),
         headers: BaseURL.authHeader,
       );
+      // if (res.statusCode == 201) {
+      //   Snackbar.success("Vendor Added Successfully", "$supplierName added successfully");
+      // } else {
+      //   Snackbar.failed("Error", "$supplierName was not added");
+      // }
       return res;
     } catch (e) {
       log("Exception@AddingVendor => $e");
@@ -341,7 +352,7 @@ class APIServices {
     //
   }
 
-  //? Add Vendor
+  //? Add Itemm
   static Future addItem(Map bodyData) async {
     // Map _body = {};
 
@@ -352,14 +363,11 @@ class APIServices {
         body: json.encode(bodyData),
         headers: BaseURL.authHeader,
       );
-      final _data = json.decode(res.body);
-      log(_data.toString());
-      log(res.statusCode.toString());
-      if (res.statusCode == 201) {
-        Snackbar.trigger("Success", "${bodyData['name']} added successfully");
-      } else {
-        Snackbar.failed("Failed", "Error while adding ${bodyData['name']} in inventory");
-      }
+      // if (res.statusCode == 201) {
+      //   Snackbar.success("Success", "${bodyData['name']} added successfully");
+      // } else {
+      //   Snackbar.failed("Failed", "Error while adding ${bodyData['name']} in inventory");
+      // }
       return res;
     } catch (e) {
       log("Exception@AddingItem => $e");
@@ -384,6 +392,23 @@ class APIServices {
       return res;
     } catch (e) {
       log("Exception@CreatingSale => $e");
+    }
+  }
+
+  static Future createPurchase(Map _body) async {
+    log("Purchase creation Req-Body=>> $_body ");
+    try {
+      var res = await http.post(
+        Uri.parse(ApiLink.createPurchase + businessID),
+        body: json.encode(_body),
+        headers: BaseURL.authHeader,
+      );
+      final _data = json.decode(res.body);
+      log(_data.toString());
+      log(res.statusCode.toString());
+      return res;
+    } catch (e) {
+      log("Exception@CreatingPurchase => $e");
     }
   }
 }

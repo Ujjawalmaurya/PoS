@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:pos/pages/inventory/inventory_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
 import 'package:pos/pages/parties/party_c.dart';
+import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/services/apiServices.dart';
+import 'package:pos/src/utils/storage_keys.dart';
 
 class PurchaseController extends GetxController {
   Vendor selectedVendor = Vendor();
@@ -17,25 +21,27 @@ class PurchaseController extends GetxController {
   InventoryController inventoryController = Get.find<InventoryController>();
   RxList<Map> items = <Map>[].obs;
 
-  Map singleItemData = {};
+//? ===== TextEditingControllers ====
 
-  TextEditingController itemNameTextCtr = TextEditingController(text: "Dummy name 1");
-  TextEditingController mrpTextCtr = TextEditingController(text: '453');
-  TextEditingController itemExpiryDateTxtCtr = TextEditingController(text: "144123");
-  TextEditingController purchaseDateTxtCtr = TextEditingController(text: "144123");
-  // TextEditingController gstTextCtr = TextEditingController(text: " 1223");
-  TextEditingController rateTextCtr = TextEditingController(text: "1143");
-  TextEditingController qtyTextCtr = TextEditingController(text: " 23");
-  TextEditingController cdTextCtr = TextEditingController(text: "23");
-  TextEditingController tdTextCtr = TextEditingController(text: "12");
-  TextEditingController cgstTextCtr = TextEditingController(text: "3");
-  TextEditingController sgstTextCtr = TextEditingController(text: "1");
-  TextEditingController hsnTextCtr = TextEditingController(text: " 14123");
-  TextEditingController batchTextCtr = TextEditingController(text: "314132");
-  TextEditingController packSizeTextCtr = TextEditingController(text: "42");
-  TextEditingController manufacturerTextCtr = TextEditingController(text: "Soke manufaturesad23");
-  TextEditingController discountTextCtr = TextEditingController(text: "13");
-  TextEditingController discountQtyTextCtr = TextEditingController(text: "12");
+  TextEditingController purchaseDateTxtCtr = TextEditingController();
+  TextEditingController purchaseInvoiceNumberTxtCtr = TextEditingController();
+  // Item form field TextEditingConrollers
+  TextEditingController itemNameTextCtr = TextEditingController();
+  TextEditingController mrpTextCtr = TextEditingController();
+  TextEditingController itemExpiryDateTxtCtr = TextEditingController();
+  // TextEditingController gstTextCtr = TextEditingController();
+  TextEditingController rateTextCtr = TextEditingController();
+  TextEditingController qtyTextCtr = TextEditingController();
+  TextEditingController cdTextCtr = TextEditingController();
+  TextEditingController tdTextCtr = TextEditingController();
+  TextEditingController cgstTextCtr = TextEditingController();
+  TextEditingController sgstTextCtr = TextEditingController();
+  TextEditingController hsnTextCtr = TextEditingController();
+  TextEditingController batchTextCtr = TextEditingController();
+  TextEditingController packSizeTextCtr = TextEditingController();
+  TextEditingController manufacturerTextCtr = TextEditingController();
+  TextEditingController discountTextCtr = TextEditingController();
+  TextEditingController discountQtyTextCtr = TextEditingController();
   TextEditingController locTextCtr = TextEditingController();
   // TextEditingController TextCtr = TextEditingController();
 
@@ -100,7 +106,7 @@ class PurchaseController extends GetxController {
     itemNameTextCtr.clear();
     mrpTextCtr.clear();
     itemExpiryDateTxtCtr.clear();
-    // cgstTextCtr.clear();
+    locTextCtr.clear();
     rateTextCtr.clear();
     qtyTextCtr.clear();
     cdTextCtr.clear();
@@ -122,11 +128,11 @@ class PurchaseController extends GetxController {
       "type": "TABLET",
       "category": selectedCategory,
       "subCategory": selectedSubCategory,
-      "hsn": hsnTextCtr,
+      "hsn": hsnTextCtr.text,
       "manufacturer": manufacturerTextCtr.text,
       "unit": "string",
       "batchNum": batchTextCtr.text,
-      "discQty": discountQtyTextCtr,
+      "discQty": discountQtyTextCtr.text,
       "discountPerProduct": discountTextCtr.text,
       "loc": locTextCtr.text,
       "mrp": mrpTextCtr.text,
@@ -138,13 +144,12 @@ class PurchaseController extends GetxController {
       "quantityChild": 0,
       "quantityMax": qtyTextCtr.text,
       "vendorId": selectedVendor.id,
-      "expiry": itemExpiryDateTxtCtr,
+      "expiry": itemExpiryDateTxtCtr.text,
     });
     log(items.toString());
-    singleItemData = {};
-    clearFormFields();
+    // clearFormFields();
     Get.back();
-    log(items.toString());
+    log("Total Items=> $items");
   }
   //
 
@@ -164,7 +169,62 @@ class PurchaseController extends GetxController {
     );
   }
 
-// { // Purchase invoice payload
+  void openSuppliers() => Get.bottomSheet(
+        BottomSheet(
+          onClosing: () {},
+          builder: (context) {
+            PartyController partyController = Get.find<PartyController>();
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Select suppliers",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: partyController.vendors.length,
+                    separatorBuilder: (c, i) => const Divider(color: Colors.black),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      Vendor _data = partyController.vendors[index];
+                      return ListTile(
+                        // isThreeLine: true,
+                        title: Text(_data.supplierName.toString()),
+                        subtitle: Text(_data.businessName.toString()),
+                        onTap: () => updateSupplierSelection(_data),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+
+  void createPurchase() {
+    Map _body = {
+      "businessDetails": {"id": readData(StorageKey.user.userData)['businessId'].toString()},
+      "category": selectedCategory,
+      "items": items,
+      "preCreatedDate": purchaseDateTxtCtr.text,
+      "preCreatedInvoice": purchaseInvoiceNumberTxtCtr.text,
+      "salesMan": selectedVendor.supplierName,
+      "vendor": {"id": selectedVendor.id}
+    };
+    var res = APIServices.createPurchase(_body);
+    log(res.toString());
+    // log(json.decode(res.body));
+  }
+
+// Purchase invoice payload
+// {
 //     "businessDetails": {
 //         "id": 1
 //     },

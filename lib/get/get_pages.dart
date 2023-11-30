@@ -91,9 +91,10 @@ class Routes {
       binding: PurchaseBindings(),
     ),
     GetPage(
-      name: PutItemDetails.path,
-      page: () => PutItemDetails(),
+      name: PurchaseItemForm.path,
+      page: () => PurchaseItemForm(),
       // binding: PurchaseBindings(),
+      transition: Transition.zoom,
     ),
     GetPage(
       name: InvoiceSettings.path,
