@@ -17,13 +17,14 @@ class AddInventory extends GetWidget<AddInventoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Add in inventory"),
         onPressed: () {
           if (controller.addItemFormKey.currentState!.validate()) {
             controller.addItem();
           }
         },
-        child: const Icon(Icons.check),
+        icon: const Icon(Icons.check),
       ),
       appBar: AppBar(
         title: const Text("Add Items"),
@@ -98,16 +99,19 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     value: controller.defaultCategory.isNotEmpty ? controller.defaultCategory : null,
                     items: controller.categories.map((String category) {
                       return DropdownMenuItem(
-                          value: category,
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 6),
-                                child: Icon(Icons.category, color: Theme.of(context).primaryColor),
-                              ),
-                              Text(category),
-                            ],
-                          ));
+                        // alignment: Alignment.center,
+                        value: category,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 6),
+                              child: Icon(Icons.category_rounded, color: Theme.of(context).primaryColor),
+                            ),
+                            Text(category),
+                          ],
+                        ),
+                      );
                     }).toList(),
                     onChanged: (val) {
                       log("Dropdown changed: - $val");
@@ -135,17 +139,24 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     },
                     // hint: const Text("Select USER_ROLE"),
                     value: controller.defaultSubCategory.isNotEmpty ? controller.defaultSubCategory : null,
-                    items: controller.subCategories.map((String category) {
+                    items: controller.subCategories.map((String subCategory) {
                       return DropdownMenuItem(
-                          value: category,
+                          value: subCategory,
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 6),
-                                child: Icon(Icons.calendar_today_outlined,
-                                    color: Theme.of(context).primaryColor),
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: Icon(
+                                  Icons.subject_rounded,
+                                  color: Theme.of(context).colorScheme.secondary,
+                                ),
                               ),
-                              Text(category),
+                              Text(
+                                subCategory,
+                                // style: Theme.of(context).textTheme.titleMedium,
+                              ),
                             ],
                           ));
                     }).toList(),
@@ -299,13 +310,12 @@ class AddInventory extends GetWidget<AddInventoryController> {
                   ),
                   PoSInputField(
                     // flex: 2,
-                    label: "Purchase Price",
-                    hint: "Price",
+                    label: "LOC",
+                    hint: "LOC",
                     numbersOnly: true,
                     maxLength: 5,
                     validator: (p0) => p0.toString().trim() == '' ? 'Cannot be empty' : null,
-                    suffixText: "Rs",
-                    controller: controller.purchasePriceCtr,
+                    controller: controller.locCtr,
                   ),
                 ],
               ),

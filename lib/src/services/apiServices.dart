@@ -386,11 +386,11 @@ class APIServices {
         body: json.encode(bodyData),
         headers: BaseURL.authHeader,
       );
-      // if (res.statusCode == 201) {
-      //   Snackbar.success("Success", "${bodyData['name']} added successfully");
-      // } else {
-      //   Snackbar.failed("Failed", "Error while adding ${bodyData['name']} in inventory");
-      // }
+      if (res.statusCode == 201) {
+        Snackbar.success("Success", "${bodyData['name']} added successfully");
+      } else {
+        Snackbar.failed("Failed", "Error while adding ${bodyData['name']} in inventory");
+      }
       return res;
     } catch (e) {
       log("Exception@AddingItem => $e");

@@ -26,7 +26,7 @@ class AddInventoryController extends GetxController {
   TextEditingController packSizeCtr = TextEditingController();
   TextEditingController mrpCtr = TextEditingController();
   TextEditingController rateCtr = TextEditingController();
-  TextEditingController purchasePriceCtr = TextEditingController();
+  // TextEditingController purchasePriceCtr = TextEditingController();
   TextEditingController openingStocksCtr = TextEditingController();
   TextEditingController qtyCtr = TextEditingController();
   TextEditingController discountCtr = TextEditingController();
@@ -82,10 +82,61 @@ class AddInventoryController extends GetxController {
     "Pharma"
   ];
   final List<String> subCategories = [
-    'subcategory1',
-    'subcategory2',
-  ];
+// Food and Beverages
+    "Packaged Food Items",
+    "Snacks",
+    "Soft Drink",
+    "Juices",
+    'Dairy',
+// Personal Care and Hygiene
+    "Toiletries",
+    "Haircare",
+    "Skincare",
+    'Oral care',
+// Household Cleaning and Care
+    "Laundry Detergents",
+    "Air Fresheners",
+    "Cleaning Agents",
+    'Disinfectants',
+// Health and Wellness
+    "Over-the-Counter Medicines",
+    "Vitamins & Supplements",
+    "Health Drinks",
+// Baby and Childcare
+    "Diapers",
+    "Baby Food",
+    "Baby Wipes",
+    "Baby Skincare Products",
+// Confectionery and Chocolates
+    "Chocolates",
+    "Candies and Sweets",
+    "Gums and Chewing Products",
 
+// Beuty and cosmetics
+    "Makeup",
+    "Perfume",
+    "Hair Styling Products",
+// tobacco and cigarettes
+    "Cigarettes",
+    "Chewing Tobacco",
+// Pharmaceutical
+    "Prescription Medicine",
+    "Pain Relief",
+    "Respiratory & Allergies",
+    "Eye & Ear Care",
+    "Foot & Leg Care",
+    "Oral Care",
+    "Digestive Care",
+    "Skin & Scalp Care",
+    "Health Supplements",
+    "Natural & Homoeopathic",
+    "Personal Aids & Repellents",
+    "Sleep & Stress Relief",
+    "Family Planning",
+    "First Aid",
+    "Baby Treatments",
+    "Medical Devices",
+  ];
   XFile? itemImage;
 
   void addItem() async {
@@ -105,14 +156,14 @@ class AddInventoryController extends GetxController {
       "discountPerProduct": discountCtr.text,
       "hsn": int.parse(hsnCtr.text),
       "loc": locCtr.text,
-      "mrp": mrpCtr.text,
-      "quantityChild": 0,
-      "quantityMax": 0,
-      "quantityParent": 0,
-      "rate": rateCtr.text,
-      "totalAmount": 5400,
+      "mrp": double.parse(mrpCtr.text),
       "type": "TABLET",
       "unit": "string",
+      "quantityChild": 0,
+      "quantityMax": 0,
+      "quantityParent": qtyCtr.text,
+      "rate": double.parse(rateCtr.text),
+      "totalAmount": double.parse(mrpCtr.text) * double.parse(qtyCtr.text),
       "expiry": itemExpCtr.text,
     }).then((value) => {
           Get.find<InventoryController>().getItems(),
