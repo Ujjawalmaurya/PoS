@@ -37,6 +37,12 @@ class ApiLink {
   static const String addNewUser = BaseURL.CompleteURL + "user";
   static const String getUser = BaseURL.CompleteURL + "user/";
 
+  // ! Search
+  // ? Product
+  // http://34.205.76.254:8085/pos/dev/product/n-gram/<businessId>?searchKeyword=<inputText>
+  static const String searchProduct =
+      BaseURL.CompleteURL + "product/n-gram/"; // <businessId>?searchKeyword=<inputText>
+
   //! Parties
   static const String getVendors = BaseURL.CompleteURL + "vendor/"; // GET
   static const String getCustomers = BaseURL.CompleteURL + "customer/"; // GET

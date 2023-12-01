@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/dashboard/create_sale/sales_c.dart';
-import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/search_field.dart';
 
 class ShowItemsForSale extends GetWidget<AddSalesController> {
   static const String path = '/showItemsToSale';
@@ -35,73 +35,75 @@ class ShowItemsForSale extends GetWidget<AddSalesController> {
       ),
       body: Column(
         children: [
-          SearchBar(
+          SearchField(
             // backgroundColor: MaterialStatePropertyAll(Colors.blueGrey),
-            controller: controller.searchController,
-            leading: const Icon(Icons.search_rounded),
-            hintText: "Search",
-            onChanged: (value) => {log("Search => $value")},
+            // controller: controller.searchController,
+            // leading: const Icon(Icons.search_rounded),
+            hint: "Search(i.e., item name, sub category, manufacturer, batch number)",
+            onChanged: (keyword) => controller.inventoryController.searchItems(keyword),
           ),
           Expanded(
-            child: ListView.separated(
-              shrinkWrap: false,
-              separatorBuilder: (context, index) => const Divider(),
-              itemCount: controller.inventoryController.items.length,
-              itemBuilder: (context, index) {
-                var _data = controller.inventoryController.items[index];
-                log("_Data: ${_data}");
-                // var item = InvoiceItem(
-                //   itemName: _data['name'],
-                //   quantity: _data['qty'],
-                //   gst: _data['gst'],
-                //   unitPrice: _data['price'],
-                //   expiryDate: DateTime(2030),
-                // );
-                return ListTile(
-                  // onTap: () => controller.addToSelectedItems(_data),
-                  title: Text("${_data['name']}"),
-                  // subtitle: Text("GST ${_data['gst']}%"),
-                  subtitle: Text(
-                    "Price: ${_data['mrp']} Rs\n(${_data['stock']} items available in stock)",
-                  ),
-                  trailing: InkWell(
-                    onTap: () => controller.addToSelectedItems(_data),
-                    child: Container(
-                      width: 100,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 3),
-                            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(3),
-                            ),
-                            child: const Text(
-                              "Add",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
+            child: Obx(
+              () => ListView.separated(
+                shrinkWrap: false,
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: controller.inventoryController.items.length,
+                itemBuilder: (context, index) {
+                  var _data = controller.inventoryController.items[index];
+                  log("_Data: ");
+                  // var item = InvoiceItem(
+                  //   itemName: _data['name'],
+                  //   quantity: _data['qty'],
+                  //   gst: _data['gst'],
+                  //   unitPrice: _data['price'],
+                  //   expiryDate: DateTime(2030),
+                  // );
+                  return ListTile(
+                    // onTap: () => controller.addToSelectedItems(_data),
+                    title: Text("${_data['name']}"),
+                    // subtitle: Text("GST ${_data['gst']}%"),
+                    subtitle: Text(
+                      "Price: ${_data['mrp']} Rs\n(${_data['stock']} items available in stock)",
+                    ),
+                    trailing: InkWell(
+                      onTap: () => controller.addToSelectedItems(_data),
+                      child: Container(
+                        width: 100,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                              child: const Text(
+                                "Add",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                          const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                        ],
+                            const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],

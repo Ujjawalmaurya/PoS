@@ -352,6 +352,29 @@ class APIServices {
     //
   }
 
+// ! Search Items
+  static
+      // Future<List<InventoryItems>>
+      searchItems(String searchKeyword) async {
+    Uri uri = Uri.parse(
+      "${ApiLink.searchProduct}$businessID?searchKeyword=$searchKeyword",
+    ); //<businessId>?searchKeyword=<inputText>
+    try {
+      var res = await http.get(uri, headers: BaseURL.authHeader);
+      if (res.statusCode == 200) {
+        final List items = json.decode(res.body);
+        log('Searched Items => $items', name: "Search Results");
+        return items;
+      } else {
+        throw Exception('response not oke: res:${res.statusCode}');
+      }
+    } catch (e) {
+      log(e.toString());
+      throw e;
+    }
+    //
+  }
+
   //? Add Itemm
   static Future addItem(Map bodyData) async {
     // Map _body = {};

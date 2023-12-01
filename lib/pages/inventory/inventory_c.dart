@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:get/get.dart';
+import 'package:pos/src/utils/utils.dart';
+import 'package:pos/src/widgets/lazy_network_image.dart';
 
 class InventoryController extends GetxController {
   // List<InventoryItems> _list = [];
@@ -38,5 +41,79 @@ class InventoryController extends GetxController {
 
   void getItems() async {
     items.value = await APIServices.getItems();
+  }
+
+  void searchItems(String searchKeyword) async {
+    if (searchKeyword.trim().isEmpty) {
+      getItems();
+    } else {
+      items.value = await APIServices.searchItems(searchKeyword);
+    }
+  }
+
+  void showItemData(context, data) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("more info"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Text("Item no: index", style: Theme.of(context).textTheme.headlineSmall),
+            Align(
+              // alignment: Align.,
+              child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: NetworkImageLoader(
+                    height: 150,
+                    width: 150,
+                    image: data["image"] ??
+                        "https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg",
+                  )
+                  // Image.network(
+                  //   data["image"] ??
+                  //       "https://mtek3d.com/wp-content/uploads/2018/01/image-placeholder-500x500.jpg",
+                  //
+                  //   fit: BoxFit.cover,
+                  // ),
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Name: ${data['name']} (${data['type']})"),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Description: ${data["description"] ?? "No description provided"}',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            // Text("type: ${data['type']}"),
+            Text("Category: ${data['category']}"),
+            Text("Sub-Category: ${data['subCategory']}"),
+            Text("Unit: ${data['unit']}"),
+            Text("Batch number: ${data['batchNum']}"),
+            Text("HSN: ${data['hsn']}"),
+            Text("Manufacturer: ${data['manufacturer']}"),
+            Text("discountPerQuantity: ${data['discountPerProduct']}"),
+            Text("DiscQty: ${data['discQty']}"),
+            Text("Loc: ${data['loc']}"),
+            Text("Rate: ${data['rate']}"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text('Price: ${Utils.parseInINR(data["price"])}'),
+                  Text('MRP: ${Utils.parseInINR(data["mrp"])}'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 } //END
