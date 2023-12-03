@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/pos_loading.dart';
 
 class NetworkImageLoader extends StatelessWidget {
@@ -28,7 +27,7 @@ class NetworkImageLoader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.error),
+          Icon(Icons.broken_image),
           Text("Error"),
         ],
       ),

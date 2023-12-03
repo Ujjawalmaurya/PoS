@@ -5,20 +5,22 @@ class RecentPurchaseTile extends StatelessWidget {
   RecentPurchaseTile({
     super.key,
     required this.name,
-    this.dateTime,
+    required this.invoiceNumber,
+    this.onTap,
     required this.amount,
   });
 
   final String name;
-  final DateTime? dateTime;
+  final String invoiceNumber;
   final dynamic amount;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // onTap: () {},
+      onTap: onTap,
       title: Text(name),
-      subtitle: Text("on ${dateTime ?? Utils.formatDate(DateTime.now())}"),
+      subtitle: Text("$invoiceNumber"),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,

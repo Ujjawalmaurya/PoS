@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/dashboard/create_purchase/add_item_details.dart';
 import 'package:pos/pages/dashboard/create_purchase/purchase_c.dart';
-import 'package:pos/pages/parties/vendor_model.dart';
-import 'package:pos/pages/parties/party_c.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
@@ -158,11 +156,11 @@ class AddPurchase extends GetWidget<PurchaseController> {
                             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                             itemCount: controller.items.length,
                             itemBuilder: (c, i) {
-                              var data = controller.items[i];
+                              var data = controller.items[i]["product"];
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: _ItemInputForm(
-                                  "Item " + data['name'] ?? "Null Name",
+                                  "Item " + data['name'] + "(${data['category']})" ?? "Null Name",
                                   "MRP: " + data['mrp'] ?? "Null MRP",
                                   data['quantityMax'] ?? "Null qty",
                                   () => controller.removeItem(i),

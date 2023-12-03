@@ -24,13 +24,13 @@ class PartyController extends GetxController {
 
   void getCustomers() async {
     customers = await APIServices.getCustomers();
-    print(customers.toString());
+    // print(customers.toString()); //
     update();
   }
 
   void getVendors() async {
     vendors = await APIServices.getVendors();
-    print(vendors.toString());
+    // print(vendors.toString());
     update();
   }
 

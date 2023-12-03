@@ -50,9 +50,7 @@ class Parties extends GetWidget<PartyController> {
                       ButtonSegment<Type>(
                         value: Type.customer,
                         label: Text('Customer'),
-                        icon: Icon(
-                          Icons.shopping_cart,
-                        ),
+                        icon: Icon(Icons.shopping_cart),
                       ),
                       ButtonSegment<Type>(
                         value: Type.supplier,
@@ -81,14 +79,16 @@ class Parties extends GetWidget<PartyController> {
                   return _.partyType == Type.supplier
                       ? ListView.separated(
                           separatorBuilder: (context, index) => const Divider(),
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: _.vendors.length,
                           itemBuilder: (context, index) {
                             var _data = _.vendors[index];
                             return SupplierTile(
-                              gstNumber: "GST54DF587SD82SD7",
-                              ownerName: "Owner",
+                              drugLicense: _data.drugLicense.toString(),
+                              gstNumber: _data.gstNumber.toString(),
+                              ownerName: _data.businessOwner.toString(),
                               name: _data.supplierName.toString(),
+                              businessAddress: _data.businessAddress.toString(),
                               businessName: "${_data.businessName}",
                               onTap: () => controller.showVendorInfo(_data),
                               amount: 585.4,
@@ -98,7 +98,7 @@ class Parties extends GetWidget<PartyController> {
                         )
                       : ListView.separated(
                           separatorBuilder: (context, index) => const Divider(),
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: _.customers.length,
                           itemBuilder: (context, index) {
                             var _data = _.customers[index];
@@ -106,7 +106,7 @@ class Parties extends GetWidget<PartyController> {
                               onTap: () => controller.showCustomerInfo(_data),
                               name: _data.name.toString(),
                               amount: 585.4,
-                              amountType: "Total Purchases",
+                              amountType: "Total",
                               subtitle: "${_data.email} ${_data.contact}",
                             );
                           },

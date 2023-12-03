@@ -3,9 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/dashboard/create_purchase/purchase_c.dart';
+import 'package:pos/src/constants/categories.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
+
+import '../../../src/constants/sub_categories.dart';
 
 class PurchaseItemForm extends GetWidget<PurchaseController> {
   static const path = '/putItemDetailsForPurchase';
@@ -63,7 +66,7 @@ class PurchaseItemForm extends GetWidget<PurchaseController> {
                     },
                     // value: controller.categories[0],
                     value: controller.defaultCategory.isNotEmpty ? controller.defaultCategory : null,
-                    items: controller.categories.map((String category) {
+                    items: categories.map((String category) {
                       return DropdownMenuItem(
                         value: category,
                         child: Row(
@@ -88,6 +91,44 @@ class PurchaseItemForm extends GetWidget<PurchaseController> {
                 ),
 
                 // // PoSInputField(label: "Manufactured on", hint: 'DD-MM-YYYY'),
+                // Text("data"),
+                // Obx(
+                //   () =>
+                controller.selectedCategory == 'Pharma'
+                    ? SegmentedButton(
+                        style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                          ),
+                        ),
+                        showSelectedIcon: false,
+                        segments: const <ButtonSegment<ProductType>>[
+                          ButtonSegment<ProductType>(
+                            value: ProductType.TABLET,
+                            label: Text('Tablet '),
+                            icon: Icon(Icons.dataset_outlined),
+                          ),
+                          ButtonSegment<ProductType>(
+                            value: ProductType.SYRUP,
+                            label: Text('Syrup '),
+                            icon: Icon(Icons.stacked_bar_chart_outlined),
+                          ),
+                          ButtonSegment<ProductType>(
+                            value: ProductType.CREAM,
+                            label: Text('Cream '),
+                            icon: Icon(Icons.catching_pokemon_sharp),
+                          ),
+                        ],
+                        selected: <ProductType>{
+                          controller.productType,
+                        },
+                        onSelectionChanged: (val) => {
+                          controller.productType = val.first,
+                          // _.updateProductType(val),
+                        },
+                      )
+                    : const SizedBox.shrink(),
+                // ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
@@ -96,19 +137,15 @@ class PurchaseItemForm extends GetWidget<PurchaseController> {
                       contentPadding: EdgeInsets.all(14),
                       labelText: "Select sub-category",
                     ),
-                    isDense: true,
-                    // validator: (dd) => 'required',
+                    // isDense: true,
                     onSaved: (nV) {
                       log("Dropdown OnSaved ");
-                      // controller.singleItemData['subcategory'] = nV.toString();
                     },
-                    // hint: const Text("Select USER_ROLE"),
-                    // value: controller.subCategories[0],
                     value: controller.defaultSubCategory.isNotEmpty ? controller.defaultSubCategory : null,
-                    items: controller.subCategories.map(
-                      (String category) {
+                    items: subCategories.map(
+                      (String subCategory) {
                         return DropdownMenuItem(
-                          value: category,
+                          value: subCategory,
                           child: Row(
                             children: <Widget>[
                               Padding(
@@ -118,7 +155,7 @@ class PurchaseItemForm extends GetWidget<PurchaseController> {
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
-                              Text(category),
+                              Text(subCategory),
                             ],
                           ),
                         );

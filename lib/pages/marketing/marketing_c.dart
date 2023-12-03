@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:share_plus/share_plus.dart';
 

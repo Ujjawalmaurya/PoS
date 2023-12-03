@@ -109,7 +109,7 @@ class AddPartyController extends GetxController {
       vDrugLicense.text,
       vGST.text,
     );
-    var response = jsonDecode(_res.body);
+    // var response = jsonDecode(_res.body);
     if (_res.statusCode == 201) {
       Snackbar.success("Vendor Added Successfully", "${vName.text} added successfully");
       vName.clear();

@@ -205,7 +205,7 @@ class AddSales extends GetWidget<AddSalesController> {
                         selectedTileColor: Colors.grey.shade300,
                         selected: true,
                         leading: Icon(
-                          controller.payType.value == PaymentType.card
+                          controller.payType.value == PaymentType.CARD
                               ? Icons.credit_card
                               : Icons.currency_exchange_sharp,
                         ),
@@ -221,7 +221,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: OutlinedButton.icon(
                                   onPressed: () {
-                                    controller.payType.value = PaymentType.card;
+                                    controller.payType.value = PaymentType.CARD;
                                     Get.back();
                                   },
                                   icon: const Icon(Icons.credit_card),
@@ -232,7 +232,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: OutlinedButton.icon(
                                   onPressed: () {
-                                    controller.payType.value = PaymentType.cash;
+                                    controller.payType.value = PaymentType.CASH;
                                     Get.back();
                                   },
                                   icon: const Icon(Icons.currency_rupee_rounded),
@@ -243,7 +243,7 @@ class AddSales extends GetWidget<AddSalesController> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: OutlinedButton.icon(
                                   onPressed: () {
-                                    controller.payType.value = PaymentType.upi;
+                                    controller.payType.value = PaymentType.UPI;
                                     Get.back();
                                   },
                                   icon: const Icon(Icons.system_update_outlined),
@@ -285,7 +285,9 @@ class AddSales extends GetWidget<AddSalesController> {
                           // controller.constCustomer,
                           // controller.constSupplier,
                           // )
-                          controller.convertToInvoiceItems(),
+                          controller.addSale(),
+
+                          // controller.convertToInvoiceItems(),
                         };
                 },
                 label: Text(

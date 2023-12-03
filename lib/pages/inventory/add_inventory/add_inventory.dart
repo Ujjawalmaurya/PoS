@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/pages/inventory/add_inventory/add_inventory_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
+import 'package:pos/src/constants/categories.dart';
+import 'package:pos/src/constants/sub_categories.dart';
 import 'package:pos/src/utils/utils.dart';
 import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
@@ -97,7 +99,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     },
                     // hint: const Text("Select USER_ROLE"),
                     value: controller.defaultCategory.isNotEmpty ? controller.defaultCategory : null,
-                    items: controller.categories.map((String category) {
+                    items: categories.map((String category) {
                       return DropdownMenuItem(
                         // alignment: Alignment.center,
                         value: category,
@@ -139,7 +141,7 @@ class AddInventory extends GetWidget<AddInventoryController> {
                     },
                     // hint: const Text("Select USER_ROLE"),
                     value: controller.defaultSubCategory.isNotEmpty ? controller.defaultSubCategory : null,
-                    items: controller.subCategories.map((String subCategory) {
+                    items: subCategories.map((String subCategory) {
                       return DropdownMenuItem(
                           value: subCategory,
                           child: Row(

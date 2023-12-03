@@ -339,7 +339,7 @@ class APIServices {
       var res = await http.get(uri, headers: BaseURL.authHeader);
       if (res.statusCode == 200) {
         final List result = json.decode(res.body);
-        log('Items=>' + result.toString());
+        print('\nItems=> $result\n');
         // _list = result.map((e) => InventoryItems.fromJson(e)).toList();
         return result;
       } else {
@@ -397,27 +397,66 @@ class APIServices {
     }
   }
 
+  // Get Sales
+
+  static
+      // Future
+      getSales() async {
+    try {
+      var res = await http.get(
+        Uri.parse(ApiLink.getSales + businessID), // + Business ID
+        headers: BaseURL.authHeader,
+      );
+      log("Got Sales:=> ${res.body}");
+      return json.decode(res.body);
+    } catch (e) {
+      log("EXCEPTION@GettingSales=> $e");
+    }
+  }
+
   // Create or Add Sale
 
-  static Future createSale() async {
-    Map _body = {};
-
-    log("Sale creation Req-Body=>> $_body ");
+  static Future createSale(Map body) async {
+    log("Sale creation Req-Body=>> $body ");
     try {
       var res = await http.post(
         Uri.parse(ApiLink.createSellInvoice + businessID),
-        body: json.encode(_body),
+        body: json.encode(body),
         headers: BaseURL.authHeader,
       );
       final _data = json.decode(res.body);
       log(_data.toString());
-      log(res.statusCode.toString());
+      log("SaleCreationStatus=> ${res.statusCode}");
       return res;
     } catch (e) {
       log("Exception@CreatingSale => $e");
     }
   }
 
+// Purchases
+
+// Get all Purchases
+  static
+      //  Future<List<Map>>
+      getPurchases() async {
+    try {
+      var res = await http.get(
+        Uri.parse(ApiLink.getPurchases + businessID), // + Business ID
+        headers: BaseURL.authHeader,
+      );
+      if (res.statusCode == 200) {
+        var data = json.decode(res.body);
+        log("Got Purchases:=>(Length:${data.length}):=> $data");
+        return data;
+      } else {
+        throw Exception("response not oke: res:${res.statusCode} msg:${res.body}");
+      }
+    } catch (e) {
+      log("EXCEPTION@GettingPurchases=> $e");
+    }
+  }
+
+// Create a new purchase
   static Future createPurchase(Map _body) async {
     log("Purchase creation Req-Body=>> $_body ");
     try {

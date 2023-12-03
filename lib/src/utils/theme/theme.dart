@@ -89,7 +89,9 @@ class PoSAppTheme {
       style: ButtonStyle(
         side: MaterialStatePropertyAll<BorderSide>(BorderSide(width: 2, color: _primarySwatch)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(35),
+          ),
         ),
         padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(vertical: 12, horizontal: 20)),
       ),

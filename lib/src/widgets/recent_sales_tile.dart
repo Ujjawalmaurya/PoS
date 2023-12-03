@@ -7,16 +7,18 @@ class RecentSalesTile extends StatelessWidget {
     required this.name,
     required this.amount,
     this.dateTime,
+    this.onTap,
   });
 
   final String name;
   final dynamic amount;
+  final Function()? onTap;
   final DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // onTap: () {},
+      onTap: onTap,
       title: Text(name),
       subtitle: Text("on ${dateTime ?? Utils.formatDate(DateTime.now())}"),
       trailing: Column(

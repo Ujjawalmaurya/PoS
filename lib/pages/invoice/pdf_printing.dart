@@ -27,7 +27,7 @@ class PDFPreview extends StatelessWidget {
         // onError: (context, error) => notifyUser(context, 'Error $error'),
         onShared: (context) => log("Shared"),
         shareActionExtraSubject: "Invoice for ${invoice.customer.name}'s purchase",
-        build: (c) => PDFInvoiceHelper.generate(invoice),
+        build: (c) => Invoices.purchase(invoice),
         onPrintError: (context, error) =>
             MassengerScaffold.notifyUser("Error in Printing", "${error.message}"),
       ),

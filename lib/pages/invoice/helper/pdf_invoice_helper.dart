@@ -18,8 +18,83 @@ import 'pdf_helper.dart';
 
 AddSalesController salesController = Get.find<AddSalesController>();
 
-class PDFInvoiceHelper {
-  static Future<Uint8List> generate(Invoice invoice) async {
+class Invoices {
+  static Future<Uint8List> purchase(Invoice invoice) async {
+    // log("Invoice Data ${invoice}");
+    final pdf = pw.Document(
+      title: " ",
+      author: "seller",
+    );
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: readData(StorageKey.settings.isInvoiceLandscape) ?? false
+            ? PdfPageFormat.a4.landscape
+            : PdfPageFormat.a4.portrait,
+        orientation: readData(StorageKey.settings.isInvoiceLandscape) ?? false
+            ? PageOrientation.landscape
+            : PageOrientation.portrait,
+        // ? Theme
+        theme: pw.ThemeData(
+            bulletStyle: const pw.TextStyle(
+              color: PdfColors.grey800,
+            ),
+            paragraphStyle: const TextStyle(
+              wordSpacing: 0.2,
+              letterSpacing: 0.1,
+              background: BoxDecoration(
+                color: PdfColors.grey200,
+              ),
+            )
+            // maxLines: 1,
+            ),
+        margin: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+        header: (context) => Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Paperlessly invoice",
+                style: const TextStyle(
+                  color: PdfColors.grey500,
+                ),
+              ),
+              Text(
+                "Sales Invoice",
+                style: TextStyle(
+                  color: PdfColors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Customer copy",
+                style: const TextStyle(
+                  color: PdfColors.grey500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        build: (context) => [
+          SizedBox(height: 0.5 * PdfPageFormat.cm),
+          // buildHeader(invoice),
+          Elements.buildTitle(invoice),
+          Elements.buildTable(invoice),
+          SizedBox(height: 1 * PdfPageFormat.cm),
+          Elements.buildInvoice(invoice),
+          // Divider(),
+          // Elements.buildTotal(invoice), //? Not in purchase
+          // Paragraph(text: LoremText().paragraph(60)),
+        ],
+        footer: (context) => Elements.buildFooter(invoice),
+      ),
+    );
+
+    // return PdfApi.saveDocument(name: 'paperlessly-invoice.pdf', pdf: pdf);
+    return pdf.save();
+  }
+
+  static Future<Uint8List> sale(Invoice invoice) async {
     // log("Invoice Data ${invoice}");
     final pdf = pw.Document(
       title: "GoPaperLess",
@@ -78,22 +153,24 @@ class PDFInvoiceHelper {
         build: (context) => [
           SizedBox(height: 0.5 * PdfPageFormat.cm),
           // buildHeader(invoice),
-          buildTitle(invoice),
-          buildTable(invoice),
+          Elements.buildTitle(invoice),
+          Elements.buildTable(invoice),
           SizedBox(height: 1 * PdfPageFormat.cm),
-          buildInvoice(invoice),
+          Elements.buildInvoice(invoice),
           Divider(),
-          buildTotal(invoice),
+          Elements.buildTotal(invoice),
           // Paragraph(text: LoremText().paragraph(60)),
         ],
-        footer: (context) => buildFooter(invoice),
+        footer: (context) => Elements.buildFooter(invoice),
       ),
     );
 
     // return PdfApi.saveDocument(name: 'paperlessly-invoice.pdf', pdf: pdf);
     return pdf.save();
   }
+}
 
+class Elements {
   // Elements ===========================================================================================
 
   static Widget buildHeader(Invoice invoice) => Column(

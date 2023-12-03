@@ -67,6 +67,7 @@ class Marketing extends GetWidget<MarketingController> {
               SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -122,7 +123,7 @@ class Marketing extends GetWidget<MarketingController> {
                         shrinkWrap: true,
                         itemCount: 13,
                         scrollDirection: Axis.horizontal,
-                        physics: const ClampingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           String _asset = 'assets/${(index + 1)}.jpg';
                           return Card(

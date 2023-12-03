@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pos/src/widgets/notify_snackbar.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 
 SingleChildScrollView addCustomerForm(controller) {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -12,6 +13,7 @@ import 'package:pos/pages/dashboard/more_pages/purchase_order.dart';
 import 'package:pos/pages/dashboard/more_pages/purchase_return.dart';
 import 'package:pos/pages/dashboard/more_pages/sales_return.dart';
 import 'package:pos/src/constants/constants.dart';
+import 'package:pos/src/services/apiServices.dart';
 
 enum callAnAction { sale, purchase }
 
@@ -24,7 +26,80 @@ class HomeController extends GetxController {
 
   List<String> businesses = ['Business1', 'Business2', 'Business3'];
 
-  String selectedBusiness = '';
+  RxString selectedBusiness = ''.obs;
+
+  RxList sales = [].obs;
+  RxList purchases = [].obs;
+  //   {
+  //    "id": 8,
+  //    "invoiceNumber": "PURUJJ202312038",
+  //    "preCreatedInvoice": "13234123",
+  //    "preCreatedDate": "2023-12-02T00:00:00.000+00:00",
+  //    "salesMan": "Dummy Supplier",
+  //    "businessDetails": {
+  //       "id": 1,
+  //       "name": "Ujjawal medical",
+  //       "type": "medical",
+  //       "description": "Medicines for td",
+  //       "contact": "780584487",
+  //       "address": "Noida sector 59",
+  //       "drugLicense": "dgt567dgh",
+  //       "fileName": "null",
+  //       "termsAndConditions": "null",
+  //       "products": [],
+  //       "customers": [],
+  //       "vendors": []
+  //    },
+  //    "vendor": {
+  //       "id": 9,
+  //       "uuid": "975916b0-2f37-1d62-abd5-19b6d9d7c593",
+  //       "supplierName": "Dummy Supplier",
+  //       "supplierNumber": "8374937493",
+  //       "businessName": "Dummy products LTD",
+  //       "businessOwner": "Dumb Owner",
+  //       "businessEmail": "BrooksideHsuebwjwj@jsjd.Sjjs",
+  //       "businessAddress": "BB idk khud DM ki",
+  //       "gstNumber": "J37TU48T93JR999L",
+  //       "drugLicense": "73J48T75I29JD83U58D",
+  //       "contact": null,
+  //       "website": null
+  //    },
+  //    "items": [
+  //       {
+  //          "uuid": "01e65f6d-9de9-4c2a-925f-bc93492cb713",
+  //          "product": {
+  //             "id": 30,
+  //             "name": "ietmmm",
+  //             "type": "TABLET",
+  //             "category": "Pharma",
+  //             "subCategory": "Pain Relief",
+  //             "hsn": 123424,
+  //             "manufacturer": "feesfdserf",
+  //             "unit": "string",
+  //             "batchNum": "1234rf3",
+  //             "discQty": 44,
+  //             "discountPerProduct": 54,
+  //             "loc": "234fv",
+  //             "mrp": 23,
+  //             "rate": 223,
+  //             "totalAmount": 3000,
+  //             "td": 3,
+  //             "qty": 0,
+  //             "cd": 2,
+  //             "quantityParent": 8,
+  //             "quantityChild": 0,
+  //             "quantityMax": 34,
+  //             "vendorId": 9,
+  //             "expiry": "2030-01-01T00:00:00.000+00:00"
+  //          },
+  //          "quantityParent": 8,
+  //          "quantityChild": 0,
+  //          "quantityMax": 34,
+  //          "isItemReturned": "N"
+  //       }
+  //    ],
+  //    "category": "Pharma"
+  // }
 
   List moreSalesOption = [
     {
@@ -103,8 +178,10 @@ class HomeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
+    sales.value = await APIServices.getSales();
+    purchases.value = await APIServices.getPurchases();
     super.onInit();
   }
 
@@ -118,6 +195,25 @@ class HomeController extends GetxController {
     actionType = _val.first;
     update();
   }
+
+  // List getSales() {
+  //
+  // log("Getting sales");
+  // var res = APIServices.getSales();
+  // return [];
+  // }
+
+  // void getPurchases() async {
+  //
+  // purchases.value = await APIServices.getPurchases();
+  // log("Getting purchases");
+  // return purchases;
+  // return [
+  //   {},
+  //   {},
+  //   {},
+  // ];
+  // }
 
   requestPermission() async {
     final permissionStatus = await Permission.storage.status;

@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pos/pages/inventory/add_inventory/add_inventory_c.dart';
 import 'package:pos/pages/inventory/inventory_c.dart';
 import 'package:pos/pages/parties/vendor_model.dart';
 import 'package:pos/pages/parties/party_c.dart';
@@ -10,7 +10,11 @@ import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/services/apiServices.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
+enum ProductType { TABLET, SYRUP, CREAM }
+
 class PurchaseController extends GetxController {
+  ProductType productType = ProductType.TABLET;
+
   Vendor selectedVendor = Vendor();
 
   final purchaseFormKey = GlobalKey<FormState>();
@@ -18,7 +22,9 @@ class PurchaseController extends GetxController {
 
   // RxList<TextEditingController> txtControllers = <TextEditingController>[].obs;
 
-  InventoryController inventoryController = Get.find<InventoryController>();
+  // InventoryController inventoryController = Get.find<InventoryController>();
+  // AddInventoryController addInventoryController = Get.find<AddInventoryController>();
+  // AddInventoryController addInventoryController = Get.put(AddInventoryController());
   RxList<Map> items = <Map>[].obs;
 
 //? ===== TextEditingControllers ====
@@ -47,24 +53,24 @@ class PurchaseController extends GetxController {
 
   RxInt index = 0.obs;
 
-  final List<String> categories = [
-    // 'Food and Beverages ',
-    // "Personal Care and Hygiene",
-    // "Household Cleaning and Care",
-    // "Health and Wellness",
-    // "Baby and Childcare",
-    // "Confectionery and Chocolates",
-    // "Beauty and Cosmetics",
-    // "Pharmaceuticals",
-    // "Tobacco and Cigarettes",
-    "General",
-    "Pharma"
-  ];
+  // final List<String> categories = [
+  //   // 'Food and Beverages ',
+  //   // "Personal Care and Hygiene",
+  //   // "Household Cleaning and Care",
+  //   // "Health and Wellness",
+  //   // "Baby and Childcare",
+  //   // "Confectionery and Chocolates",
+  //   // "Beauty and Cosmetics",
+  //   // "Pharmaceuticals",
+  //   // "Tobacco and Cigarettes",
+  //   "General",
+  //   "Pharma"
+  // ];
 
-  final List<String> subCategories = [
-    'subcategory1',
-    'subcategory2',
-  ];
+  // final List<String> subCategories = [
+  //   'subcategory1',
+  //   'subcategory2',
+  // ];
 
   String selectedCategory = '';
   String selectedSubCategory = '';
@@ -96,6 +102,13 @@ class PurchaseController extends GetxController {
     update();
   }
 
+  void updateProductType(Set<ProductType> val) {
+    // TODO: implement
+    productType = val.first;
+
+    update();
+  }
+
   void unselectSupplier() {
     selectedVendor = Vendor();
     update();
@@ -124,27 +137,29 @@ class PurchaseController extends GetxController {
 
   void insertItem() {
     items.add({
-      "name": itemNameTextCtr.text,
-      "type": "TABLET",
-      "category": selectedCategory,
-      "subCategory": selectedSubCategory,
-      "hsn": hsnTextCtr.text,
-      "manufacturer": manufacturerTextCtr.text,
-      "unit": "string",
-      "batchNum": batchTextCtr.text,
-      "discQty": discountQtyTextCtr.text,
-      "discountPerProduct": discountTextCtr.text,
-      "loc": locTextCtr.text,
-      "mrp": mrpTextCtr.text,
-      "rate": rateTextCtr.text,
-      "totalAmount": 3000,
-      "td": tdTextCtr.text,
-      "cd": cdTextCtr.text,
-      "quantityParent": 8,
-      "quantityChild": 0,
-      "quantityMax": qtyTextCtr.text,
-      "vendorId": selectedVendor.id,
-      "expiry": itemExpiryDateTxtCtr.text,
+      "product": {
+        "name": itemNameTextCtr.text,
+        "type": "TABLET",
+        "category": selectedCategory,
+        "subCategory": selectedSubCategory,
+        "hsn": hsnTextCtr.text,
+        "manufacturer": manufacturerTextCtr.text,
+        "unit": "string",
+        "batchNum": batchTextCtr.text,
+        "discQty": discountQtyTextCtr.text,
+        "discountPerProduct": discountTextCtr.text,
+        "loc": locTextCtr.text,
+        "mrp": mrpTextCtr.text,
+        "rate": rateTextCtr.text,
+        "totalAmount": 3000,
+        "td": tdTextCtr.text,
+        "cd": cdTextCtr.text,
+        "quantityParent": 8,
+        "quantityChild": 0,
+        "quantityMax": qtyTextCtr.text,
+        "vendorId": selectedVendor.id,
+        "expiry": itemExpiryDateTxtCtr.text,
+      }
     });
     log(items.toString());
     // clearFormFields();

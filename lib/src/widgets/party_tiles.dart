@@ -30,9 +30,16 @@ class CustomerTile extends StatelessWidget {
         onTap: onTap,
         isThreeLine: true,
         leading: NetworkImageLoader(image: image),
-        title: Text(name, style: Theme.of(context).textTheme.titleMedium),
-        subtitle: Text(subtitle ?? "${Utils.formatDate(DateTime.now())}",
-            style: Theme.of(context).textTheme.labelMedium),
+        title: Text(
+          name,
+          style: Theme.of(context).textTheme.titleMedium,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          subtitle ?? "${Utils.formatDate(DateTime.now())}",
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -40,14 +47,21 @@ class CustomerTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(amountType, style: Theme.of(context).textTheme.bodySmall),
-                Text(Utils.parseInINR(amount), style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  amountType,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  Utils.parseInINR(amount),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ],
             ),
             IconButton(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                onPressed: onTap,
-                icon: const Icon(Icons.more_vert_outlined))
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              onPressed: onTap,
+              icon: const Icon(Icons.more_vert_outlined),
+            ),
           ],
         ),
         // children: const [
@@ -70,6 +84,8 @@ class SupplierTile extends StatelessWidget {
     required this.amount,
     required this.amountType,
     required this.businessName,
+    required this.businessAddress,
+    required this.drugLicense,
     required this.gstNumber,
     this.onTap,
   });
@@ -78,8 +94,10 @@ class SupplierTile extends StatelessWidget {
   final dynamic amount;
   final String amountType;
   final String businessName;
+  final String businessAddress;
   final String ownerName;
   final String gstNumber;
+  final String drugLicense;
   final String image;
   final void Function()? onTap;
 
@@ -95,7 +113,13 @@ class SupplierTile extends StatelessWidget {
               leading: NetworkImageLoader(image: image),
               onTap: onTap,
               isThreeLine: true,
-              title: Text(name, style: const TextStyle(fontSize: 18)),
+              title: Text(
+                name,
+                style: Theme.of(context).textTheme.titleMedium,
+                // softWrap: true,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
               subtitle: Text(businessName),
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,8 +135,23 @@ class SupplierTile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Column(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
                   Text('Owner: $ownerName'),
+                  // Text('Address: $businessAddress'),
+                  // ],
+                  // ),
+                  // Column(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   crossAxisAlignment: CrossAxisAlignment.end,
+                  //   children: [
                   Text('GST: $gstNumber'),
+                  // Text('Drug: $drugLicense'),
+                  //   ],
+                  // ),
                 ],
               ),
             )

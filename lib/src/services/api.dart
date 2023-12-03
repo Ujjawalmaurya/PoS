@@ -57,7 +57,7 @@ class ApiLink {
 
   // ! Sell invoice
   static const String createSellInvoice = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} POST
-  static const String getSellInvoices = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} GET
+  static const String getSales = BaseURL.CompleteURL + "sell-invoice/"; // +{businessId} GET
   static const String getSellInvoicesByInvoiceNumber =
       BaseURL.CompleteURL + "/sell-invoice/"; // +{invoiceNumber}/{businessId} GET
 
