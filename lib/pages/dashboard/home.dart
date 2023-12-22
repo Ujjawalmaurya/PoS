@@ -123,51 +123,70 @@ class TabOne extends GetWidget<HomeController> {
                       builder: (_) {
                         return controller.actionType == callAnAction.sale
                             // * Sales
-                            ? ListView.separated(
-                                separatorBuilder: (context, index) => const Divider(),
-                                physics: const NeverScrollableScrollPhysics(),
-                                // itemCount: controller.sales.length,
-                                itemCount: controller.sales.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  var _saleData = controller.sales[index];
-                                  return RecentSalesTile(
-                                    name: 'Sale to customer ${index + 1}',
-                                    amount: 123 * (index + 1) + (5 * index + 8),
-                                  );
-                                },
+                            ? Obx(
+                                () => controller.sales.isNotEmpty
+                                    ? ListView.separated(
+                                        separatorBuilder: (context, index) => const Divider(),
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        // itemCount: controller.sales.length,
+                                        itemCount: controller.sales.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          var _saleData = controller.sales[index];
+                                          return RecentSalesTile(
+                                            name: 'Sale to customer ${index + 1}',
+                                            amount: 123 * (index + 1) + (5 * index + 8),
+                                          );
+                                        },
+                                      )
+                                    : SizedBox(
+                                        height: Get.height * 0.35,
+                                        child: const Center(
+                                          child: Text("No Sales"),
+                                        ),
+                                      ),
                               )
                             // * Purchases
-                            : ListView.separated(
-                                separatorBuilder: (context, index) => const Divider(),
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: controller.purchases.length,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  Map _purchaseData = controller.purchases[index];
-                                  return RecentPurchaseTile(
-                                    onTap: () => Get.defaultDialog(
-                                        title: "Data",
-                                        content: SizedBox(
-                                          height: Get.height * 0.6,
-                                          child: SingleChildScrollView(
-                                            child: Column(
-                                              children: [
-                                                // Text("Purchase Data: ${_purchaseData}"),
-                                                Text("Business Data: ${_purchaseData['businessDetails']}\n"),
-                                                Text("Vendor Data: ${_purchaseData['vendor']}\n"),
-                                                Text(
-                                                    "Products(${_purchaseData['items'].length}): ${_purchaseData['items']}\n"),
-                                                // Text("Purchase Data: ${_purchaseData}"),
-                                              ],
-                                            ),
-                                          ),
-                                        )),
-                                    amount: 559 * index + (8 * (index + 1) + 8),
-                                    invoiceNumber: "Invoice no: ${_purchaseData['invoiceNumber']}",
-                                    name: "Sales man: ${_purchaseData['salesMan']}",
-                                  );
-                                },
+                            : Obx(
+                                () => controller.purchases.isNotEmpty
+                                    ? ListView.separated(
+                                        separatorBuilder: (context, index) => const Divider(),
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: controller.purchases.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          Map _purchaseData = controller.purchases[index];
+                                          return RecentPurchaseTile(
+                                            onTap: () => Get.defaultDialog(
+                                                title: "Data",
+                                                content: SizedBox(
+                                                  height: Get.height * 0.6,
+                                                  child: SingleChildScrollView(
+                                                    child: Column(
+                                                      children: [
+                                                        // Text("Purchase Data: "),
+                                                        Text(
+                                                            "Business Data: ${_purchaseData['businessDetails']}\n"),
+                                                        Text("Vendor Data: ${_purchaseData['vendor']}\n"),
+                                                        Text(
+                                                            "Products(${_purchaseData['items'].length}): ${_purchaseData['items']}\n"),
+                                                        // Text("Purchase Data: "),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )),
+                                            amount: 559 * index + (8 * (index + 1) + 8),
+                                            invoiceNumber: "Invoice no: ${_purchaseData['invoiceNumber']}",
+                                            name: "Sales man: ${_purchaseData['salesMan']}",
+                                          );
+                                        },
+                                      )
+                                    : SizedBox(
+                                        height: Get.height * 0.35,
+                                        child: const Center(
+                                          child: Text("No Purchases"),
+                                        ),
+                                      ),
                               );
                       },
                     ),
@@ -190,18 +209,21 @@ class TabOne extends GetWidget<HomeController> {
                       child: Row(
                         children: [
                           const Icon(Icons.add_circle_outline),
-                          Text(controller.actionType == callAnAction.sale ? "Add Sales" : "Add Purchase"),
+                          Text(
+                            controller.actionType == callAnAction.sale ? "Add Sales" : "Add Purchase",
+                          ),
                         ],
                       ),
                     ),
                     OutlinedButton(
                       // style: ButtonStyle(elevation: MaterialStatePropertyAll(5)),
                       onPressed: () => controller.moreOptionsBbottomSheet(
-                          context,
-                          controller.actionType == callAnAction.sale
-                              ? controller.moreSalesOption
-                              : controller.morePurchaseOptions,
-                          controller.actionType == callAnAction.sale ? 'sale' : 'purchase'),
+                        context,
+                        controller.actionType == callAnAction.sale
+                            ? controller.moreSalesOption
+                            : controller.morePurchaseOptions,
+                        controller.actionType == callAnAction.sale ? 'sale' : 'purchase',
+                      ),
                       child: const Column(
                         children: [
                           Text("More"),

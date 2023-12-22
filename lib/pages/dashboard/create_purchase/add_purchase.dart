@@ -177,8 +177,8 @@ class AddPurchase extends GetWidget<PurchaseController> {
                 icon: const Icon(Icons.check_circle_outlined),
                 onPressed: () {
                   if (controller.purchaseFormKey.currentState!.validate()) {
-                    if (controller.selectedVendor.supplierName == null && controller.items.isNotEmpty) {
-                      MassengerScaffold.notifyUser(context, "Select a vendor");
+                    if (controller.selectedVendor.supplierName == null || controller.items.isEmpty) {
+                      MassengerScaffold.notifyUser(context, "Select a vendor and item(s)");
                     } else {
                       log("Validation success");
                       controller.createPurchase();

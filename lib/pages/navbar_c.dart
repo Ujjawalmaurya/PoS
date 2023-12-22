@@ -16,6 +16,8 @@ class UserController extends GetxController {
 // BottomNavBarController(this.repository);
   final GlobalKey<ScaffoldState> navbarScaffoldKey = GlobalKey();
 
+  // final
+
   String userRole = readData(StorageKey.user.userData)["role"];
   String refreshToken = readData(StorageKey.user.refreshToken);
   String accessToken = readData(StorageKey.user.accessToken);
@@ -46,7 +48,7 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    log("======== USER: >> $userRole <<=========");
+    log("======== USER: >> ${userRole} <<=========");
     super.onInit();
   }
 

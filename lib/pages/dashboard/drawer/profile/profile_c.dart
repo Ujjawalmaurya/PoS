@@ -94,10 +94,12 @@ class MyProfileController extends GetxController {
         // isLoading.value = false;
         log(_bodyData.toString());
         return _bodyData;
-      } else if (res.statusCode == 403) {
-        // Snackbar.trigger("Alert", _bodyData['message'].toString());
-        APIServices.refreshAccessToken(getProfile());
-      } else {
+      }
+      // else if (res.statusCode == 403) {
+      // Snackbar.trigger("Alert", _bodyData['message'].toString());
+      // APIServices.refreshAccessToken(getProfile());
+      // }
+      else {
         Snackbar.trigger("Alert", _bodyData['message']);
         // return AsyncError(_bodyData['message'], StackTrace.current);
         // return AsyncSnapshot.withError(ConnectionState.done, [_bodyData['message'].toString()]);
@@ -110,4 +112,4 @@ class MyProfileController extends GetxController {
 
     //
   }
-}//
+} //

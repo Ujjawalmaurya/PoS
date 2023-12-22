@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pos/get/bindings.dart';
+import 'package:pos/get/middleware.dart';
 import 'package:pos/pages/login.dart';
 import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
@@ -44,9 +45,9 @@ class Routes {
       name: BottomNavigationBarPage.path,
       page: () => const BottomNavigationBarPage(),
       binding: BottomNavigationBarBinding(),
-      // middlewares: [
-      //   GetMiddleware(),
-      // ],
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
     // GetPage(
     //   name: '/home',

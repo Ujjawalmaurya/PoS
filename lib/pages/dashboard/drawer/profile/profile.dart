@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pos/pages/dashboard/drawer/profile/profile_c.dart';
-import 'package:pos/src/widgets/dotted_border_widget.dart';
+// import 'package:pos/src/widgets/dotted_border_widget.dart';
 import 'package:pos/src/widgets/pos_input_tile.dart';
 import 'package:pos/src/widgets/pos_loading.dart';
 
@@ -68,10 +69,16 @@ class MyProfile extends GetWidget<MyProfileController> {
                                     //   'https://robohash.org/doloremquesintcorrupti.png',
                                     // ),
                                     maxRadius: 55,
-                                    child: Text(
-                                      snapshot.data['name'][0],
-                                      style: Theme.of(context).textTheme.displayMedium,
+                                    child: Lottie.network(
+                                      'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/${snapshot.data['name'][0].toString().toUpperCase()}.json',
+                                      reverse: true,
+                                      fit: BoxFit.fill,
                                     ),
+
+                                    // Text(
+                                    //   snapshot.data['name'][0],
+                                    //   style: Theme.of(context).textTheme.displayMedium,
+                                    // ),
                                   ),
                                 ),
                                 Text(

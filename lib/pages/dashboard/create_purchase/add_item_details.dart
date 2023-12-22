@@ -433,7 +433,7 @@ class PurchaseItemForm extends GetWidget<PurchaseController> {
                             controller.insertItem();
                             controller.clearFormFields();
                           } else {
-                            MassengerScaffold.notifyUser(context, "Complete Form");
+                            MassengerScaffold.notifyUser(context, "Complete the Form first!");
                           }
                         },
                         label: const Text("Submit"),

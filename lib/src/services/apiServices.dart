@@ -12,7 +12,7 @@ import './api.dart';
 import 'package:http/http.dart' as http;
 
 final String businessID = readData(StorageKey.user.userData)['businessId'].toString();
-UserController userController = Get.find<UserController>();
+// UserController userController = Get.find<UserController>();
 
 class APIServices {
   // Login
@@ -84,13 +84,14 @@ class APIServices {
         headers: BaseURL.authHeader,
       );
       log("${readData(StorageKey.user.userData)['id']}");
+      log("Getting profile res=> ${res.statusCode}");
       return res;
     } catch (e) {
       log("EXCEPTION@MyProfile=> $e");
     }
   }
 
-  static refreshAccessToken(reCallFunction) async {
+  static refreshAccessToken() async {
     Map _body = {"refreshToken": userController.refreshToken};
     log("Refresh Token Body=>> $_body ");
     try {
@@ -204,9 +205,13 @@ class APIServices {
         print("Customers => " + result.toString());
         return result.map((e) => Customer.fromJson(e)).toList();
         // return result;
-      } else if (res.statusCode == 403) {
-        return refreshAccessToken(getCustomers());
-      } else {
+      }
+      // else
+      // if (res.statusCode == 403)
+      //  {
+      // return refreshAccessToken(getCustomers());
+      // }
+      else {
         throw Exception('Getting customers=> response not oke: res:${res.statusCode}');
       }
     } catch (e) {

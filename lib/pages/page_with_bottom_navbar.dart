@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pos/pages/dashboard/drawer/about_us.dart';
 import 'package:pos/pages/dashboard/drawer/account_settings.dart';
 import 'package:pos/pages/dashboard/drawer/invoice_settings.dart';
@@ -20,26 +21,43 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
     final Color _color = Theme.of(context).primaryColor;
     double displayWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       key: controller.navbarScaffoldKey,
       // drawerEnableOpenDragGesture: false,
       drawer: Drawer(
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Theme.of(context).dividerColor),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    readData(StorageKey.user.userData)['name'],
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    // textAlign: TextAlign.left,
-                  ),
-                  // Text("Role: ${readData(StorageKey.user.userData)['role']}"),
-                ],
+            // DrawerHeader(
+            //   decoration: BoxDecoration(color: Theme.of(context).dividerColor),
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.start,
+            // children: [
+            //   Text(
+            //     readData(StorageKey.user.userData)['name'],
+            //     style: Theme.of(context).textTheme.headlineMedium,
+            // textAlign: TextAlign.left,
+            // ),
+            // Text("Role: ${readData(StorageKey.user.userData)['role']}"),
+            //     ],
+            //   ),
+            // ),
+            UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.background,
+                child: Lottie.network(
+                  'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/${readData(StorageKey.user.userData)['name'][0].toString().toUpperCase()}.json',
+                  // reverse: true,
+                  repeat: false,
+                ),
               ),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background),
+              accountName: Text(
+                readData(StorageKey.user.userData)['name'],
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              accountEmail: Text("${readData(StorageKey.user.userData)['email']}"),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
@@ -99,7 +117,54 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: ListTile(
                 splashColor: Colors.pinkAccent,
-                onTap: () {},
+                onTap: () {
+                  Get.defaultDialog(
+                    title: "",
+                    content: Stack(
+                      children: [
+                        Lottie.network(
+                          'https://lottie.host/3d58e6ad-ef07-4a2d-9e32-d12f5a9b23d1/960PhxwIrB.json',
+                          // height: 200,
+                          // width: 200,
+                          repeat: false,
+                          onLoaded: (composition) {
+                            // Configure the AnimationController with the duration of the
+                            // Lottie file and start the animation.
+                            // controller.duration = composition.duration;
+                            // controller.forward();
+                          },
+                          animate: true,
+                          // reverse: true,
+                          frameBuilder: (context, child, composition) {
+                            return AnimatedOpacity(
+                              child: child,
+                              opacity: composition == null ? 0 : 1,
+                              duration: const Duration(seconds: 5),
+                              curve: Curves.easeOut,
+                            );
+                          },
+                        ),
+                        const Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Hurrah! You're a PLUS member",
+                              textAlign: TextAlign.center,
+                            ),
+                            // ElevatedButton.icon(
+                            //   onPressed: () {},
+                            //   icon: Icon(Icons.featured_play_list_outlined),
+                            //   label: Text(
+                            //     "Explore features",
+                            //   ),
+                            // )
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }, // TODO?
                 leading: const Icon(
                   Icons.star_border_purple500_sharp,
                   size: 45,
@@ -107,11 +172,12 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
                 ),
                 titleTextStyle: Theme.of(context).textTheme.titleMedium,
                 textColor: Colors.brown,
-                title: const Text("You're a PLUS member"),
+                title: Text("You're a PLUS member"),
                 subtitle: const Text("Expires on XX-XX-XXXX"),
                 tileColor: Colors.yellow.shade100,
               ),
             ),
+
             const Divider(),
             // ListTile(
             //   leading: const Icon(Icons.help_center_sharp),
