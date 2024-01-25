@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:pos/get/auth_controller.dart';
+import 'package:pos/get/authMiddleware.dart';
 import 'package:pos/pages/otp/otp_c.dart';
 import 'package:pos/pages/dashboard/create_purchase/purchase_c.dart';
 import 'package:pos/pages/dashboard/create_sale/sales_c.dart';
@@ -13,11 +15,19 @@ import 'package:pos/pages/parties/party_c.dart';
 
 import '../pages/dashboard/drawer/manage_user/manage_user_c.dart';
 
+class InitialBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.put(AuthController());
+    Get.put(AuthMiddleware());
+  }
+}
+
 class BottomNavigationBarBinding implements Bindings {
   @override
   void dependencies() {
     // Get.lazyPut<UserController>(() => UserController());
-    UserController _ = Get.put(UserController());
+    NavBarController _ = Get.put(NavBarController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<MarketingController>(() => MarketingController());
     PartyController partyController = Get.put(PartyController());

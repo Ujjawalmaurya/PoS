@@ -11,7 +11,7 @@ import 'package:pos/pages/parties/parties.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class UserController extends GetxController {
+class NavBarController extends GetxController {
 // final MyRepository repository;
 // BottomNavBarController(this.repository);
   final GlobalKey<ScaffoldState> navbarScaffoldKey = GlobalKey();
@@ -19,8 +19,8 @@ class UserController extends GetxController {
   // final
 
   String userRole = readData(StorageKey.user.userData)["role"];
-  String refreshToken = readData(StorageKey.user.refreshToken);
-  String accessToken = readData(StorageKey.user.accessToken);
+  // String refreshToken = readData(StorageKey.user.refreshToken);
+  // String accessToken = readData(StorageKey.user.accessToken);
 
   final List<Widget> widgetOptions = <Widget>[
     const TabOne(),

@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pos/get/bindings.dart';
-import 'package:pos/get/middleware.dart';
+import 'package:pos/get/authMiddleware.dart';
+import 'package:pos/get/protectedPage.dart';
 import 'package:pos/pages/login.dart';
 import 'package:pos/pages/otp/otpScreen.dart';
 import 'package:pos/pages/scanner/scanner.dart';
@@ -49,6 +51,12 @@ class Routes {
         AuthMiddleware(),
       ],
     ),
+    // GetPage(
+    //   name: ProtectedPage.path,
+    //   page: () => const ProtectedPage(),
+    //   binding: InitialBinding(),
+    //   middlewares: [AuthMiddleware()],
+    // ),
     // GetPage(
     //   name: '/home',
     //   page: () => const TabOne(),

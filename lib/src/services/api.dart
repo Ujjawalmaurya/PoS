@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:get/get.dart';
-import 'package:pos/pages/navbar_c.dart';
 import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
 // import 'package:http/http.dart' as http;
 
-UserController userController = Get.find<UserController>();
+// NavBarController userController = Get.find<NavBarController>();
 
 class BaseURL {
   static const domain = "http://34.205.76.254:8085/";
@@ -19,8 +14,9 @@ class BaseURL {
   static var authHeader = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer ${userController.accessToken}',
+    'Authorization': 'Bearer ${readData(StorageKey.user.accessToken)}',
   };
+  // 'Authorization': 'Bearer ${userController.accessToken}',
 }
 
 //

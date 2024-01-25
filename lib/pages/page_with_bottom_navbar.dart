@@ -12,7 +12,7 @@ import 'package:pos/src/constants/constants.dart';
 import 'package:pos/src/utils/hapics.dart';
 import 'package:pos/src/utils/storage_keys.dart';
 
-class BottomNavigationBarPage extends GetWidget<UserController> {
+class BottomNavigationBarPage extends GetWidget<NavBarController> {
   static const String path = '/dashboard';
   const BottomNavigationBarPage({super.key});
 
@@ -97,7 +97,7 @@ class BottomNavigationBarPage extends GetWidget<UserController> {
             //   title: const Text("Reminder Settings"),
             //   onTap: () {},
             // ),
-            Get.find<UserController>().userRole == 'STORE_MANAGER'
+            Get.find<NavBarController>().userRole == 'STORE_MANAGER'
                 ? ListTile(
                     leading: Icon(
                       Icons.supervised_user_circle_sharp,

@@ -92,8 +92,8 @@ class APIServices {
   }
 
   static refreshAccessToken() async {
-    Map _body = {"refreshToken": userController.refreshToken};
-    log("Refresh Token Body=>> $_body ");
+    Map _body = {"refreshToken": readData(StorageKey.user.refreshToken)};
+    log("Refresh Token req Body=>> $_body ");
     try {
       var res = await http.post(
         Uri.parse(ApiLink.refreshAccessTokenLink),
@@ -109,9 +109,9 @@ class APIServices {
         // writeData('date', _headerData['date']);
         print('Access Token ==>> ${_headerData["accesstoken"]}');
         writeData(StorageKey.user.accessToken, _headerData['accesstoken']);
-        userController.accessToken = _headerData['accesstoken'] ?? ''; // updateData in controller
+        // userController.accessToken = _headerData['accesstoken'] ?? ''; // updateData in controller
         print('Refresh Token ==>> ${_headerData["refreshtoken"]}');
-        userController.refreshToken = _headerData['refreshtoken'] ?? ''; // updateData in controller
+        // userController.refreshToken = _headerData['refreshtoken'] ?? ''; // updateData in controller
         writeData(StorageKey.user.refreshToken, _headerData['refreshtoken']);
         log("================== Success ==================");
         print(_bodyData.toString());

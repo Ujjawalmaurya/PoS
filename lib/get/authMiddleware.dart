@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 import 'package:pos/get/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -6,33 +8,24 @@ import 'package:pos/pages/navbar_c.dart';
 import 'package:pos/pages/page_with_bottom_navbar.dart';
 
 class AuthMiddleware extends GetMiddleware {
-  // final authController = Get.put<AuthController>();
   AuthController authController = Get.put(AuthController());
-
-  UserController controller = Get.put(UserController());
 
   @override
   int? get priority => 1;
 
   // @override
-  // RouteSettings redirect(String route) {
-  //   return authController.authenticated || route == '/login' ? null : RouteSettings(name: '/login');
+  // RouteSettings? redirect(String? route) {
+  // Navigate to login if client is not authenticated other wise continue
+  // log("Middleware routing ${authController.isAuth.value}", name: "=> middleware <=");
+  // if (authController.isAuth.value) {
+  // return const RouteSettings(name: BottomNavigationBarPage.path);
+  //   return null;
+  // } else {
+  //   print('Not auth');
+  //   return const RouteSettings(name: Login.path);
   // }
-
-  // @override
-  // GetPage onPageCalled(GetPage page) {
-  //   print('>>> Page ${page.name} called');
-  //   print('>>> User ${authController.username} logged');
-  //   return authController.username != null
-  //       ? page.copyWith(parameter: {'user': authController.username})
-  //       : page;
+  // return null;
   // }
-
-  @override
-  GetPage? onPageCalled(GetPage? page) {
-    authController.isAuth.value ? Get.toNamed(BottomNavigationBarPage.path) : Get.toNamed(Login.path);
-    return super.onPageCalled(page);
-  }
 
   // @override
   // List<Bindings> onBindingsStart(List<Bindings> bindings) {

@@ -40,14 +40,14 @@ void eraseStorage() => storage.erase().onError(
 // User Roles
 // SALESMAN, STORE_MANAGER, STORE_OWNER, ADMIN
 
-bool ifSalesMan() {
-  String userRole = Get.find<UserController>().userRole;
-  return (userRole == 'SALESMAN'
+// bool ifSalesMan() {
+  // String userRole = Get.find<UserController>().userRole;
+  // return (userRole == 'SALESMAN'
       // userRole == 'STORE_MANAGER' ||
       // userRole == 'STORE_OWNER' ||
       // userRole == 'ADMIN'
-      )
-      ? true
-      : false;
+      // )
+      // ? true
+      // : false;
   // return
-}
+// }
